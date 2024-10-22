@@ -1,2 +1,2 @@
 # Project_5
-expo react native app
+React Native Android/iOS Fitness Application
