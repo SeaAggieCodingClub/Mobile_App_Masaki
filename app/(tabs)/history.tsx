@@ -1,13 +1,12 @@
 import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme } from "react-native"
-import { useEffect, useState } from "react"
 
-const index = () => {
+const history = () => {
 
     return (
         <SafeAreaView>
-            <Text>Home</Text>
+            <Text>history</Text>
         </SafeAreaView>
     )
 }
 
-export default index
+export default history
