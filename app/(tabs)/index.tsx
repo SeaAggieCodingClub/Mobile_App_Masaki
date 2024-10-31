@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, FlatList } from "react-native"
 import { useEffect, useState } from "react"
+import globalStyles from "../globalStyles"
 
 const index = () => {
 
     return (
         <SafeAreaView>
-            <Text>Home</Text>
+            <Text style={globalStyles.androidSafeView}>Home</Text>
             <FlatList
                 data = {[
                     {id: "1", title: "test"}, 
