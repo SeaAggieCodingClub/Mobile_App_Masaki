@@ -7,7 +7,7 @@ export default StyleSheet.create({
         },
         pageTitle: {
             fontSize: 40,
-            fontFamily:"Montserrat"
+            fontFamily:"Montserrat-Bold"
         }
     })
 

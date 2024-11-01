@@ -4,8 +4,8 @@ import globalStyles from "../globalStyles"
 
 const index = () => {
     return (
-        <SafeAreaView>
-            <Text style={globalStyles.androidSafeView}>Home</Text>
+        <SafeAreaView style={globalStyles.androidSafeView}>
+            <Text style={globalStyles.pageTitle}>Home</Text>
             <FlatList
                 data = {[
                     {id: "1", title: "test"}, 
