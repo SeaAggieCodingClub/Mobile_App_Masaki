@@ -1,4 +1,4 @@
-import {Tabs, useNavigation, router} from "expo-router"
+import {Tabs, useNavigation, router, Stack} from "expo-router"
 
 const tabsLayout = () => {
     return (
@@ -19,7 +19,7 @@ const tabsLayout = () => {
             <Tabs.Screen name="account" options = {{
                 headerShown: false,
                 title: "Account"
-            }}/>
+            }}/>     
         </Tabs>
     )
 }

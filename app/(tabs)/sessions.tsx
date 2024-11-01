@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme } from
 import { useEffect, useState } from "react"
 import globalStyles from "../globalStyles"
 const sessions = () => {
-
+    
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
             <Text>Sessions</Text>
