@@ -5,6 +5,9 @@ export default StyleSheet.create({
             flex: 1,
             paddingTop: Platform.OS === "android" ? StatusBar.currentHeight: 0,
         },
+        screenContainer: {
+            padding: 8,
+        },
         pageTitle: {
             fontSize: 40,
             fontFamily:"Montserrat-Bold"
