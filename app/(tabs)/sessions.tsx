@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme } from
 import { useEffect, useState } from "react"
 
 const sessions = () => {
-
+    
     return (
         <SafeAreaView>
             <Text>Sessions</Text>
