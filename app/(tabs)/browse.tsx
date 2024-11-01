@@ -88,11 +88,14 @@ interface itemProps {
     instructions: string   
 }
 
+import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme } from "react-native"
+import globalStyles from "../globalStyles"
+
 const browse = () => {
     const [data, setData] = useState(dataSample)
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={globalStyles.androidSafeView}>
             <Text>browse</Text>
             <Text></Text>
             <FlatList data={data} keyExtractor={(item) => item.name} renderItem={({item}: {item: itemProps})=>(

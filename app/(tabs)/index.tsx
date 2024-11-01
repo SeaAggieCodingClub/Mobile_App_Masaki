@@ -1,42 +1,52 @@
-import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, FlatList } from "react-native"
+import { View, Text, StyleSheet, SafeAreaView, FlatList, Dimensions } from "react-native"
 import { useEffect, useState } from "react"
 import globalStyles from "../globalStyles"
 
 const index = () => {
-
     return (
-        <SafeAreaView>
-            <Text style={globalStyles.androidSafeView}>Home</Text>
-            <FlatList
-                data = {[
-                    {id: "1", title: "test"}, 
-                    {id: "2", title: "test2"},
-                    {id: "3", title: "test3"},
-                ]}
-                keyExtractor={(item) => item.id}  
-                renderItem={ ({item}) => (
-                    <View>
-                        <Text style={styles.listContainer}>{item.title}</Text>
-                    </View>
-                )}  
-                horizontal={true}
-                snapToAlignment = "start"
-                decelerationRate={"fast"}
-                snapToInterval={500}
-                showsHorizontalScrollIndicator={false}
-            />
+        <SafeAreaView style={globalStyles.androidSafeView}>
+            <View style={globalStyles.screenContainer}>
+                <Text style={globalStyles.pageTitle}>Home</Text>
+                <FlatList
+                    style={{borderRadius: styles.listContainer.borderRadius}}
+                    data = {[
+                        {id: "1", title: "test"}, 
+                        {id: "2", title: "test2"},
+                        {id: "3", title: "test3"},
+                    ]}
+                    keyExtractor={(item) => item.id}  
+                    renderItem={ ({item}) => (
+                        <View  style={styles.listContainer}>
+                            <Text style={styles.listText}>{item.title}</Text>
+                        </View>
+                    )}  
+                    horizontal={true}
+                    disableIntervalMomentum={true}
+                    snapToAlignment = "start"
+                    decelerationRate={"fast"}
+                    snapToInterval={Dimensions.get("window").width - 2 * globalStyles.screenContainer.padding}
+                    showsHorizontalScrollIndicator={false}
+                />
+            </View>
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     listContainer: {
-        width: 500,
+        marginRight: 10,
+        width: Dimensions.get("window").width - 2 * globalStyles.screenContainer.padding - 10,
         height: 500,
-        backgroundColor: "gray",
+        backgroundColor: "#232633",
+        borderColor: "#232633",
         padding: 10,
-        borderColor: "black",
-        borderWidth: 5
+        borderWidth: 5,
+        borderRadius: 10,
+    },
+
+    listText: {
+        color: "#ffffff",
+        fontFamily: "Montserrat-Medium",
     }
 })
 
