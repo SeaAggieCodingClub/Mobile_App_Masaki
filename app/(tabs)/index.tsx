@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, FlatList } from "react-native"
+import { View, Text, StyleSheet, SafeAreaView, FlatList, Dimensions } from "react-native"
 import { useEffect, useState } from "react"
 import globalStyles from "../globalStyles"
 
 const index = () => {
-
     return (
         <SafeAreaView>
             <Text style={globalStyles.androidSafeView}>Home</Text>
@@ -20,9 +19,10 @@ const index = () => {
                     </View>
                 )}  
                 horizontal={true}
+                disableIntervalMomentum={true}
                 snapToAlignment = "start"
                 decelerationRate={"fast"}
-                snapToInterval={500}
+                snapToInterval={Dimensions.get("window").width}
                 showsHorizontalScrollIndicator={false}
             />
         </SafeAreaView>
@@ -31,7 +31,7 @@ const index = () => {
 
 const styles = StyleSheet.create({
     listContainer: {
-        width: 500,
+        width: Dimensions.get("window").width,
         height: 500,
         backgroundColor: "gray",
         padding: 10,
