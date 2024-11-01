@@ -16,7 +16,7 @@ const SubBrowseData = () => {
   return (
     <View style={{ flex: 1 }}>
       <Stack.Screen options = {{
-                headerTitle: "SubBrowseData"
+        headerTitle: "Info"
       }}/>
       <Text>whatever</Text>
     </View>

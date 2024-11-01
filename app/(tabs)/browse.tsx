@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, FlatList, Pressable } from "react-native"
 import { Link, router, Stack } from "expo-router"
+import globalStyles from "../globalStyles"
 
 
 const dataSample= 
@@ -88,9 +89,6 @@ interface itemProps {
     instructions: string   
 }
 
-import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme } from "react-native"
-import globalStyles from "../globalStyles"
-
 const browse = () => {
     const [data, setData] = useState(dataSample)
 
@@ -100,12 +98,12 @@ const browse = () => {
             <Text></Text>
             <FlatList data={data} keyExtractor={(item) => item.name} renderItem={({item}: {item: itemProps})=>(
                 <View>
-                    <Text>{item.name}</Text>
-                    <Text>{item.type}</Text>
-                    <Text>{item.muscle}</Text>
-                    <Text>{item.equipment}</Text>
-                    <Text>{item.difficulty}</Text>
-                    <Link href="/(browse)/SubBrowseData">
+                    <Text style={itemText.text}>{item.name}</Text>
+                    <Text style={itemText.text}>{item.type}</Text>
+                    <Text style={itemText.text}>{item.muscle}</Text>
+                    <Text style={itemText.text}>{item.equipment}</Text>
+                    <Text style={itemText.text}>{item.difficulty}</Text>
+                    <Link href="/(browse)/SubBrowseData" style={itemText.text}>
                     Learn More
                     </Link>
                     <Text></Text>
@@ -114,6 +112,14 @@ const browse = () => {
             />
         </SafeAreaView>
     )
+
 }
+
+const itemText = StyleSheet.create({
+    text: {
+        color: "#ffffff",
+        fontFamily: "Montserrat-Regular"
+    }
+})
 
 export default browse
