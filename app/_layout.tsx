@@ -24,7 +24,8 @@ const RootLayout = () => {
         <Stack>
             <Stack.Screen name="(tabs)" options = {{
                 headerShown: false
-            }}/>
+            }}
+            />
         </Stack>
     )
 }

@@ -4,13 +4,16 @@ export default StyleSheet.create({
         androidSafeView: {
             flex: 1,
             paddingTop: Platform.OS === "android" ? StatusBar.currentHeight: 0,
+            backgroundColor: "#08080c"
         },
         screenContainer: {
-            padding: 8,
+            padding : 16,
+            backgroundColor: "#08080c"
         },
         pageTitle: {
             fontSize: 40,
-            fontFamily:"Montserrat-Bold"
+            fontFamily:"Montserrat-Bold",
+            color: "#ffffff"
         }
     })
 

@@ -5,7 +5,8 @@ const tabsLayout = () => {
         <Tabs initialRouteName = "index">
             <Tabs.Screen name="index" options = {{
                 headerShown: false,
-                title: "Home"
+                title: "Home",
+                
             }}/>
             <Tabs.Screen name="browse" options = {{
                 headerShown: false,
