@@ -103,7 +103,7 @@ const browse = () => {
                     <Text style={itemText.text}>{item.muscle}</Text>
                     <Text style={itemText.text}>{item.equipment}</Text>
                     <Text style={itemText.text}>{item.difficulty}</Text>
-                    <Link href="/(browse)/SubBrowseData" style={itemText.text}>
+                    <Link href={{pathname: "/(browse)/[id]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty}}} style={itemText.text}>
                     Learn More
                     </Link>
                     <Text></Text>
