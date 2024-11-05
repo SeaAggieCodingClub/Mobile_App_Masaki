@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, SafeAreaView, FlatList, Dimensions } from "react-native"
 import { useEffect, useState } from "react"
 import globalStyles from "../globalStyles"
+import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar"
 
 const index = () => {
     return (

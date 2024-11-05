@@ -3,6 +3,7 @@ import { ActivityIndicator, Text, View } from "react-native"
 import { useFonts } from "expo-font"
 import { useEffect } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { StatusBar } from "expo-status-bar"
 
 const RootLayout = () => {
 
@@ -21,11 +22,14 @@ const RootLayout = () => {
     }
 
     return(
-        <Stack>
-            <Stack.Screen name="(tabs)" options = {{
-                headerShown: false
-            }}/>
-        </Stack>
+        <>
+            <StatusBar style="light"/>
+            <Stack>
+                <Stack.Screen name="(tabs)" options = {{
+                    headerShown: false
+                }}/>
+            </Stack>
+        </>
     )
 }
 
