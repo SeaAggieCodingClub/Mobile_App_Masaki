@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, SafeAreaView, FlatList, Dimensions } from "reac
 import { useEffect, useState } from "react"
 import globalStyles from "../globalStyles"
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar"
+import styleColors from "../styleColors"
 
 const index = () => {
     return (
@@ -38,8 +39,8 @@ const styles = StyleSheet.create({
         marginRight: 10,
         width: Dimensions.get("window").width - 2 * globalStyles.screenContainer.padding - 10,
         height: 500,
-        backgroundColor: "#232633",
-        borderColor: "#232633",
+        backgroundColor: styleColors.primary,
+        borderColor:  styleColors.primary,
         padding: 10,
         borderWidth: 5,
         borderRadius: 10,

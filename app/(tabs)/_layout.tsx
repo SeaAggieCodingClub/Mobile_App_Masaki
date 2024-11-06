@@ -1,5 +1,6 @@
 import {Tabs, useNavigation, router, Stack} from "expo-router"
 import globalStyles from "../globalStyles"
+import styleColors from "../styleColors"
 
 const tabsLayout = () => {
     return (
@@ -8,7 +9,7 @@ const tabsLayout = () => {
                 headerShown: false,
                 title: "Home",
                 tabBarStyle: {
-                    backgroundColor: "#232633",
+                    backgroundColor: styleColors.dark,
                     borderTopWidth: 0
                 }
                 
@@ -17,7 +18,7 @@ const tabsLayout = () => {
                 headerShown: false,
                 title: "Browse",
                 tabBarStyle: {
-                    backgroundColor: "#232633",
+                    backgroundColor: styleColors.dark,
                     borderTopWidth: 0
                 }
             }}/>
@@ -25,7 +26,7 @@ const tabsLayout = () => {
                 headerShown: false,
                 title: "Sessions",
                 tabBarStyle: {
-                    backgroundColor: "#232633",
+                    backgroundColor: styleColors.dark,
                     borderTopWidth: 0
                 }
             }}/>
@@ -33,7 +34,7 @@ const tabsLayout = () => {
                 headerShown: false,
                 title: "Account",
                 tabBarStyle: {
-                    backgroundColor: "#232633",
+                    backgroundColor: styleColors.dark,
                     borderTopWidth: 0
                 }
             }}/>     

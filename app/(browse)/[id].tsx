@@ -2,6 +2,9 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { useNavigation, Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useLayoutEffect} from 'react';
+import globalStyles from '../globalStyles';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import styleColors from '../styleColors';
 
 
 const SubBrowseData = () => {
@@ -17,16 +20,20 @@ const SubBrowseData = () => {
   // }, [navigation]);
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={globalStyles.androidSafeView}>
       <Stack.Screen options = {{
         headerTitle: name,
-        headerBackTitle: "Back"
+        headerBackTitle: "Back",
+        headerTintColor: styleColors.primary,
+        headerStyle: {
+          backgroundColor: styleColors.dark,
+        }
       }}/>
       <Text>{type}</Text>
       <Text>{muscle}</Text>
       <Text>{equipment}</Text>
       <Text>{difficulty}</Text>
-    </View>
+    </SafeAreaView>
   )
 }
 
