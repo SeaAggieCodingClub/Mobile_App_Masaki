@@ -9,7 +9,7 @@ import styleColors from '../styleColors';
 
 const SubBrowseData = () => {
 
-  const {id, name, type, muscle, equipment, difficulty} = useLocalSearchParams<{id: string, name: string, type: string, muscle: string, equipment: string, difficulty: string}>()
+  const {id, name, type, muscle, equipment, difficulty, instructions} = useLocalSearchParams<{id: string, name: string, type: string, muscle: string, equipment: string, difficulty: string, instructions: string}>()
 
   // const navigation = useNavigation();
 
@@ -20,20 +20,21 @@ const SubBrowseData = () => {
   // }, [navigation]);
 
   return (
-    <SafeAreaView style={globalStyles.androidSafeView}>
+    <View style={globalStyles.screenContainer}>
       <Stack.Screen options = {{
         headerTitle: name,
         headerBackTitle: "Back",
-        headerTintColor: styleColors.primary,
+        headerTintColor: styleColors.light,
         headerStyle: {
           backgroundColor: styleColors.dark,
         }
       }}/>
-      <Text>{type}</Text>
-      <Text>{muscle}</Text>
-      <Text>{equipment}</Text>
-      <Text>{difficulty}</Text>
-    </SafeAreaView>
+      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Type: {type}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Muscle: {muscle}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Equipment: {equipment}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Difficulty: {difficulty}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Instructions: {instructions}{"\n"}</Text>
+    </View>
   )
 }
 

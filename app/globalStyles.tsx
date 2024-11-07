@@ -10,19 +10,33 @@ export default StyleSheet.create({
     },
 
     screenContainer: {
-        padding : 16,
+        paddingRight: 16,
+        paddingLeft: 16,
+        paddingTop: 16,
         backgroundColor: styleColors.darkest,
         flex: 1,
     },
 
+    tabs: {
+        backgroundColor: styleColors.dark,
+        borderTopWidth: 0,
+        shadowColor: "#000000",
+        shadowRadius: 10,
+        shadowOpacity: 0.3,
+        elevation: 5,
+    },
+
     tile: {
-        backgroundColor: styleColors.primary,
+        backgroundColor: styleColors.dark,
         marginRight: 10,
         marginBottom: 10,
         padding: 10,
-        borderRadius: 20,
+        borderRadius: 5,
         width: (Dimensions.get("window").width - 32 )/ 2 - 5,
         height: ((Dimensions.get("window").width - 32 )/ 2 - 10 ) * (2/3),
+        shadowRadius: 10,
+        shadowOpacity: 0.3,
+        elevation: 5,
     },
 
     screenHeader: {

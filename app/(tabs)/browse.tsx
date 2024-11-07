@@ -172,13 +172,13 @@ const browse = () => {
                     // ListHeaderComponent={<View style={{backgroundColor: styleColors.darkest}}><Text style={globalStyles.pageTitle}>Browse</Text></View>}
                     // stickyHeaderIndices={[0]}
                     showsVerticalScrollIndicator={false}
-                    numColumns={2} 
+                    numColumns={2}
                     data={data} 
                     keyExtractor={(item) => item.name} 
                     renderItem={({item}: {item: itemProps})=>(
                         <View style={globalStyles.tile}>
                             <Text style={itemText.text}>{item.name}</Text>
-                            <Link href={{pathname: "/(browse)/[id]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty}}} style={itemText.text}>
+                            <Link href={{pathname: "/(browse)/[id]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty, instructions: item.instructions}}} style={itemText.text}>
                             Learn More
                             </Link>
                             <Text></Text>

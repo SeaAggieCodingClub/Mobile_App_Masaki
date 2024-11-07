@@ -8,35 +8,22 @@ const tabsLayout = () => {
             <Tabs.Screen name="index" options = {{
                 headerShown: false,
                 title: "Home",
-                tabBarStyle: {
-                    backgroundColor: styleColors.dark,
-                    borderTopWidth: 0
-                }
-                
+                tabBarStyle: globalStyles.tabs
             }}/>
             <Tabs.Screen name="browse" options = {{
                 headerShown: false,
                 title: "Browse",
-                tabBarStyle: {
-                    backgroundColor: styleColors.dark,
-                    borderTopWidth: 0
-                }
+                tabBarStyle: globalStyles.tabs
             }}/>
             <Tabs.Screen name="sessions" options = {{
                 headerShown: false,
                 title: "Sessions",
-                tabBarStyle: {
-                    backgroundColor: styleColors.dark,
-                    borderTopWidth: 0
-                }
+                tabBarStyle: globalStyles.tabs
             }}/>
             <Tabs.Screen name="account" options = {{
                 headerShown: false,
                 title: "Account",
-                tabBarStyle: {
-                    backgroundColor: styleColors.dark,
-                    borderTopWidth: 0
-                }
+                tabBarStyle: globalStyles.tabs
             }}/>     
         </Tabs>
     )
