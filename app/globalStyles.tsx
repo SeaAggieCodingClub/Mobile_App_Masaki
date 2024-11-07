@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, StatusBar, } from "react-native"
+import { StyleSheet, Platform, StatusBar, Dimensions, } from "react-native"
 import styleColors from "./styleColors"
 
 export default StyleSheet.create({
@@ -11,7 +11,18 @@ export default StyleSheet.create({
 
     screenContainer: {
         padding : 16,
-        backgroundColor: "#141419" 
+        backgroundColor: styleColors.darkest,
+        flex: 1,
+    },
+
+    tile: {
+        backgroundColor: styleColors.primary,
+        marginRight: 10,
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 20,
+        width: (Dimensions.get("window").width - 32 )/ 2 - 5,
+        height: ((Dimensions.get("window").width - 32 )/ 2 - 10 ) * (2/3),
     },
 
     screenHeader: {
@@ -22,8 +33,10 @@ export default StyleSheet.create({
     pageTitle: {
         fontSize: 40,
         fontFamily:"Montserrat-Bold",
-        color: "#ffffff"
+        color: "#ffffff",
+        paddingBottom: 5,
     }
+
 })
 
 
