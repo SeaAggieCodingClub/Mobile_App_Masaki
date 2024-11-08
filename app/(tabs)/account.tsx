@@ -6,9 +6,7 @@ const accounts = () => {
 
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
-            <View style={globalStyles.screenContainer}>
-                <Text>account</Text>
-            </View>
+            <Text style={globalStyles.pageTitle}>Account</Text>
         </SafeAreaView>
     )
 }

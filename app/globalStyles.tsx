@@ -51,7 +51,9 @@ export default StyleSheet.create({
         fontSize: 40,
         fontFamily:"Montserrat-Bold",
         color: "#ffffff",
+        padding: 16,
         paddingBottom: 5,
+
     }
 
 })

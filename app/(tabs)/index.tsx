@@ -7,10 +7,9 @@ import styleColors from "../styleColors"
 const index = () => {
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
-            <View style={globalStyles.screenContainer}>
                 <Text style={globalStyles.pageTitle}>Home</Text>
                 <FlatList
-                    style={{borderRadius: styles.listContainer.borderRadius}}
+                    style={{borderRadius: styles.listContainer.borderRadius, marginLeft: 16, marginRight: 16}}
                     data = {[
                         {id: "1", title: "test"}, 
                         {id: "2", title: "test2"},
@@ -32,7 +31,6 @@ const index = () => {
                     contentContainerStyle={{columnGap: 20}}
                     
                 />
-            </View>
         </SafeAreaView>
     )
 }

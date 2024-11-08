@@ -5,7 +5,7 @@ const sessions = () => {
     
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
-            <Text>Sessions</Text>
+            <Text style={globalStyles.pageTitle}>Sessions</Text>
         </SafeAreaView>
     )  
 }
