@@ -20,6 +20,9 @@ export default StyleSheet.create({
     tabs: {
         backgroundColor: styleColors.dark,
         borderTopWidth: 0,
+    },
+
+    shadow: {
         shadowColor: "#000000",
         shadowRadius: 10,
         shadowOpacity: 0.3,

@@ -165,19 +165,19 @@ const browse = () => {
     const [data, setData] = useState(dataSample)
 
     return (
-        <SafeAreaView style={globalStyles.androidSafeView}>
-            <View style={[globalStyles.screenContainer]}>
-                <Text style={globalStyles.pageTitle}>Browse</Text>
+        <SafeAreaView style={[globalStyles.androidSafeView]}>
+                <Text style={[globalStyles.pageTitle, {paddingLeft: 16, paddingRight: 16, paddingTop: 16}]}>Browse</Text>
                 <FlatList 
                     // ListHeaderComponent={<View style={{backgroundColor: styleColors.darkest}}><Text style={globalStyles.pageTitle}>Browse</Text></View>}
                     // stickyHeaderIndices={[0]}
+                    style={{padding: 16, paddingTop: 0,}}
                     showsVerticalScrollIndicator={false}
                     numColumns={2}
                     data={data} 
                     keyExtractor={(item) => item.name} 
                     renderItem={({item}: {item: itemProps})=>(
                         <View style={globalStyles.tile}>
-                            <Text style={itemText.text}>{item.name}</Text>
+                            <Text style={[itemText.text]}>{item.name}</Text>
                             <Link href={{pathname: "/(browse)/[id]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty, instructions: item.instructions}}} style={itemText.text}>
                             Learn More
                             </Link>
@@ -185,7 +185,6 @@ const browse = () => {
                         </View>
                     )}  
                 />
-            </View>
         </SafeAreaView>
     )
 
