@@ -176,13 +176,9 @@ const browse = () => {
                     data={data} 
                     keyExtractor={(item) => item.name} 
                     renderItem={({item}: {item: itemProps})=>(
-                        <View style={globalStyles.tile}>
+                        <Pressable style={globalStyles.tile} onPress={() => {router.push({pathname: "/(browse)/[id]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty, instructions: item.instructions}})}}>
                             <Text style={[itemText.text]}>{item.name}</Text>
-                            <Link href={{pathname: "/(browse)/[id]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty, instructions: item.instructions}}} style={itemText.text}>
-                            Learn More
-                            </Link>
-                            <Text></Text>
-                        </View>
+                        </Pressable>
                     )}  
                 />
         </SafeAreaView>
@@ -193,7 +189,8 @@ const browse = () => {
 const itemText = StyleSheet.create({
     text: {
         color: "#ffffff",
-        fontFamily: "Montserrat-Regular"
+        fontFamily: "Montserrat-Regular",
+        fontSize: 18,
     }
 })
 
