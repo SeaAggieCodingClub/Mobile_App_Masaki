@@ -55,7 +55,6 @@ export default StyleSheet.create({
         paddingBottom: 5,
 
     }
-
 })
 
 
