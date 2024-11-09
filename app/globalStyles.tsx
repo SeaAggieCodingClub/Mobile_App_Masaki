@@ -24,6 +24,8 @@ export default StyleSheet.create({
         fontFamily:"Montserrat-Bold",
         color: "#ffffff"
     }
+
+
 })
 
 
