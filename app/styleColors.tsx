@@ -1,6 +1,6 @@
 const styleColors = {
     darkest: "#141419",
-    dark: "#1E1E26",
+    dark: "#242428",//"#22222B", //"#1E1E26",
     light: "#FFFFFF",
     primary: "#FFBE32",
 }

@@ -7,10 +7,9 @@ import styleColors from "../styleColors"
 const index = () => {
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
-            <View style={globalStyles.screenContainer}>
                 <Text style={globalStyles.pageTitle}>Home</Text>
                 <FlatList
-                    style={{borderRadius: styles.listContainer.borderRadius}}
+                    style={{borderRadius: styles.listContainer.borderRadius, marginLeft: 16, marginRight: 16}}
                     data = {[
                         {id: "1", title: "test"}, 
                         {id: "2", title: "test2"},
@@ -24,25 +23,24 @@ const index = () => {
                     )}  
                     horizontal={true}
                     disableIntervalMomentum={true}
-                    snapToAlignment = "start"
                     decelerationRate={"fast"}
-                    snapToInterval={Dimensions.get("window").width - 2 * globalStyles.screenContainer.padding}
+                    snapToAlignment={"start"}
+                    snapToInterval={styles.listContainer.width + 20}
+                    //snapToInterval={Dimensions.get("window").width - 2 * globalStyles.screenContainer.paddingLeft}
                     showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{columnGap: 20}}
+                    
                 />
-            </View>
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     listContainer: {
-        marginRight: 10,
-        width: Dimensions.get("window").width - 2 * globalStyles.screenContainer.padding - 10,
+        width: Dimensions.get("window").width - 2 * globalStyles.screenContainer.paddingLeft,
         height: 500,
-        backgroundColor: styleColors.primary,
-        borderColor:  styleColors.primary,
+        backgroundColor: styleColors.dark,
         padding: 10,
-        borderWidth: 5,
         borderRadius: 10,
     },
 

@@ -17,10 +17,7 @@ const tabsLayout = () => {
                     </Text>
                 ),
                 tabBarLabelPosition: "below-icon",
-                tabBarStyle:  {
-                    backgroundColor: styleColors.dark,
-                    borderTopWidth: 0
-                },
+                tabBarStyle: [globalStyles.tabs, globalStyles.shadow],
                 tabBarIcon: ({focused}) => (
                     <Icon 
                     name="home" 
@@ -43,10 +40,7 @@ const tabsLayout = () => {
                     </Text>
                 ),
                 tabBarLabelPosition: "below-icon",
-                tabBarStyle: {
-                    backgroundColor: styleColors.dark,
-                    borderTopWidth: 0
-                },
+                tabBarStyle: [globalStyles.tabs, globalStyles.shadow],
                 tabBarIcon: ({focused}) => (
                     <Icon 
                     name="search" 
@@ -67,10 +61,7 @@ const tabsLayout = () => {
                     </Text>
                 ),
                 tabBarLabelPosition: "below-icon",
-                tabBarStyle: {
-                    backgroundColor: styleColors.dark,
-                    borderTopWidth: 0
-                },
+                tabBarStyle: [globalStyles.tabs, globalStyles.shadow],
                 tabBarIcon: ({focused}) => (
                     <Icon 
                     name="fitness-center" 
@@ -91,10 +82,7 @@ const tabsLayout = () => {
                     </Text>
                 ),
                 tabBarLabelPosition: "below-icon",
-                tabBarStyle: {
-                    backgroundColor: styleColors.dark,
-                    borderTopWidth: 0
-                },
+                tabBarStyle: [globalStyles.tabs, globalStyles.shadow],
                 tabBarIcon: ({focused}) => (
                     <Icon 
                     name="person" 
