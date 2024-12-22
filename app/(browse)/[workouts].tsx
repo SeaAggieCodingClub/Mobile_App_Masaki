@@ -23,17 +23,18 @@ const SubBrowseData = () => {
     <View style={globalStyles.screenContainer}>
       <Stack.Screen options = {{
         headerTitle: name,
+        headerTitleStyle: {fontFamily: "Montserrat-Bold"},
         headerBackTitle: "Back",
         headerTintColor: styleColors.light,
         headerStyle: {
           backgroundColor: styleColors.dark,
         }
       }}/>
-      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Type: {type}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Muscle: {muscle}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Equipment: {equipment}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Difficulty: {difficulty}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Medium", color: "#FFFFFF", fontSize: 18}}>Instructions: {instructions}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Type: {type}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Muscle: {muscle}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Equipment: {equipment}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Difficulty: {difficulty}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Instructions: {instructions}{"\n"}</Text>
     </View>
   )
 }

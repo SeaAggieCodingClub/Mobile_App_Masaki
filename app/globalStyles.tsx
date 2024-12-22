@@ -54,7 +54,14 @@ export default StyleSheet.create({
         padding: 16,
         paddingBottom: 5,
 
-    }
+    },
+
+    baseText: {
+        fontFamily: "Montserrat-Regular",
+        color: "#FFFFFF",
+        fontSize: 18
+    },
+
 })
 
 
