@@ -30,6 +30,8 @@ export default StyleSheet.create({
     },
 
     tile: {
+        display: "flex",
+        flexDirection: "row",
         backgroundColor: styleColors.dark,
         marginRight: 10,
         marginBottom: 10,

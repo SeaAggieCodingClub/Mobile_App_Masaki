@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, FlatList, Pressable } from "react-native"
 import { Link, router, Stack } from "expo-router"
 import { Dropdown, MultiSelect } from "react-native-element-dropdown"
+import BottomSheet, {BottomSheetView} from "@gorhom/bottom-sheet"
 import globalStyles from "../globalStyles"
 import styleColors from "../styleColors"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import Icon from '@expo/vector-icons/MaterialIcons'
 
 const dataSample= 
     [
@@ -499,26 +502,29 @@ let muscleItem = "All"
 const browse = () => {
     const [filter, setFilter] = useState(dataSample)
 
-const changeFilters = () => {
-    let filteredData = dataSample
-    console.log(typeItem, muscleItem, muscleItem.length)
+    const changeFilters = () => {
+        let filteredData = dataSample
+        console.log(typeItem, muscleItem, muscleItem.length)
 
-    if(typeItem != "All") {
-        filteredData = filteredData.filter(function(value){
-            return value.type == typeItem.toLowerCase()
-        })
+        if(typeItem != "All") {
+            filteredData = filteredData.filter(function(value){
+                return value.type == typeItem.toLowerCase()
+            })
+        }
+
+        if(muscleItem != "All") {
+            filteredData = filteredData.filter(function(value){
+                return value.muscle == muscleItem.toLowerCase()
+            })
+        }
+        setFilter(filteredData)
     }
 
-    if(muscleItem != "All") {
-        filteredData = filteredData.filter(function(value){
-            return value.muscle == muscleItem.toLowerCase()
-        })
-    }
-    setFilter(filteredData)
-}
+    const snapPoints = useMemo(() => ['25%', '75%'], [])
 
     return (
-        <SafeAreaView style={[globalStyles.androidSafeView]}>
+        <GestureHandlerRootView>
+            <SafeAreaView style={[globalStyles.androidSafeView]}>
                 <Text style={[globalStyles.pageTitle, {paddingLeft: 16, paddingRight: 16, paddingTop: 16}]}>Browse</Text>
 
                 <View style={{display: "flex", flexDirection: "row"}}>
@@ -539,7 +545,7 @@ const changeFilters = () => {
                             changeFilters()
                         }}
                     />
- 
+
                     <Dropdown
                         style={{marginHorizontal: 16, flex: 1}}
                         containerStyle={{backgroundColor: styleColors.darkest, borderRadius: 5}}
@@ -568,11 +574,31 @@ const changeFilters = () => {
                     keyExtractor={(item) => item.name} 
                     renderItem={({item}: {item: itemProps})=>(
                         <Pressable style={globalStyles.tile} onPress={() => {router.push({pathname: "/(browse)/[workouts]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty, instructions: item.instructions}})}}>
-                            <Text style={[itemText.text]}>{item.name}</Text>
+                            <View style={{borderColor: "#ffffff", borderWidth: 1, flex: 9}}>
+                                <Text style={[itemText.text]}>{item.name}</Text>
+                            </View>
+                            <View style={{borderColor: "#ffffff", borderWidth: 1, flex: 1, flexDirection: "row", justifyContent: "flex-end"}}>
+                                <Pressable style={{}} onPress={() => {{console.log("add")}}}>
+                                    <Icon
+                                        name="add"
+                                        style={{}}
+                                    />
+                                </Pressable>
+                            </View>
+                            
                         </Pressable>
                     )}  
                 />
-        </SafeAreaView>
+                
+                    
+                <BottomSheet index={1} snapPoints={snapPoints}>
+                    <BottomSheetView>
+                        <Text></Text>
+                    </BottomSheetView>
+                </BottomSheet>
+                
+            </SafeAreaView>
+        </GestureHandlerRootView>
     )
 
 }

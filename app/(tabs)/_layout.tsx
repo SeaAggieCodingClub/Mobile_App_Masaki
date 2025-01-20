@@ -8,6 +8,8 @@ const tabsLayout = () => {
     return (
         <Tabs initialRouteName = "index">
             <Tabs.Screen name="index" options = {{
+                tabBarShowLabel: false,
+
                 headerShown: false,
                 title: "Home",
                 tabBarLabel: ({focused}) => (
@@ -29,6 +31,8 @@ const tabsLayout = () => {
             }}/>
 
             <Tabs.Screen name="browse" options = {{
+                tabBarShowLabel: false,
+
                 headerShown: false,
                 title: "Browse",
                 tabBarLabel: ({focused}) => ( 
@@ -50,6 +54,8 @@ const tabsLayout = () => {
             }}/>
 
             <Tabs.Screen name="sessions" options = {{
+                tabBarShowLabel: false,
+
                 headerShown: false,
                 title: "Sessions",
                 tabBarLabel: ({focused}) => (
@@ -71,6 +77,8 @@ const tabsLayout = () => {
             }}/>
 
             <Tabs.Screen name="account" options = {{
+                tabBarShowLabel: false,
+                
                 headerShown: false,
                 title: "Account",
                 tabBarLabel: ({focused}) => (
