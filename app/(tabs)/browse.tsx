@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, FlatList, Pressable } from "react-native"
 import { Link, router, Stack } from "expo-router"
 import { Dropdown, MultiSelect } from "react-native-element-dropdown"
-import BottomSheet, {BottomSheetView} from "@gorhom/bottom-sheet"
+import BottomSheet, {BottomSheetBackdrop, BottomSheetView} from "@gorhom/bottom-sheet"
 import globalStyles from "../globalStyles"
 import styleColors from "../styleColors"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
@@ -520,7 +520,12 @@ const browse = () => {
         setFilter(filteredData)
     }
 
-    const snapPoints = useMemo(() => ['25%', '75%'], [])
+    const snapPoints = useMemo(() => ['70%'], [])
+    const bottomSheetRef = useRef<BottomSheet>(null)
+    const [bottomSheetText, setBottomSheetText] = useState("")
+
+    const renderBackdrop = useCallback(
+        (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
 
     return (
         <GestureHandlerRootView>
@@ -574,26 +579,43 @@ const browse = () => {
                     keyExtractor={(item) => item.name} 
                     renderItem={({item}: {item: itemProps})=>(
                         <Pressable style={globalStyles.tile} onPress={() => {router.push({pathname: "/(browse)/[workouts]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty, instructions: item.instructions}})}}>
-                            <View style={{borderColor: "#ffffff", borderWidth: 1, flex: 9}}>
-                                <Text style={[itemText.text]}>{item.name}</Text>
-                            </View>
-                            <View style={{borderColor: "#ffffff", borderWidth: 1, flex: 1, flexDirection: "row", justifyContent: "flex-end"}}>
-                                <Pressable style={{}} onPress={() => {{console.log("add")}}}>
-                                    <Icon
-                                        name="add"
-                                        style={{}}
-                                    />
-                                </Pressable>
-                            </View>
+                            <Text style={[itemText.text]}>{item.name}</Text>
+                            <View style={{flex: 1}}></View>
+                            
+                            <Pressable 
+                                // style={{backgroundColor: styleColors.darkest, alignItems: "center", justifyContent: "center", borderRadius: 999, flex: 1,}} 
+                                style={{borderRadius: 999, backgroundColor: styleColors.darkest, alignItems: "center", justifyContent: "center", width: '14%', aspectRatio: 1, position: "absolute", top: 10, right: 10}}
+                                onPress={() => {{
+                                    setBottomSheetText(item.name)
+                                    bottomSheetRef.current?.expand()
+                                    
+                                }}}
+                                >
+                                <Icon
+                                    name="add"
+                                    color={styleColors.light}
+                                    size={24}
+                                />
+                            </Pressable>
                             
                         </Pressable>
                     )}  
                 />
                 
                     
-                <BottomSheet index={1} snapPoints={snapPoints}>
+                <BottomSheet 
+                    ref={bottomSheetRef}
+                    index={-1} 
+                    snapPoints={snapPoints}
+                    enablePanDownToClose={true}
+                    backgroundStyle={{backgroundColor: styleColors.light}}
+                    backdropComponent={renderBackdrop}
+                >
+                    
+                    
+
                     <BottomSheetView>
-                        <Text></Text>
+                        <Text>Add {bottomSheetText}</Text>
                     </BottomSheetView>
                 </BottomSheet>
                 
@@ -608,6 +630,9 @@ const itemText = StyleSheet.create({
         color: "#ffffff",
         fontFamily: "Montserrat-Regular",
         fontSize: 18,
+        padding: 10,
+        flex: 3,
+        //borderWidth: 1, borderColor: "#0000ff",
     }
 })
 
