@@ -4,6 +4,9 @@ import { useFonts } from "expo-font"
 import { useEffect } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { StatusBar } from "expo-status-bar"
+import Auth from "./auth"
+
+
 
 const RootLayout = () => {
 
@@ -20,17 +23,18 @@ const RootLayout = () => {
             </SafeAreaView>
         )
     }
-
+    
     return(
-        <>
-            <StatusBar style="light"/>
-            <Stack>
-                <Stack.Screen name="(tabs)" options = {{
-                    headerShown: false
-                }}/>
-            </Stack>
-        </>
+        <Auth/>
     )
+        // <>
+        //     <StatusBar style="light"/>
+        //     <Stack>
+        //         <Stack.Screen name="(tabs)" options = {{
+        //             headerShown: false
+        //         }}/>
+        //     </Stack>
+        // </>
 }
 
 export default RootLayout

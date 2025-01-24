@@ -54,6 +54,24 @@ export default StyleSheet.create({
 
     },
 
+    pageSubtitle: {
+        fontSize: 18,
+        fontFamily: "Montserrat-Bold",
+        color: styleColors.light,
+        paddingTop: 20,
+        paddingBottom: 4,
+    },
+
+    button: {
+        
+        backgroundColor: styleColors.dark,
+    },
+
+    buttonText: {
+        fontSize: 18,
+        fontFamily: "Montserrat-Medium",
+    },
+
     baseText: {
         fontFamily: "Montserrat-Regular",
         color: "#FFFFFF",
