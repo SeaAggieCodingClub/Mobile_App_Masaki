@@ -6,8 +6,6 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { StatusBar } from "expo-status-bar"
 import Auth from "./auth"
 
-
-
 const RootLayout = () => {
 
     const [loaded, error] = useFonts({
@@ -15,6 +13,9 @@ const RootLayout = () => {
         'Montserrat-Medium': require("../assets/fonts/Montserrat-Medium.ttf"),
         'Montserrat-Bold': require("../assets/fonts/Montserrat-Bold.ttf")
     })
+
+    //have to use useContext i think
+    const authorized = false
 
     if(!loaded) {
         return(
@@ -24,17 +25,22 @@ const RootLayout = () => {
         )
     }
     
+    if(!authorized) {
+        return(
+            <Auth/>
+        )
+    }
+
     return(
-        <Auth/>
+        <>
+            <StatusBar style="light"/>
+            <Stack>
+                <Stack.Screen name="(tabs)" options = {{
+                    headerShown: false
+                }}/>
+            </Stack>
+        </>
     )
-        // <>
-        //     <StatusBar style="light"/>
-        //     <Stack>
-        //         <Stack.Screen name="(tabs)" options = {{
-        //             headerShown: false
-        //         }}/>
-        //     </Stack>
-        // </>
 }
 
 export default RootLayout
