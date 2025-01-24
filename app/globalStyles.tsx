@@ -19,7 +19,8 @@ export default StyleSheet.create({
 
     tabs: {
         backgroundColor: styleColors.dark,
-        borderTopWidth: 0,
+        borderTopWidth: 0.5,
+        borderColor: styleColors.light,
     },
 
     shadow: {
@@ -36,23 +37,19 @@ export default StyleSheet.create({
         marginRight: 10,
         marginBottom: 10,
         borderRadius: 5,
-        width: (Dimensions.get("window").width - 32 )/ 2 - 5,
-        height: ((Dimensions.get("window").width - 32 )/ 2 - 10 ) * (1/2),
+        width: (Dimensions.get("window").width - 32 ) - 5,
+        height: ((Dimensions.get("window").width - 32 )/ 2 - 10 ) * (1/3),
         shadowRadius: 10,
         shadowOpacity: 0.3,
         elevation: 5,
     },
 
-    screenHeader: {
-        backgroundColor: "#141419",
-        color: "#FFFFFF"
-    },
-
     pageTitle: {
-        fontSize: 40,
+        fontSize: 36,
         fontFamily:"Montserrat-Bold",
         color: "#ffffff",
         padding: 16,
+        paddingTop: 20,
         paddingBottom: 5,
 
     },

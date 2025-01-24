@@ -574,7 +574,7 @@ const browse = () => {
                     // stickyHeaderIndices={[0]}
                     style={{padding: 16, paddingTop: 0,}}
                     showsVerticalScrollIndicator={false}
-                    numColumns={2}
+                    numColumns={1}
                     data={filter} 
                     keyExtractor={(item) => item.name} 
                     renderItem={({item}: {item: itemProps})=>(
@@ -584,7 +584,7 @@ const browse = () => {
                             
                             <Pressable 
                                 // style={{backgroundColor: styleColors.darkest, alignItems: "center", justifyContent: "center", borderRadius: 999, flex: 1,}} 
-                                style={{borderRadius: 999, backgroundColor: styleColors.darkest, alignItems: "center", justifyContent: "center", width: '14%', aspectRatio: 1, position: "absolute", top: 10, right: 10}}
+                                style={{borderRadius: 999, backgroundColor: styleColors.darkest, alignItems: "center", justifyContent: "center", width: '8%', aspectRatio: 1, position: "absolute", top: 10, right: 10}}
                                 onPress={() => {{
                                     setBottomSheetText(item.name)
                                     bottomSheetRef.current?.expand()
@@ -605,17 +605,19 @@ const browse = () => {
                     
                 <BottomSheet 
                     ref={bottomSheetRef}
+                    
                     index={-1} 
                     snapPoints={snapPoints}
                     enablePanDownToClose={true}
-                    backgroundStyle={{backgroundColor: styleColors.light}}
+                    handleIndicatorStyle={{backgroundColor: styleColors.light}}
+                    backgroundStyle={{backgroundColor: styleColors.darkest}}
                     backdropComponent={renderBackdrop}
                 >
                     
                     
 
                     <BottomSheetView>
-                        <Text>Add {bottomSheetText}</Text>
+                        <Text style={globalStyles.baseText}>Add {bottomSheetText}</Text>
                     </BottomSheetView>
                 </BottomSheet>
                 
