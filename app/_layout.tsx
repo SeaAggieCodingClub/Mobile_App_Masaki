@@ -1,10 +1,12 @@
-import {Stack} from "expo-router"
-import { ActivityIndicator, Text, View } from "react-native"
+import {Redirect, Stack} from "expo-router"
+import { ActivityIndicator, Pressable, Text, View } from "react-native"
 import { useFonts } from "expo-font"
-import { useEffect } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { StatusBar } from "expo-status-bar"
 import Auth from "./auth"
+
+import { AuthContext, useAuthContext } from "./authContext"
 
 const RootLayout = () => {
 
@@ -15,7 +17,7 @@ const RootLayout = () => {
     })
 
     //have to use useContext i think
-    const authorized = false
+    const [auth, setAuth] = useState<boolean>(false)
 
     if(!loaded) {
         return(
@@ -25,20 +27,24 @@ const RootLayout = () => {
         )
     }
     
-    if(!authorized) {
+    if(!auth) {
         return(
-            <Auth/>
+            <AuthContext.Provider value={{ value: auth, setValue: setAuth }}>
+                <Auth/>
+            </AuthContext.Provider>
         )
     }
 
     return(
         <>
-            <StatusBar style="light"/>
-            <Stack>
-                <Stack.Screen name="(tabs)" options = {{
-                    headerShown: false
-                }}/>
-            </Stack>
+            <AuthContext.Provider value={{ value: auth, setValue: setAuth }}>
+                <StatusBar style="light"/>
+                <Stack>
+                    <Stack.Screen name="(tabs)" options = {{
+                        headerShown: false
+                    }}/>
+                </Stack>
+            </AuthContext.Provider>
         </>
     )
 }

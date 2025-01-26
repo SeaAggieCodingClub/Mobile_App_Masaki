@@ -1,18 +1,19 @@
 import { SafeAreaView, Text, TextInput, View, StyleSheet, Pressable } from "react-native"
 import globalStyles from "./globalStyles"
 import styleColors from "./styleColors"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { router, Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
+import { useAuthContext } from "./authContext"
 
-const testUser = ["user1", "pass1"]
-
-
+const testUser = ["1", "2"]
 
 
 const auth = () => {
     const [usernameInput, setUsernameInput] = useState("")
     const [passwordInput, setPasswordInput] = useState("")
+
+    const {setValue: setAuth} = useAuthContext()
 
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
@@ -21,12 +22,12 @@ const auth = () => {
                     <Text style={globalStyles.pageSubtitle}>Username</Text>
                     <TextInput onChangeText={input => setUsernameInput(input)} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Text style={globalStyles.pageSubtitle}>Password</Text>
-                    <TextInput secureTextEntry={true} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
+                    <TextInput onChangeText={input => setPasswordInput(input)} secureTextEntry={true} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Pressable onPress={() => {
                         console.log("login pressed")
                         //connect to backend
                         if(usernameInput == testUser[0] && passwordInput == testUser[1]) {
-                            
+                            setAuth(true)
                         }
 
                     }} style={[globalStyles.button, {marginHorizontal: "auto", width: "40%", height: "10%", marginTop: 20}]}>
