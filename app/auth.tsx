@@ -5,15 +5,37 @@ import { useContext, useState } from "react"
 import { router, Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useAuthContext } from "./authContext"
+import * as SecureStore from "expo-secure-store"
 
 const testUser = ["1", "2"]
 
+const checkIfExist = async (key: string, value: string): Promise<string | null> => {
+    let result = await SecureStore.getItemAsync(key)
+    if(result == null) {
+        console.log("it didnt exist")
+    } else {
+        console.log("it existed")
+    }
+    return(result)
+}
+
+const secureStoreSet = async (key: string, value: string): Promise<void> => {
+    await SecureStore.setItemAsync(key, value)
+    console.log("saved")
+}
+
+const secureStoreGet = async (key: string): Promise<string | null> => {
+    let result = await SecureStore.getItemAsync(key)
+    return result
+}
 
 const auth = () => {
     const [usernameInput, setUsernameInput] = useState("")
     const [passwordInput, setPasswordInput] = useState("")
 
     const {setValue: setAuth} = useAuthContext()
+
+
 
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
@@ -27,7 +49,8 @@ const auth = () => {
                         console.log("login pressed")
                         //connect to backend
                         if(usernameInput == testUser[0] && passwordInput == testUser[1]) {
-                            setAuth(true)
+                            setAuth(usernameInput)
+                            checkIfExist(usernameInput, passwordInput)
                         }
 
                     }} style={[globalStyles.button, {marginHorizontal: "auto", width: "40%", height: "10%", marginTop: 20}]}>

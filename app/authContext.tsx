@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react"
 
 export type authType = {
-    value: boolean
-    setValue: (val:boolean) => void
+    value: boolean | string
+    setValue: (val:boolean | string) => void
 }
 
 export const AuthContext = createContext<authType>({

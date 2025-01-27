@@ -17,7 +17,7 @@ const RootLayout = () => {
     })
 
     //have to use useContext i think
-    const [auth, setAuth] = useState<boolean>(false)
+    const [auth, setAuth] = useState<boolean | string>(false)
 
     if(!loaded) {
         return(
