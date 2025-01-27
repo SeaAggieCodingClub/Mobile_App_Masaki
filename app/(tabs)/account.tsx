@@ -6,6 +6,7 @@ import { Pressable } from "react-native"
 import { AuthContext, useAuthContext } from "../authContext"
 
 import * as SecureStore from "expo-secure-store"
+import { secureStoreGet, secureStoreSet } from "../authContext"
 
 const secureStoreDelete = async (key: string): Promise<void> => {
     await SecureStore.deleteItemAsync(key)
@@ -20,10 +21,16 @@ const accounts = () => {
         <SafeAreaView style={globalStyles.androidSafeView}>
             <Text style={globalStyles.pageTitle}>Account</Text>
             <Pressable onPress={() => {
-                        console.log("logout pressed", auth)
+                        secureStoreGet("authUser")
+                        secureStoreGet("authPass")
+
                         if(typeof auth === "string") {
-                            secureStoreDelete(auth)
+                            secureStoreDelete("authUser")
+                            secureStoreDelete("authPass")
                         }
+
+
+
                         setAuth(false)
                     }} style={[globalStyles.button, {marginHorizontal: "auto", width: "40%", height: "10%", marginTop: 20}]}>
                         <Text style={[globalStyles.buttonText, {color: styleColors.light, textAlign: "center"}]}>Log out</Text>
