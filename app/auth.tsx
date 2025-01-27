@@ -6,7 +6,7 @@ import { router, Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useAuthContext, secureStoreGet, secureStoreSet } from "./authContext"
 
-const testUser = ["1", "2"]
+const testUser = ["johndoe", "1"]
 
 const auth = () => {
     const [usernameInput, setUsernameInput] = useState("")
@@ -25,7 +25,6 @@ const auth = () => {
                     <Text style={globalStyles.pageSubtitle}>Password</Text>
                     <TextInput onChangeText={input => setPasswordInput(input)} secureTextEntry={true} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Pressable onPress={() => {
-                        console.log("login pressed")
                         //connect to backend
                         if(usernameInput == testUser[0] && passwordInput == testUser[1]) {
                             setAuth(usernameInput)
@@ -35,7 +34,7 @@ const auth = () => {
                         }
 
                     }} style={[globalStyles.button, {marginHorizontal: "auto", width: "40%", height: "10%", marginTop: 20}]}>
-                        <Text style={[globalStyles.buttonText, {color: styleColors.light, textAlign: "center"}]}>Login</Text>
+                        <Text style={[globalStyles.buttonText, {color: styleColors.light}]}>Login</Text>
                     </Pressable>
                     <View style={{paddingBottom: "70%"}}></View>
                 </View>
