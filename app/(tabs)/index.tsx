@@ -10,10 +10,12 @@ const DOTW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 const index = () => {
 
     const [date, setDate] = useState<String>()
+    const [time, setTime] = useState<String>()
 
     useFocusEffect(
         useCallback(() => {
             setDate(DOTW[new Date().getDay()])
+            setTime((new Date().getHours()).toString() + ":" + (new Date().getMinutes()).toString() + ":" + (new Date().getSeconds()).toString())
         }, [])
     )
 
@@ -24,7 +26,7 @@ const index = () => {
                     style={{borderRadius: styles.listContainer.borderRadius, marginLeft: 16, marginRight: 16}}
                     data = {[
                         {id: "1", title: date}, 
-                        {id: "2", title: "test2"},
+                        {id: "2", title: time},
                         {id: "3", title: "test3"},
                     ]}
                     keyExtractor={(item) => item.id}  
