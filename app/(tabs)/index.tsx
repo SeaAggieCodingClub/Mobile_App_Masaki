@@ -1,17 +1,29 @@
 import { View, Text, StyleSheet, SafeAreaView, FlatList, Dimensions } from "react-native"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import globalStyles from "../globalStyles"
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar"
 import styleColors from "../styleColors"
+import { useFocusEffect } from "expo-router"
+
+const DOTW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 const index = () => {
+
+    const [date, setDate] = useState<String>()
+
+    useFocusEffect(
+        useCallback(() => {
+            setDate(DOTW[new Date().getDay()])
+        }, [])
+    )
+
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
                 <Text style={globalStyles.pageTitle}>Home</Text>
                 <FlatList
                     style={{borderRadius: styles.listContainer.borderRadius, marginLeft: 16, marginRight: 16}}
                     data = {[
-                        {id: "1", title: "test"}, 
+                        {id: "1", title: date}, 
                         {id: "2", title: "test2"},
                         {id: "3", title: "test3"},
                     ]}
