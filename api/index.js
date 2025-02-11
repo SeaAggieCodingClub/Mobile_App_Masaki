@@ -1,11 +1,13 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const productRoute = require('./routes/product.route')
+const userRouter = require('./routes/user')
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use('/api/workouts', productRoute)
+app.use(userRouter)
 require('dotenv').config()
 
 const mongoUrl = process.env.MONG_URI
