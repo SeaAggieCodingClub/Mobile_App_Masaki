@@ -14,3 +14,10 @@ exports.createUser = async (req, res) => {
     await user.save()
     res.json(user)
 }
+
+exports.checkUser = async (req, res) => {
+    const {fullname, username, password} = req.body
+    const user = await User.findOne({username: username})
+    const result = await user.comparePassword(password)
+    res.json(result)
+}

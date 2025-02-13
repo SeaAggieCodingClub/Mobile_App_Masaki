@@ -8,14 +8,14 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use('/api/workouts', productRoute)
 app.use(userRouter)
-require('dotenv').config()
 
-const mongoUrl = process.env.MONG_URI
-
-mongoose.connect(mongoUrl)
+//
+// In the code mongoose.connect(""), insert the database link from discord
+//
+mongoose.connect("")
 .then(() => {
     console.log('Connected')
-    app.listen(process.env.PORT, () =>{
-        console.log('Server is running on port', process.env.PORT)
+    app.listen(4000, () =>{
+        console.log('Server is running on port', 4000)
     })
 })
