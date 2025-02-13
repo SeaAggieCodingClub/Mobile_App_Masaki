@@ -17,7 +17,12 @@ exports.createUser = async (req, res) => {
 
 exports.checkUser = async (req, res) => {
     const {username, password} = req.body
+
     const user = await User.findOne({username: username})
-    const result = await user.comparePassword(password)
-    res.json(result)
+    if (user == null) {
+        res.json(false)
+    } else {
+        const result = await user.comparePassword(password)
+        res.json(result)
+    }
 }

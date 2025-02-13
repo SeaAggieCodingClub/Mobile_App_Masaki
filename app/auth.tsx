@@ -28,16 +28,11 @@ const auth = () => {
                     <TextInput onChangeText={input => setPasswordInput(input)} secureTextEntry={true} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Pressable onPress={() => {
                         //connect to backend
-                        
 
-                        // let inputData = {
-                        //     username: usernameInput,
-                        //     password: passwordInput
-                        // }
-
-
-                        axios.post('http://:4000/check-user', 
+                        axios.post('http://localhost:4000/check-user', 
                         {
+                            username: usernameInput,
+                            password: passwordInput
                         })
                         .then(function (response : object) {
                             console.log("then")
