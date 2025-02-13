@@ -6,11 +6,13 @@ import { router, Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useAuthContext, secureStoreGet, secureStoreSet } from "./authContext"
 
+const axios = require('axios').default
+
 const testUser = ["johndoe", "1"]
 
 const auth = () => {
-    const [usernameInput, setUsernameInput] = useState("")
-    const [passwordInput, setPasswordInput] = useState("")
+    const [usernameInput, setUsernameInput] = useState<string>("")
+    const [passwordInput, setPasswordInput] = useState<string>("")
 
     const {setValue: setAuth} = useAuthContext()
 
@@ -26,12 +28,32 @@ const auth = () => {
                     <TextInput onChangeText={input => setPasswordInput(input)} secureTextEntry={true} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Pressable onPress={() => {
                         //connect to backend
-                        if(usernameInput == testUser[0] && passwordInput == testUser[1]) {
-                            setAuth(usernameInput)
+                        
 
-                            secureStoreSet("authUser", usernameInput)
-                            secureStoreSet("authPass", passwordInput)
-                        }
+                        // let inputData = {
+                        //     username: usernameInput,
+                        //     password: passwordInput
+                        // }
+
+
+                        axios.post('http://:4000/check-user', 
+                        {
+                        })
+                        .then(function (response : object) {
+                            console.log("then")
+                            console.log(response["data" as keyof boolean])
+                        })
+                        .catch(function (error : object) {
+                            console.log("error")
+                            console.log(error)
+                        })
+
+                        // if(usernameInput == testUser[0] && passwordInput == testUser[1]) {
+                        //     setAuth(usernameInput)
+
+                        //     secureStoreSet("authUser", usernameInput)
+                        //     secureStoreSet("authPass", passwordInput)
+                        // }
 
                     }} style={[globalStyles.button, {marginHorizontal: "auto", width: "40%", height: "10%", marginTop: 20}]}>
                         <Text style={[globalStyles.buttonText, {color: styleColors.light}]}>Login</Text>
