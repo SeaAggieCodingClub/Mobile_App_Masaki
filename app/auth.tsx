@@ -29,7 +29,7 @@ const auth = () => {
                     <Pressable onPress={() => {
                         //connect to backend
 
-                        axios.post('http://localhost:4000/check-user', 
+                        axios.post('http://10.0.2.2:4000/check-user', 
                         {
                             username: usernameInput,
                             password: passwordInput

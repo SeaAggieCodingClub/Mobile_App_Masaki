@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const productRoute = require('./routes/product.route')
@@ -9,10 +10,9 @@ app.use(express.urlencoded({extended: false}))
 app.use('/api/workouts', productRoute)
 app.use(userRouter)
 
-//
-// In the code mongoose.connect(""), insert the database link from discord
-//
-mongoose.connect("")
+
+//console.log(process.env.MONG_URI)
+mongoose.connect(process.env.MONG_URI)
 .then(() => {
     console.log('Connected')
     app.listen(4000, () =>{
