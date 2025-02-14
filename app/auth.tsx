@@ -26,6 +26,7 @@ const auth = () => {
                     <TextInput onChangeText={input => setUsernameInput(input)} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Text style={globalStyles.pageSubtitle}>Password</Text>
                     <TextInput onChangeText={input => setPasswordInput(input)} secureTextEntry={true} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
+                    
                     <Pressable onPress={() => {
                         //connect to backend
 
@@ -35,8 +36,11 @@ const auth = () => {
                             password: passwordInput
                         })
                         .then(function (response : object) {
-                            console.log("then")
                             console.log(response["data" as keyof boolean])
+                            if(response["data" as keyof boolean]) {
+                                setAuth(usernameInput)
+                                console.log("authorized")
+                            }
                         })
                         .catch(function (error : object) {
                             console.log("error")
