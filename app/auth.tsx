@@ -1,4 +1,5 @@
 import { SafeAreaView, Text, TextInput, View, StyleSheet, Pressable } from "react-native"
+import BouncyCheckbox from "react-native-bouncy-checkbox"
 import globalStyles from "./globalStyles"
 import styleColors from "./styleColors"
 import { useContext, useState } from "react"
@@ -13,6 +14,7 @@ const testUser = ["johndoe", "1"]
 const auth = () => {
     const [usernameInput, setUsernameInput] = useState<string>("")
     const [passwordInput, setPasswordInput] = useState<string>("")
+    const [stayCheck, setStayCheck] = useState<boolean>(false)
 
     const {setValue: setAuth} = useAuthContext()
 
@@ -26,7 +28,16 @@ const auth = () => {
                     <TextInput onChangeText={input => setUsernameInput(input)} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Text style={globalStyles.pageSubtitle}>Password</Text>
                     <TextInput onChangeText={input => setPasswordInput(input)} secureTextEntry={true} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
-                    
+                    <BouncyCheckbox
+                        style={{paddingTop: 16}}
+                        fillColor={styleColors.dark}
+                        iconStyle={{borderColor: styleColors.dark, borderWidth: 3}}
+                        textStyle={{textDecorationLine: "none", fontFamily: "Montserrat-Medium", color: styleColors.light}}
+                        text={"Stay signed in"}
+                        onPress={isChecked => {
+                            setStayCheck(isChecked)
+                        }}
+                    />
                     <Pressable onPress={() => {
                         //connect to backend
 
@@ -40,6 +51,11 @@ const auth = () => {
                             if(response["data" as keyof boolean]) {
                                 setAuth(usernameInput)
                                 console.log("authorized")
+
+                                if(stayCheck) {
+                                    secureStoreSet("authUser", usernameInput)
+                                    secureStoreSet("authPass", passwordInput)
+                                }
                             }
                         })
                         .catch(function (error : object) {
