@@ -3,10 +3,10 @@ import globalStyles from "../globalStyles"
 import styleColors from "../styleColors"
 import { useEffect, useState } from "react"
 import { Pressable } from "react-native"
-import { AuthContext, useAuthContext } from "../authContext"
+import { AuthContext, useAuthContext } from "../(preAuth)/authContext"
 
 import * as SecureStore from "expo-secure-store"
-import { secureStoreGet, secureStoreSet, secureStoreDelete } from "../authContext"
+import { secureStoreGet, secureStoreSet, secureStoreDelete } from "../(preAuth)/authContext"
 
 
 
