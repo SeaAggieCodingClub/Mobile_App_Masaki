@@ -84,6 +84,7 @@ const auth = () => {
                     }}>
                         <Text style={[globalStyles.buttonText, {color: styleColors.light}]}>Login</Text>
                     </Pressable>
+                    <Pressable onPress={() => {setAuth("bob")}}><Text>Auto Auth</Text></Pressable>
                     <View style={{paddingBottom: "70%"}}></View>
                 
                 
