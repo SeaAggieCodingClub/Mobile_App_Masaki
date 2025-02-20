@@ -15,8 +15,6 @@ const sessions = () => {
         <SafeAreaView style={globalStyles.androidSafeView}>
             <Text style={globalStyles.pageTitle}>Sessions</Text>
 
-            
-
             <FlatList
                 style={{paddingHorizontal: 16}}
                 numColumns={2}
@@ -25,7 +23,7 @@ const sessions = () => {
                 renderItem={({item}: {item: sessionsProps})=>(
                     <Pressable style={globalStyles.sessionTile}>
                         <Text style={{fontFamily: "Montserrat-Medium", color: styleColors.light}}>{item.name}</Text>
-                        <Image source={require("...\assets\sessionsIcons\UnfilledArm2.png")}/>
+                        <Image style={{width: "20%", aspectRatio: 1}} source={require("../../assets/sessionsIcons/UnfilledArm2.png")}/>
                     </Pressable>
                 )}
             />
