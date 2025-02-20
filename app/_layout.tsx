@@ -4,15 +4,18 @@ import { useFonts } from "expo-font"
 import { createContext, useContext, useEffect, useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { StatusBar } from "expo-status-bar"
-import Auth from "./auth"
+import Auth from "./(preAuth)/auth"
+import Signup from "./(preAuth)/signup"
 
-import { secureStoreGet, AuthContext, useAuthContext } from "./authContext"
+import { secureStoreGet, AuthContext, useAuthContext } from "./(preAuth)/authContext"
 import * as SecureStore from "expo-secure-store"
+import { SignupContext, useSignupContext } from "./(preAuth)/signupContext"
 
 const RootLayout = () => {
 
     const [authLoaded, setAuthLoaded] = useState(false)
     const [auth, setAuth] = useState<boolean | string>(false)
+    const [signup, setSignup] = useState<boolean>(false)
 
     const [loaded, error] = useFonts({
         'Montserrat-Regular': require("../assets/fonts/Montserrat-Regular.ttf"),
@@ -36,6 +39,7 @@ const RootLayout = () => {
         loadAuth()
     }, []) 
 
+
     if(!loaded) {
         return(
             <SafeAreaView>
@@ -52,14 +56,31 @@ const RootLayout = () => {
         )
     }
     
-    if(!auth) {
+    
+
+
+
+    if(!auth && !signup) {
         return(
-            
             <AuthContext.Provider value={{ value: auth, setValue: setAuth }}>
+            <SignupContext.Provider value={{value: signup, setValue: setSignup}}>
                 <StatusBar style="light"/>
                 <Auth/>
+            </SignupContext.Provider>
             </AuthContext.Provider>
         )
+    }
+    
+    if(signup) {
+        return(
+            <AuthContext.Provider value={{ value: auth, setValue: setAuth }}>
+            <SignupContext.Provider value={{value: signup, setValue: setSignup}}>
+                <StatusBar style="light"/>
+                <Signup/>
+            </SignupContext.Provider>
+            </AuthContext.Provider>
+        )
+        
     }
 
     return(

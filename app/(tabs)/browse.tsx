@@ -530,7 +530,7 @@ const browse = () => {
     return (
         <GestureHandlerRootView>
             <SafeAreaView style={[globalStyles.androidSafeView]}>
-                <Text style={[globalStyles.pageTitle, {paddingLeft: 16, paddingRight: 16, paddingTop: 16}]}>Browse</Text>
+                <Text style={[globalStyles.pageTitle]}>Browse</Text>
 
                 <View style={{display: "flex", flexDirection: "row"}}>
                     <Dropdown
