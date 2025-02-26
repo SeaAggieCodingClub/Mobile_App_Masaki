@@ -73,6 +73,7 @@ const signup = () => {
                             .then(function(response : object) {
                                 if(response["data" as keyof object]["success"]) {
                                     setAuth(usernameInput)
+                                    setSignup(false)
 
                                     if(stayCheck) {
                                         secureStoreSet("authUser", usernameInput)
@@ -82,9 +83,6 @@ const signup = () => {
                                 else {
                                     setErrorMessage(response["data" as keyof object]["message"])
                                 }
-                                // if(response["data" as keyof boolean]) {
-
-                                // }
                             })
                             .catch(function (error : object) {
                                 console.log(error)

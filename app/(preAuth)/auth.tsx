@@ -66,7 +66,6 @@ const auth = () => {
                                 password: passwordInput
                             })
                             .then(function (response : object) {
-                                console.log(response)
                                 if(response["data" as keyof boolean]) {
                                     setAuth(usernameInput)
                                     console.log("authorized")
