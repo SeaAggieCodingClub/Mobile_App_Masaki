@@ -12,9 +12,12 @@ import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler
 const axios = require('axios').default
 
 const signup = () => {
+    const [fullNameInput, setFullNameInput] = useState<string>("")
     const [usernameInput, setUsernameInput] = useState<string>("")
     const [passwordInput, setPasswordInput] = useState<string>("")
     const [stayCheck, setStayCheck] = useState<boolean>(false)
+
+    const [errorMessage, setErrorMessage] = useState<String>("\n")
 
     const {setValue: setAuth} = useAuthContext()
     const {setValue: setSignup} = useSignupContext()
@@ -25,7 +28,9 @@ const signup = () => {
         <SafeAreaView style={globalStyles.androidSafeView}>
             <GestureHandlerRootView><ScrollView>
             <View style={{marginHorizontal: "auto", width: "80%", height: "100%", marginTop: "20%"}}>
-                <Text style={[globalStyles.pageTitle, {marginHorizontal: "auto", paddingBottom: 32, fontSize: 32}]}>Create an account</Text>
+                    <Text style={[globalStyles.pageTitle, {marginHorizontal: "auto", paddingBottom: 32, fontSize: 32}]}>Create an account</Text>
+                    <Text style={globalStyles.pageSubtitle}>Full Name</Text>
+                    <TextInput inputMode={'text'} onChangeText={input => setFullNameInput(input)} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Text style={globalStyles.pageSubtitle}>Create Username</Text>
                     <TextInput inputMode={'text'} onChangeText={input => setUsernameInput(input)} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Text style={globalStyles.pageSubtitle}>Create Password</Text>
@@ -43,6 +48,7 @@ const signup = () => {
                                 setStayCheck(isChecked)
                             }}
                         />
+                        
                         <Pressable onPress={() => {
                                 setSignup(false)
                             }}>
@@ -50,31 +56,37 @@ const signup = () => {
                         </Pressable>
                     </View>
 
+                    <Text style={[globalStyles.baseText, {color: "red"}]}>{errorMessage}</Text>
+
                     <Pressable 
                         style={[globalStyles.button, {marginHorizontal: "auto", width: "50%", height: "5%", marginTop: 64, backgroundColor: styleColors.dark, borderRadius: 16}]}
                         
                         onPress={() => {
                             //connect to backend
 
-                            axios.post('http://10.0.2.2:4000/check-user', 
+                            axios.post('http://10.0.2.2:4000/create-user', 
                             {
+                                fullname: fullNameInput,
                                 username: usernameInput,
                                 password: passwordInput
                             })
-                            .then(function (response : object) {
-                                console.log(response["data" as keyof boolean])
-                                if(response["data" as keyof boolean]) {
+                            .then(function(response : object) {
+                                if(response["data"]["success"]) {
                                     setAuth(usernameInput)
-                                    console.log("authorized")
 
                                     if(stayCheck) {
                                         secureStoreSet("authUser", usernameInput)
                                         secureStoreSet("authPass", passwordInput)
                                     }
                                 }
+                                else {
+                                    setErrorMessage(response["data"]["message"])
+                                }
+                                // if(response["data" as keyof boolean]) {
+
+                                // }
                             })
                             .catch(function (error : object) {
-                                console.log("error")
                                 console.log(error)
                         })
                     }}>

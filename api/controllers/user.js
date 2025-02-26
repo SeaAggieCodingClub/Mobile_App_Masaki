@@ -12,7 +12,7 @@ exports.createUser = async (req, res) => {
         password
     })
     await user.save()
-    res.json(user)
+    res.json({success: true, message: 'Successfully registered :)'})
 }
 
 exports.checkUser = async (req, res) => {
