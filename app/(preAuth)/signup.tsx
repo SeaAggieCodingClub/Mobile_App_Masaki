@@ -71,7 +71,7 @@ const signup = () => {
                                 password: passwordInput
                             })
                             .then(function(response : object) {
-                                if(response["data"]["success"]) {
+                                if(response["data" as keyof object]["success"]) {
                                     setAuth(usernameInput)
 
                                     if(stayCheck) {
@@ -80,7 +80,7 @@ const signup = () => {
                                     }
                                 }
                                 else {
-                                    setErrorMessage(response["data"]["message"])
+                                    setErrorMessage(response["data" as keyof object]["message"])
                                 }
                                 // if(response["data" as keyof boolean]) {
 
