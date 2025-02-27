@@ -17,7 +17,7 @@ const signup = () => {
     const [passwordInput, setPasswordInput] = useState<string>("")
     const [stayCheck, setStayCheck] = useState<boolean>(false)
 
-    const [errorMessage, setErrorMessage] = useState<String>("")
+    const [errorMessage, setErrorMessage] = useState<String>()
 
     const {setValue: setAuth} = useAuthContext()
     const {setValue: setSignup} = useSignupContext()
@@ -28,7 +28,7 @@ const signup = () => {
         <SafeAreaView style={globalStyles.androidSafeView}>
             <GestureHandlerRootView><ScrollView>
             <View style={{marginHorizontal: "auto", width: "80%", height: "100%", marginTop: "20%"}}>
-                    <Text style={[globalStyles.pageTitle, {marginHorizontal: "auto", paddingBottom: 32, fontSize: 32}]}>Create an account</Text>
+                    <Text numberOfLines={1} adjustsFontSizeToFit={true} style={[globalStyles.pageTitle, {marginHorizontal: "auto", paddingBottom: 32, fontSize: 32}]}>Create an account</Text>
                     <Text style={globalStyles.pageSubtitle}>Full Name</Text>
                     <TextInput inputMode={'text'} onChangeText={input => setFullNameInput(input)} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Text style={globalStyles.pageSubtitle}>Create Username</Text>

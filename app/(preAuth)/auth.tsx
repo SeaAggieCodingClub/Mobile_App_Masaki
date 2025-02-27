@@ -27,7 +27,7 @@ const auth = () => {
         <SafeAreaView style={[globalStyles.androidSafeView]}>
             <GestureHandlerRootView><ScrollView>
             <View style={{marginHorizontal: "auto", marginTop: "20%", width: "80%", height: "100%"}}>
-                    <Text style={[globalStyles.pageTitle, {marginHorizontal: "auto", paddingBottom: 32, fontSize: 32}]}>Welcome back!</Text>
+                    <Text numberOfLines={1} adjustsFontSizeToFit={true} style={[globalStyles.pageTitle, {marginHorizontal: "auto", paddingBottom: 32, fontSize: 32}]}>Welcome back!</Text>
                     <Text style={globalStyles.pageSubtitle}>Username</Text>
                     <TextInput onChangeText={input => setUsernameInput(input)} style={style.textInput} selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     <Text style={globalStyles.pageSubtitle}>Password</Text>
