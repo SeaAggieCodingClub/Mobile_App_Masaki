@@ -60,7 +60,7 @@ const auth = () => {
                             console.log(signup)
                             //connect to backend
 
-                            axios.post('http://10.0.2.2:4000/check-user', 
+                            axios.post('http://localhost:4000/check-user', 
                             {
                                 username: usernameInput,
                                 password: passwordInput
