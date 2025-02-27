@@ -12,19 +12,18 @@ import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler
 
 const axios = require('axios').default
 
-const testUser = ["johndoe", "1"]
-
 const auth = () => {
     const [usernameInput, setUsernameInput] = useState<string>("")
     const [passwordInput, setPasswordInput] = useState<string>("")
     const [stayCheck, setStayCheck] = useState<boolean>(false)
+
+    const [errorMessage, setErrorMessage] = useState<String>()
 
     const {value: auth, setValue: setAuth} = useAuthContext()
     const {value: signup, setValue: setSignup} = useSignupContext()
 
 
     return (
-        
         <SafeAreaView style={[globalStyles.androidSafeView]}>
             <GestureHandlerRootView><ScrollView>
             <View style={{marginHorizontal: "auto", marginTop: "20%", width: "80%", height: "100%"}}>
@@ -38,8 +37,8 @@ const auth = () => {
                         <BouncyCheckbox
                             style={{flex: 1}}
                             fillColor={styleColors.primary}
-                            iconStyle={{borderColor: styleColors.dark}}
-                            innerIconStyle={{borderColor: styleColors.dark}}
+                            iconStyle={{borderColor: styleColors.dark, borderWidth: 4}}
+                            innerIconStyle={{borderColor: styleColors.dark, borderWidth: 0}}
                             textStyle={{textDecorationLine: "none", fontFamily: "Montserrat-Medium", color: styleColors.light, fontSize: 18}}
                             text={"Stay logged in"}
                             onPress={isChecked => {
@@ -52,15 +51,15 @@ const auth = () => {
                             <Text style={{textDecorationLine: "underline", fontFamily: "Montserrat-Medium", color: styleColors.light, fontSize: 18, flex: 1}}>Sign up</Text>
                         </Pressable>
                     </View>
-                    
+
+                    <Text adjustsFontSizeToFit={true} numberOfLines={1} style={[globalStyles.baseText, {color: "red", paddingVertical: 16, marginHorizontal: "auto"}]}>{errorMessage}</Text>
 
                     <Pressable 
-                        style={[globalStyles.button, {marginHorizontal: "auto", width: "50%", height: "5%", marginTop: 64, backgroundColor: styleColors.dark, borderRadius: 16}]}
+                        style={[globalStyles.button, {marginHorizontal: "auto", width: "50%", height: "5%", backgroundColor: styleColors.dark, borderRadius: 16}]}
                         onPress={() => {
-                            console.log(signup)
                             //connect to backend
 
-                            axios.post('http://10.0.2.2:4000/check-user', 
+                            axios.post('http://www.fitnessapp.duckdns.org:4000/check-user', 
                             {
                                 username: usernameInput,
                                 password: passwordInput
@@ -74,6 +73,8 @@ const auth = () => {
                                         secureStoreSet("authUser", usernameInput)
                                         secureStoreSet("authPass", passwordInput)
                                     }
+                                } else {
+                                    setErrorMessage("Invalid username or password")
                                 }
                             })
                             .catch(function (error : object) {
@@ -83,10 +84,6 @@ const auth = () => {
                     }}>
                     <Text style={[globalStyles.buttonText, {color: styleColors.light}]}>Login</Text>
                     </Pressable>
-                    <Pressable onPress={() => {
-                        setAuth("bob")
-                    }}>
-                            <Text>Auto Auth</Text></Pressable>
                     <View style={{paddingBottom: "70%"}}></View>
                 
                 

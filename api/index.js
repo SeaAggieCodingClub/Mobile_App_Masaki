@@ -19,3 +19,16 @@ mongoose.connect(process.env.MONG_URI)
         console.log('Server is running on port', 4000)
     })
 })
+
+const dns = "https://www.duckdns.org/update?domains=fitnessapp&token=" + process.env.DUCK_TOKEN
+
+async function updateDNS() {
+    try {
+        const response = await fetch(dns)
+        console.log("DNS: " + await response.text())
+    } catch (error) {
+        console.log("DNS error")
+    }
+}
+
+updateDNS()

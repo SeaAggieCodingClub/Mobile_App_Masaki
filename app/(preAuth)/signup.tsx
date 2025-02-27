@@ -17,7 +17,7 @@ const signup = () => {
     const [passwordInput, setPasswordInput] = useState<string>("")
     const [stayCheck, setStayCheck] = useState<boolean>(false)
 
-    const [errorMessage, setErrorMessage] = useState<String>("\n")
+    const [errorMessage, setErrorMessage] = useState<String>("")
 
     const {setValue: setAuth} = useAuthContext()
     const {setValue: setSignup} = useSignupContext()
@@ -56,15 +56,15 @@ const signup = () => {
                         </Pressable>
                     </View>
 
-                    <Text style={[globalStyles.baseText, {color: "red"}]}>{errorMessage}</Text>
+                    <Text adjustsFontSizeToFit={true} numberOfLines={1} style={[globalStyles.baseText, {color: "red", paddingVertical: 16, marginHorizontal: "auto"}]}>{errorMessage}</Text>
 
                     <Pressable 
-                        style={[globalStyles.button, {marginHorizontal: "auto", width: "50%", height: "5%", marginTop: 64, backgroundColor: styleColors.dark, borderRadius: 16}]}
+                        style={[globalStyles.button, {marginHorizontal: "auto", width: "50%", height: "5%", backgroundColor: styleColors.dark, borderRadius: 16}]}
                         
                         onPress={() => {
                             //connect to backend
 
-                            axios.post('http://10.0.2.2:4000/create-user', 
+                            axios.post('http://www.fitnessapp.duckdns.org:4000/create-user', 
                             {
                                 fullname: fullNameInput,
                                 username: usernameInput,
