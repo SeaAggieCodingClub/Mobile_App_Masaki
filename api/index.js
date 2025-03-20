@@ -31,4 +31,4 @@ async function updateDNS() {
     }
 }
 
-updateDNS();
+updateDNS()
