@@ -11,7 +11,9 @@ const WorkoutSchema = mongoose.Schema(
             required: true
         },
         muscle : {
-            type: String,
+            type: [String],
+            enum: ['abductors', 'abs', 'adductors', 'biceps', 'calves', 'chest', 'forearms', 'glutes', 'hamstrings', 
+                'hip flexors', 'lats', 'lower back', 'upper back', 'neck', 'obliques', 'quads', 'shoulders', 'traps', 'triceps'],
             required: true
         },
         description: {
@@ -23,12 +25,13 @@ const WorkoutSchema = mongoose.Schema(
             required: true
         },
         difficulty: {
-            type: String,
+            type: Number,
+            enum: [1, 2, 3, 4, 5],
             required: true
         },
         workoutType: {
             type: [String],
-            enum: ['Endurance', 'Strength', 'Cardio'],
+            enum: ['endurance', 'strength', 'cardio'],
             required: true
         } 
     },

@@ -1,5 +1,6 @@
 const Product = require('../models/product.model')
 const Workout = require('../models/workout.model')
+const Session = require('../models/session.model')
 
 const getWorkouts = async (req, res) => {
     try {
@@ -62,10 +63,33 @@ const deleteWorkout = async (req, res) => {
     }
 }
 
+const addWorkoutSession = async (req, res) => {
+    try {
+        //workoutObject is an array
+        const {name, daysOfSession, workoutObject} = req.body 
+        for (const w of workoutObject) {
+            const existingWorkout = await Workout.findOne({name: w.workout})
+            if (!existingWorkout) {
+                res.status(404).json({message: "workout not found"})
+            }
+        }
+        const session = await Session ({
+            name: name,
+            daysOfSession: daysOfSession,
+            workoutObject: workoutObject
+        })
+        await session.save()
+        res.json({success: true, message: 'session added'})
+    } catch (error) {
+        res.status(500).json({message: error.message})   
+    }
+}
+
 module.exports = {
     getWorkouts,
     getWorkout,
     createWorkout,
     updateWorkout,
-    deleteWorkout
+    deleteWorkout,
+    addWorkoutSession
 }
