@@ -60,6 +60,7 @@ const auth = () => {
                             //connect to backend
 
                             axios.post('http://www.fitnessapp.duckdns.org:4000/check-user', 
+
                             {
                                 username: usernameInput,
                                 password: passwordInput
