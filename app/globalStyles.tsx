@@ -35,11 +35,8 @@ export default StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         backgroundColor: styleColors.dark,
-        marginRight: 10,
-        marginBottom: 10,
         borderRadius: 5,
-        width: (Dimensions.get("window").width - 32 ) - 5,
-        height: ((Dimensions.get("window").width - 32 )/ 2 - 10 ) * (1/3),
+        aspectRatio: 8,
         shadowRadius: 10,
         shadowOpacity: 0.3,
         elevation: 5,
@@ -48,17 +45,13 @@ export default StyleSheet.create({
     sessionTile: {
         display: "flex",
         flex: 1,
-        flexDirection: "row",
         backgroundColor: styleColors.dark,
-        marginRight: 10,
-        marginBottom: 10,
         borderRadius: 10,
-        aspectRatio: 1.2,
         padding: 10,
-        //height: ((Dimensions.get("window").width - 32 )/ 2 - 10 ) * (1),
         shadowRadius: 10,
         shadowOpacity: 0.3,
         elevation: 5,
+        aspectRatio: 1.2,
     },
 
     pageTitle: {
@@ -67,7 +60,7 @@ export default StyleSheet.create({
         color: "#ffffff",
         padding: 16,
         paddingTop: 20,
-        paddingBottom: 5,
+        paddingBottom: 4,
 
     },
 

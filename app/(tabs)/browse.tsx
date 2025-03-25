@@ -572,13 +572,14 @@ const browse = () => {
                 <FlatList 
                     // ListHeaderComponent={<View style={{backgroundColor: styleColors.darkest}}><Text style={globalStyles.pageTitle}>Browse</Text></View>}
                     // stickyHeaderIndices={[0]}
-                    style={{padding: 16, paddingTop: 0,}}
+                    style={{paddingHorizontal: 16}}
+                    contentContainerStyle={{gap: 8}}
                     showsVerticalScrollIndicator={false}
                     numColumns={1}
                     data={filter} 
                     keyExtractor={(item) => item.name} 
                     renderItem={({item}: {item: itemProps})=>(
-                        <Pressable style={globalStyles.tile} onPress={() => {router.push({pathname: "/(browse)/[workouts]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty, instructions: item.instructions}})}}>
+                        <Pressable style={globalStyles.tile} onPress={() => {router.push({pathname: "(browse)/[workoutID]", params: {id: item.name, name: item.name, type: item.type, muscle: item.muscle, equipment: item.equipment, difficulty: item.difficulty, instructions: item.instructions}})}}>
                             <Text style={[itemText.text]}>{item.name}</Text>
                             <View style={{flex: 1}}></View>
                             
@@ -618,6 +619,7 @@ const browse = () => {
 
                     <BottomSheetView>
                         <Text style={globalStyles.baseText}>Add {bottomSheetText}</Text>
+                        
                     </BottomSheetView>
                 </BottomSheet>
                 
