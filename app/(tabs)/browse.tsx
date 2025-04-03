@@ -5,7 +5,7 @@ import { Dropdown, MultiSelect } from "react-native-element-dropdown"
 import BottomSheet, {BottomSheetBackdrop, BottomSheetView, TouchableOpacity} from "@gorhom/bottom-sheet"
 import globalStyles from "../globalStyles"
 import styleColors from "../styleColors"
-import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler"
+import { GestureHandlerRootView, ScrollView, TextInput } from "react-native-gesture-handler"
 import Icon from '@expo/vector-icons/MaterialIcons'
 
 const dataSample = [
@@ -118,6 +118,7 @@ const dataSample = [
 
 
 const muscleFilters = [
+    { value: "All" },
     { value: "Abductors" },
     { value: "Abs" },
     { value: "Adductors" },
@@ -143,22 +144,27 @@ const muscleFilters = [
   ]
   
 const workoutTypeFilters = [
-    { key: "Strength", value: "strength"},
-    { key: "Endurance", value: "endurance"},
-    { key: "Cardio", value: "cardio"},
+    { key: "Type", value: "All"},
+    { key: "Type", value: "Strength"},
+    { key: "Type", value: "Endurance"},
+    { key: "Type", value: "Cardio"},
 ]
 
 const difficultyFilters = [
-    { key: "1", value: 1 },
-    { key: "2", value: 2 },
-    { key: "3", value: 3 },
-    { key: "4", value: 4 },
-    { key: "5", value: 5 }
+    { key: "Difficulty", value: "All" },
+    { key: "Difficulty", value: "1" },
+    { key: "Difficulty", value: "2" },
+    { key: "Difficulty", value: "3" },
+    { key: "Difficulty", value: "4" },
+    { key: "Difficulty", value: "5" }
   ]
   
 
 const browse = () => {
-    const [selectedMuscles, setSelectedMuscles] = useState<Array<String>>([])
+    const [searchInput, setSearchInput] = useState<String>()
+    const [selectedType, setSelectedType] = useState<String>("All")
+    const [selectedMuscles, setSelectedMuscles] = useState<Array<String>>(["All"])
+    const [selectedDifficulty, setSelectedDifficulty] = useState<String>("All")
 
     // const changeFilters = () => {
     //     let filteredData = dataSample
@@ -197,52 +203,124 @@ const browse = () => {
         <GestureHandlerRootView>
             <SafeAreaView style={[globalStyles.androidSafeView]}>
                 <Text style={[globalStyles.pageTitle]}>Browse</Text>
+                {/* search bar muscle */}
+                <TextInput 
+                    style={[globalStyles.textInput, {marginHorizontal: 16, marginBottom: 8, fontSize: 16}]}
+                    placeholder={"Search..."}
+                    placeholderTextColor={"rgba(255, 255, 255, 0.5)"}
+                    selectionColor={"rgba(255, 255, 255, 0.25)"}
+                    onChangeText={(input) => {
+                        setSearchInput(input)
+                    }}
+                ></TextInput>
                 {/* row of filters */}
-                <View style={{display: "flex", flexDirection: "row"}}>
+                <View style={{display: "flex", flexDirection: "row", gap: 8, marginHorizontal: 16}}>
                     {/* filter dropdowns */}
                     <Dropdown
-                    style={{flex: 2}}
+                        style={{flex: 1, backgroundColor: styleColors.dark, paddingVertical: 16, paddingHorizontal: 8}}
+                        selectedTextStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
+                        containerStyle={{borderWidth: 0}}
                         data={workoutTypeFilters}
+                        selectedTextProps={{}}
                         labelField="key"
                         valueField="value"
-                        onChange={(value)=> {
+                        placeholder={"Type"}
+                        placeholderStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
+                        onChange={(type)=> {
                             console.log("bob")
-                            // let newSelectedMuscles = [...selectedMuscles, ...muscle]
-                            // setSelectedMuscles(newSelectedMuscles)
-                            // console.log(selectedMuscles)
+                            setSelectedType(type.value)
+                        }}
+
+                        renderItem={(type) => {
+                            const isSelected = selectedType == type.value
+                            return(
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: isSelected? styleColors.darkest : styleColors.dark,
+                                        padding: 8,
+                                        paddingVertical: 16,
+                                    }}
+                                    >
+                                    <Text style={{
+                                        color: styleColors.light, 
+                                        fontSize: 16, 
+                                        fontFamily: "Montserrat-Medium"
+                                    }}>{type.value}</Text>
+                                </TouchableOpacity>
+                            )
                         }}
                     />
                     <MultiSelect
-                        style={{flex: 2}}
+                        style={{flex: 1, backgroundColor: styleColors.dark, paddingVertical: 16, paddingHorizontal: 8}}
+                        containerStyle={{borderWidth: 0, borderRadius: 8}}
                         data={muscleFilters}
                         labelField="value"
                         valueField="value"
                         visibleSelectedItem={false}
-                        onChange={muscleOnPress}
+                        placeholder={"Muscle"}
+                        placeholderStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
+                        onChange={(value: Array<String>) => {
+                            if(value[0] == "All") {
+                                setSelectedMuscles(["All"])
+                            }
+                            if(!selectedMuscles.includes(value[0])) {
+                                setSelectedMuscles([...selectedMuscles, ...value])
+                            } else {
+                                setSelectedMuscles(selectedMuscles.filter((item) => item != value[0]))
+                            }
+                        }}
                         renderItem={(muscle) => {
                             const isSelected = selectedMuscles.includes(muscle.value)
                             return(
                                 <TouchableOpacity
                                     style={{
-                                        backgroundColor: isSelected? "#00FF00" : "#FFFFFF"
+                                        backgroundColor: isSelected? styleColors.darkest : styleColors.dark,
+                                        padding: 8,
+                                        paddingVertical: 16
                                     }}
                                     >
-                                    <Text>{muscle.value}</Text>
+                                    <Text style={{
+                                        color: isSelected? styleColors.primary : styleColors.light , 
+                                        fontSize: 16, 
+                                        fontFamily: "Montserrat-Medium"
+                                    }}>{muscle.value}</Text>
                                 </TouchableOpacity>
                             )
                         }}
                     />
                     
+                    {/* difficulty */}
                     <Dropdown
-                    style={{flex: 1}}
+                        style={{flex: 1, backgroundColor: styleColors.dark, paddingVertical: 16, paddingHorizontal: 8}}
+                        selectedTextStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
+                        containerStyle={{borderWidth: 0}}
                         data={difficultyFilters}
+                        selectedTextProps={{}}
                         labelField="key"
                         valueField="value"
-                        onChange={(value)=> {
-                            console.log("bob")
-                            // let newSelectedMuscles = [...selectedMuscles, ...muscle]
-                            // setSelectedMuscles(newSelectedMuscles)
-                            // console.log(selectedMuscles)
+                        placeholder={"Difficulty"}
+                        placeholderStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
+                        onChange={(difficulty)=> {
+                            setSelectedDifficulty(difficulty.value)
+                        }}
+
+                        renderItem={(difficulty) => {
+                            const isSelected = selectedDifficulty == difficulty.value
+                            return(
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: isSelected? styleColors.darkest : styleColors.dark,
+                                        padding: 8,
+                                        paddingVertical: 16,
+                                    }}
+                                    >
+                                    <Text style={{
+                                        color: styleColors.light, 
+                                        fontSize: 16, 
+                                        fontFamily: "Montserrat-Medium"
+                                    }}>{difficulty.value}</Text>
+                                </TouchableOpacity>
+                            )
                         }}
                     />
 
@@ -252,6 +330,10 @@ const browse = () => {
 
                 <Text style={globalStyles.baseText}>{selectedMuscles}</Text>
 
+                {/* muscles list */}
+                {/* <FlatList>
+
+                </FlatList> */}
                 {/* <<View style={{display: "flex", flexDirection: "row"}}>
                     <Dropdown
                         style={{marginHorizontal: 16, flex: 1, height: 50}}
