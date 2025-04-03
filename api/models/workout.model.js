@@ -6,10 +6,6 @@ const WorkoutSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        muscleGroup: {
-            type: String,
-            required: true
-        },
         muscle : {
             type: [String],
             enum: ['abductors', 'abs', 'adductors', 'biceps', 'calves', 'chest', 'forearms', 'glutes', 'hamstrings', 
