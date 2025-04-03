@@ -89,6 +89,19 @@ export default StyleSheet.create({
         fontSize: 18
     },
 
+    dropdown: {
+        backgroundColor: styleColors.dark
+    },
+
+    textInput: {
+        backgroundColor: styleColors.dark,
+        padding: 8,
+        height: 50,
+        fontFamily: "Montserrat-Medium",
+        color: styleColors.light,
+        fontSize: 24,
+    }
+
 })
 
 
