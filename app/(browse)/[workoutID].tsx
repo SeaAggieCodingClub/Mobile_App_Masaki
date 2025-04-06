@@ -9,7 +9,30 @@ import styleColors from '../styleColors';
 
 const SubBrowseData = () => {
 
-  const {id, name, type, muscle, equipment, difficulty, instructions} = useLocalSearchParams<{id: string, name: string, type: string, muscle: string, equipment: string, difficulty: string, instructions: string}>()
+  interface workout {
+    name: string,
+    muscle: string[],
+    description: string,
+    equipment: string,
+    difficulty: number,
+    workoutType: string,
+}
+
+  const {
+    name,
+    muscle,
+    description,
+    equipment,
+    difficulty,
+    workoutType,
+  } = useLocalSearchParams<{
+    name: string,
+    muscle: string[],
+    description: string,
+    equipment: string,
+    difficulty: string,
+    workoutType: string,
+  }>()
 
   // const navigation = useNavigation();
 
@@ -30,12 +53,20 @@ const SubBrowseData = () => {
           backgroundColor: styleColors.dark,
         }
       }}/>
-      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Type: {type}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Muscle: {muscle}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Workout: {name}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Workout Type: {workoutType}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Target Muscles: {muscle.toString()}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Description: {description}{"\n"}</Text>
       <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Equipment: {equipment}{"\n"}</Text>
       <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Difficulty: {difficulty}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Instructions: {instructions}{"\n"}</Text>
+
     </View>
+    //  name: item.name,
+    //  muscle: item.muscle,
+    //  description: item.description,
+    //  equipment: item.equipment,
+    //  difficulty: item.difficulty,
+    //  workoutType: item.workoutType,
   )
 }
 

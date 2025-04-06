@@ -59,8 +59,8 @@ const auth = () => {
                         onPress={() => {
                             //connect to backend
 
-                            axios.post('http://localhost:4000/check-user', 
-                            //http://www.fitnessapp.duckdns.org:4000/check-user
+                            // axios.post('http://fitnessapp.duckdns.com:4000/check-user', 
+                            axios.post('http://10.0.2.2:4000/check-user', 
                             {
                                 username: usernameInput,
                                 password: passwordInput
@@ -85,8 +85,10 @@ const auth = () => {
                     }}>
                     <Text style={[globalStyles.buttonText, {color: styleColors.light}]}>Login</Text>
                     </Pressable>
+                    <Pressable onPress={() => {setAuth("bob")}}><Text style={{color: "#FFFFFF"}}>AutoAuth</Text></Pressable>
                     <View style={{paddingBottom: "70%"}}></View>
                 
+                    
                 
             </View>
             </ScrollView></GestureHandlerRootView>
