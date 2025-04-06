@@ -99,21 +99,41 @@ const addWorkoutSession = async (req, res) => {
     }
 }
 
-//Important
-const loadData = async (req, res) => {
+//Use this route to retrieve session data
+const retrieveData = async (req, res) => {
+    try {
+        const {username} = req.body
+        const verifyUsername = await User.findOne({username: username})
+        if (!verifyUsername) {
+            return res.status(404).json({success: false, message: 'username not found'})
+        }
+        const findUserWithSessions = await UserData.findOne({username: username})
+        if (findUserWithSessions) {
+            res.status(200).json(findUserWithSessions)
+        } else {
+            res.status(200).json({success: true, message: "there's no workouts saved for this user"})
+        }
+
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message})
+    }
+}
+
+//Use this to update the session data
+const updateData = async (req, res) => {
     try {
         const {username, session} = req.body
         const verifyUsername = await User.findOne({username: username})
         const replaceUser = await UserData.findOne({username: username})
         if (!verifyUsername) {
-            res.status(404).json({success: false, message: 'username not found'})
+            return res.status(404).json({success: false, message: 'username not found'})
         }
         for (const w of session) {
             const whatever = await w.workoutObject
             for (const l of whatever) {
                 const existingWorkout = await Workout.findOne({name: l.workout})
                 if (!existingWorkout) {
-                    res.status(404).json({success: false, message: "workout not found"})
+                    return res.status(404).json({success: false, message: "workout not found"})
                 }
             }
         }
@@ -134,7 +154,7 @@ const loadData = async (req, res) => {
             })
             data.save()
         }
-        res.json({success: true, message: "sessions loaded successfully"})
+        res.json(data)
     } catch (error) {
         res.status(500).json({success: false, message: error.message})
     }
@@ -149,5 +169,6 @@ module.exports = {
     deleteWorkout,
     addWorkoutSession,
     getSession,
-    loadData
+    updateData,
+    retrieveData
 }
