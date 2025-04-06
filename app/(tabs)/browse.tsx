@@ -79,7 +79,7 @@ const browse = () => {
             //newFilteredData.forEach(item => item.muscle.forEach(item2 => console.log(item2.toLowerCase())))
             //newFilteredData = newFilteredData.filter(item => selectedMuscles.includes(item.muscle[0]) )
             //newFilteredData = newFilteredData.filter(item => item.muscle.every(muscle => selectedMuscles.includes(muscle.toLowerCase())))
-            newFilteredData = newFilteredData.filter(item => selectedMuscles.every(sMuscle => item.muscle.includes(sMuscle)))
+            newFilteredData = newFilteredData.filter(item => selectedMuscles.every(sMuscle => item.muscle.includes(sMuscle.toLowerCase())))
         }
         if(selectedDifficulty != "All") {
             newFilteredData = newFilteredData.filter(item => item.difficulty.toString() == selectedDifficulty)
