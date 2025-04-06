@@ -10,11 +10,17 @@ import Signup from "./(preAuth)/signup"
 import { secureStoreGet, AuthContext, useAuthContext } from "./(preAuth)/authContext"
 import * as SecureStore from "expo-secure-store"
 import { SignupContext, useSignupContext } from "./(preAuth)/signupContext"
+import { WorkoutsContext, workoutType } from "./(browse)/workoutsContext"
+import axios from "axios"
 
 const RootLayout = () => {
 
     const [authLoaded, setAuthLoaded] = useState(false)
     const [auth, setAuth] = useState<boolean | string>(false)
+
+    const [workouts, setWorkouts] = useState<workoutType[]>([])
+    const [workoutsLoaded, setWorkoutsLoaded] = useState(false)
+
     const [signup, setSignup] = useState<boolean>(false)
 
     const [loaded, error] = useFonts({
@@ -35,8 +41,21 @@ const RootLayout = () => {
         setAuthLoaded(true)
     }
 
+    const loadData = async (): Promise<void> => {
+        await axios.get('http://10.0.2.2:4000/api/workouts')
+        .then(response => {
+            setWorkouts(response.data)
+            setWorkoutsLoaded(true)
+        })
+        .catch((error) => {
+            console.log("error")
+            console.log(error)
+        })
+    }
+
     useEffect(() => {
         loadAuth()
+        loadData()
     }, []) 
 
 
@@ -50,13 +69,19 @@ const RootLayout = () => {
 
     if(!authLoaded) {
         return(
-            <View>
+            <SafeAreaView>
                 <Text>loading auth</Text>
-            </View>
+            </SafeAreaView>
         )
     }
     
-    
+    if(!workoutsLoaded) {
+        return(
+            <View>
+                <Text>loading data</Text>
+            </View>
+        )
+    }
 
 
 
@@ -86,12 +111,14 @@ const RootLayout = () => {
     return(
         <>
             <AuthContext.Provider value={{ value: auth, setValue: setAuth }}>
+            <WorkoutsContext.Provider value={{value: workouts}}>
                 <StatusBar style="light"/>
                 <Stack>
                     <Stack.Screen name="(tabs)" options = {{
                         headerShown: false
                     }}/>
                 </Stack>
+            </WorkoutsContext.Provider>
             </AuthContext.Provider>
         </>
     )

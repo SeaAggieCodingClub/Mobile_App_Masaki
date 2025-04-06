@@ -20,7 +20,7 @@ export default StyleSheet.create({
     tabs: {
         backgroundColor: styleColors.dark,
         borderTopWidth: 0.5,
-        borderColor: styleColors.light,
+        borderColor: "rgba(255, 255, 255, 0.25)",
     },
 
     shadow: {
@@ -31,12 +31,10 @@ export default StyleSheet.create({
     },
 
     tile: {
-        display: "flex",
-        flex: 1,
-        flexDirection: "row",
+        width: "100%",
         backgroundColor: styleColors.dark,
         borderRadius: 5,
-        aspectRatio: 8,
+        aspectRatio: 6,
         shadowRadius: 10,
         shadowOpacity: 0.3,
         elevation: 5,

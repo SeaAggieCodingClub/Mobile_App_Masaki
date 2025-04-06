@@ -58,8 +58,9 @@ const auth = () => {
                         style={[globalStyles.button, {marginHorizontal: "auto", width: "50%", height: "5%", backgroundColor: styleColors.dark, borderRadius: 16}]}
                         onPress={() => {
                             //connect to backend
-                            //http://10.0.2.2:4000/check-user local ip
-                            axios.post('http://fitnessapp.duckdns.com/check-user', 
+
+                            // axios.post('http://fitnessapp.duckdns.com:4000/check-user', 
+                            axios.post('http://10.0.2.2:4000/check-user', 
 
                             {
                                 username: usernameInput,
