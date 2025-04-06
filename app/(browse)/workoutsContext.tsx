@@ -1,6 +1,6 @@
 import { createContext } from "react"
 
-export type workoutType = {
+export type workoutInterface = {
     name: string,
     muscle: string[],
     description: string,
@@ -10,7 +10,7 @@ export type workoutType = {
 }
 
 export type workoutsType = {
-    value: workoutType[]
+    value: workoutInterface[]
 }
 
 export const WorkoutsContext = createContext<workoutsType>( {} as workoutsType)
