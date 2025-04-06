@@ -1,0 +1,3 @@
+PORT=4000
+MONG_URI=mongodb+srv://seogwonjeong0324:u5OxYHep2P5OFogA@cluster0.mwy1p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+DUCK_TOKEN=980fc905-02fa-47dd-93ac-2f0e63bd7b06
