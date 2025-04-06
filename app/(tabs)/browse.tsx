@@ -7,62 +7,64 @@ import globalStyles from "../globalStyles"
 import styleColors from "../styleColors"
 import { GestureHandlerRootView, ScrollView, TextInput } from "react-native-gesture-handler"
 import Icon from '@expo/vector-icons/MaterialIcons'
-import { WorkoutsContext, workoutType, workoutsType } from "../(browse)/workoutsContext"
+import { WorkoutsContext, workoutInterface, workoutsType } from "../(browse)/workoutsContext"
 
-const muscleFilters = [
-    { value: "All" },
-    { value: "Abductors" },
-    { value: "Abs" },
-    { value: "Adductors" },
-    { value: "Biceps" },
-    { value: "Calves" },
-    { value: "Chest" },
-    { value: "Forearms" },
-    { value: "Glutes" },
-    { value: "Hamstrings" },
-    { value: "Hip Flexors" },
-    { value: "IT Band" },
-    { value: "Lats" },
-    { value: "Lower Back" },
-    { value: "Upper Back" },
-    { value: "Neck" },
-    { value: "Obliques" },
-    { value: "Palmar Fascia" },
-    { value: "Plantar Fascia" },
-    { value: "Quads" },
-    { value: "Shoulders" },
-    { value: "Traps" },
-    { value: "Triceps" }
-  ]
-  
-const workoutTypeFilters = [
-    { key: "Type", value: "All"},
-    { key: "Type", value: "Strength"},
-    { key: "Type", value: "Endurance"},
-    { key: "Type", value: "Cardio"},
-]
 
-const difficultyFilters = [
-    { key: "Difficulty", value: "All" },
-    { key: "Difficulty", value: "1" },
-    { key: "Difficulty", value: "2" },
-    { key: "Difficulty", value: "3" },
-    { key: "Difficulty", value: "4" },
-    { key: "Difficulty", value: "5" }
-  ]
   
 
 const browse = () => {
     const workoutData = useContext(WorkoutsContext)
+
+    const [muscleFiltersLabel, setMuscleFiltersLabel] = useState("Muscles")
+
+    const muscleFilters = [
+        {value: "All" },
+        {value: "Abductors" },
+        {value: "Abs" },
+        {value: "Adductors" },
+        {value: "Biceps" },
+        {value: "Calves" },
+        {value: "Chest" },
+        {value: "Forearms" },
+        {value: "Glutes" },
+        {value: "Hamstrings" },
+        {value: "Hip Flexors" },
+        {value: "IT Band" },
+        {value: "Lats" },
+        {value: "Lower Back" },
+        {value: "Upper Back" },
+        {value: "Neck" },
+        {value: "Obliques" },
+        {value: "Palmar Fascia" },
+        {value: "Plantar Fascia" },
+        {value: "Quads" },
+        {value: "Shoulders" },
+        {value: "Traps" },
+        {value: "Triceps" }
+    ]
+      
+    const workoutTypeFilters = [
+        { key: "Type", value: "All"},
+        { key: "Strength", value: "Strength"},
+        { key: "Endurance", value: "Endurance"},
+        { key: "Cardio", value: "Cardio"},
+    ]
+
+    const difficultyFilters = [
+        { key: "Difficulty", value: "All" },
+        { key: "Difficulty: 1", value: "1" },
+        { key: "Difficulty: 2", value: "2" },
+        { key: "Difficulty: 3", value: "3" },
+        { key: "Difficulty: 4", value: "4" },
+        { key: "Difficulty: 5", value: "5" }
+    ]
 
     const [searchInput, setSearchInput] = useState<string>("")
     const [selectedType, setSelectedType] = useState<string>("All")
     const [selectedMuscles, setSelectedMuscles] = useState<Array<string>>(["All"])
     const [selectedDifficulty, setSelectedDifficulty] = useState<string>("All")
 
-    const [workoutDataFiltered, setWorkoutDataFiltered] = useState<workoutType[]>(workoutData.value)
-    
-
+    const [workoutDataFiltered, setWorkoutDataFiltered] = useState<workoutInterface[]>(workoutData.value)
     
     useEffect(() => {
         let newFilteredData = workoutData.value
@@ -80,12 +82,17 @@ const browse = () => {
             //newFilteredData = newFilteredData.filter(item => selectedMuscles.includes(item.muscle[0]) )
             //newFilteredData = newFilteredData.filter(item => item.muscle.every(muscle => selectedMuscles.includes(muscle.toLowerCase())))
             newFilteredData = newFilteredData.filter(item => selectedMuscles.every(sMuscle => item.muscle.includes(sMuscle.toLowerCase())))
+            setMuscleFiltersLabel("Muscles (" + selectedMuscles.length.toString() + ")")
+        } else {
+            setMuscleFiltersLabel("Muscles")
         }
         if(selectedDifficulty != "All") {
             newFilteredData = newFilteredData.filter(item => item.difficulty.toString() == selectedDifficulty)
         }
         // console.log(newFilteredData)
         setWorkoutDataFiltered(newFilteredData)
+
+
     }, [searchInput, selectedType, selectedMuscles, selectedDifficulty])
     // const changeFilters = () => {
     //     let filteredData = dataSample
@@ -128,20 +135,19 @@ const browse = () => {
                     }}
                 ></TextInput>
                 {/* row of filters */}
-                <View style={{display: "flex", flexDirection: "row", gap: 8, marginHorizontal: 16}}>
+                <View style={[{display: "flex", flexDirection: "row", gap: 8, marginHorizontal: 16}]}>
                     {/* filter dropdowns */}
                     <Dropdown
                         style={{flex: 1, backgroundColor: styleColors.dark, paddingVertical: 16, paddingHorizontal: 8}}
                         selectedTextStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
                         containerStyle={{borderWidth: 0}}
                         data={workoutTypeFilters}
-                        selectedTextProps={{}}
                         labelField="key"
                         valueField="value"
                         placeholder={"Type"}
+                        value={selectedType}
                         placeholderStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
                         onChange={(type)=> {
-                            console.log("bob")
                             setSelectedType(type.value)
                         }}
 
@@ -171,7 +177,7 @@ const browse = () => {
                         labelField="value"
                         valueField="value"
                         visibleSelectedItem={false}
-                        placeholder={"Muscle"}
+                        placeholder={muscleFiltersLabel}
                         placeholderStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
                         onChange={(value: Array<string>) => {
                             if(value[0] == "All") {
@@ -187,8 +193,8 @@ const browse = () => {
                                     setSelectedMuscles([...selectedMuscles.filter((item) => item != "All"), ...[value[0]]])
                                 }
                                
+                                
                             }
-                            
                         }}
                         renderItem={(muscle) => {
                             const isSelected = selectedMuscles.includes(muscle.value)
@@ -200,11 +206,13 @@ const browse = () => {
                                         paddingVertical: 16
                                     }}
                                 >
-                                    <Text style={{
-                                        color: isSelected? styleColors.primary : styleColors.light , 
-                                        fontSize: 16, 
-                                        fontFamily: "Montserrat-Medium"
-                                    }}>{muscle.value}</Text>
+                                    <Text 
+                                        style={{
+                                            color: isSelected? styleColors.primary : styleColors.light , 
+                                            fontSize: 16, 
+                                            fontFamily: "Montserrat-Medium"
+                                        }}
+                                    >{muscle.value}</Text>
                                 </TouchableOpacity>
                             )
                         }}
@@ -216,10 +224,10 @@ const browse = () => {
                         selectedTextStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
                         containerStyle={{borderWidth: 0}}
                         data={difficultyFilters}
-                        selectedTextProps={{}}
                         labelField="key"
                         valueField="value"
                         placeholder={"Difficulty"}
+                        value={selectedDifficulty}
                         placeholderStyle={{color: styleColors.light, fontSize: 16, fontFamily: "Montserrat-Medium"}}
                         onChange={(difficulty)=> {
                             setSelectedDifficulty(difficulty.value)
@@ -236,10 +244,11 @@ const browse = () => {
                                     }}
                                     >
                                     <Text style={{
-                                        color: isSelected? styleColors.primary : styleColors.light,
-                                        fontSize: 16, 
-                                        fontFamily: "Montserrat-Medium"
-                                    }}>{difficulty.value}</Text>
+                                            color: isSelected? styleColors.primary : styleColors.light,
+                                            fontSize: 16, 
+                                            fontFamily: "Montserrat-Medium"
+                                        }}
+                                    >{difficulty.value}</Text>
                                 </TouchableOpacity>
                             )
                         }}

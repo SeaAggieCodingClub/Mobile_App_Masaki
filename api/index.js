@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config({ path: "private.env"})
 const express = require('express')
 const mongoose = require('mongoose')
 const productRoute = require('./routes/product.route')

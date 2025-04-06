@@ -10,7 +10,7 @@ import Signup from "./(preAuth)/signup"
 import { secureStoreGet, AuthContext, useAuthContext } from "./(preAuth)/authContext"
 import * as SecureStore from "expo-secure-store"
 import { SignupContext, useSignupContext } from "./(preAuth)/signupContext"
-import { WorkoutsContext, workoutType } from "./(browse)/workoutsContext"
+import { WorkoutsContext, workoutInterface } from "./(browse)/workoutsContext"
 import axios from "axios"
 
 const RootLayout = () => {
@@ -18,7 +18,7 @@ const RootLayout = () => {
     const [authLoaded, setAuthLoaded] = useState(false)
     const [auth, setAuth] = useState<boolean | string>(false)
 
-    const [workouts, setWorkouts] = useState<workoutType[]>([])
+    const [workouts, setWorkouts] = useState<workoutInterface[]>([])
     const [workoutsLoaded, setWorkoutsLoaded] = useState(false)
 
     const [signup, setSignup] = useState<boolean>(false)
