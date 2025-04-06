@@ -296,6 +296,7 @@ const browse = () => {
                             
                         </Pressable>
                     )}  
+                    ListFooterComponent={<View style={{height: 16}}></View>}
                 />
                 
                     
