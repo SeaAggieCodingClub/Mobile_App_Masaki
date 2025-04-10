@@ -8,7 +8,9 @@ import styleColors from "../styleColors"
 import { GestureHandlerRootView, ScrollView, TextInput } from "react-native-gesture-handler"
 import Icon from '@expo/vector-icons/MaterialIcons'
 import { WorkoutsContext, workoutInterface, workoutsType } from "../(browse)/workoutsContext"
-
+import { useAuthContext, secureStoreGet, secureStoreSet } from "../(preAuth)/authContext"
+import { workoutObj, sessionObj} from "../(session)/sessionTypes"
+const axios = require('axios').default
 
   
 
@@ -63,7 +65,9 @@ const browse = () => {
     const [selectedType, setSelectedType] = useState<string>("All")
     const [selectedMuscles, setSelectedMuscles] = useState<Array<string>>(["All"])
     const [selectedDifficulty, setSelectedDifficulty] = useState<string>("All")
-
+    const [userSessions, setUserSessions] = useState<sessionObj[]>([])
+    const [errorMessage, setErrorMessage] = useState<String>()
+    const {value: auth, setValue: setAuth} = useAuthContext()
     const [workoutDataFiltered, setWorkoutDataFiltered] = useState<workoutInterface[]>(workoutData.value)
     
     useEffect(() => {
@@ -292,10 +296,28 @@ const browse = () => {
                                 style={{borderRadius: 999, backgroundColor: styleColors.darkest, alignItems: "center", justifyContent: "center", width: '8%', aspectRatio: 1, position: "absolute", top: 10, right: 10}}
                                 onPress={() => {{
                                     setBottomSheetText(item.name)
+                                    //backend pull session
+                                    axios.post('http://localhost:4000/api/workouts/retrieveData',
+                                    //axios.post("http://www.fitnessapp.duckdns.org:4000/create-user",
+                                    {
+                                        username: auth,
+                                    })
+                                    .then(function(response : object) {
+                                        setUserSessions(response.data.session)
+                                        // if(response["data" as keyof object]["success"]) {
+                                        //     console.log(response)
+                                        //     // setWorkoutDataFiltered(response)
+                                        // }
+                                        // else {
+                                        //     setErrorMessage(response["data" as keyof object]["message"])
+                                        // }
+                                    })
+                                    .catch(function (error : object) {
+                                        console.log(error)
+                                    })
                                     bottomSheetRef.current?.expand()
                                     
-                                }}}
-                                >
+                                }}}>
                                 <Icon
                                     name="add"
                                     color={styleColors.light}
@@ -323,8 +345,23 @@ const browse = () => {
                     
 
                     <BottomSheetView>
-                        <Text style={globalStyles.baseText}>Add {bottomSheetText}</Text>
-                        
+                        <Text style={globalStyles.baseText}>Add {bottomSheetText} </Text>
+                        {/*show sessions Important*/}
+                        <FlatList
+                            data={userSessions}
+                            keyExtractor={(item) => item.name}
+                            renderItem={({item})=>(
+                                <Pressable
+                                    onPress ={()=>{
+                                        console.log(item.name)
+                                    }} 
+                                >
+                                    <Text style={{color: '#ffff'}}>
+                                    {item.name}
+                                    </Text>
+                                </Pressable>
+                            )}
+                        />
                     </BottomSheetView>
                 </BottomSheet>
                 

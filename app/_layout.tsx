@@ -43,8 +43,8 @@ const RootLayout = () => {
     }
 
     const loadData = async (): Promise<void> => {
-        //await axios.get('http://localhost:4000/api/workouts')
-        await axios.get('http://10.0.2.2:4000/api/workouts')
+        await axios.get('http://localhost:4000/api/workouts')
+        //await axios.get('http://10.0.2.2:4000/api/workouts')
         .then(response => {
             setWorkouts(response.data)
             setWorkoutsLoaded(true)
