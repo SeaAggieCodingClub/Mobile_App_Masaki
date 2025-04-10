@@ -1,5 +1,6 @@
-import { View, Text, Image, StyleSheet, FlatList, Pressable, SafeAreaView, Appearance, useColorScheme } from "react-native"
+import { View, Text, TextInput, Image, StyleSheet, FlatList, Pressable, SafeAreaView, Appearance, useColorScheme } from "react-native"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import React from 'react';
 import { useRouter } from "expo-router"
 import globalStyles from "../globalStyles"
 import styleColors from "../styleColors"
@@ -13,6 +14,11 @@ interface sessionsProps {
 }
 
 const sessions = () => {
+
+    const [workoutNameInput, setNameInput] = useState("Name")
+    const [setNum, setNumInput] = useState("")
+    let selectedDays: string[] = []
+
     const sessions = [
         { "id": 1, "name": "test1", "day": ["M"] },
         { "id": 2, "name": "test2", "day": ["T"] },
@@ -91,10 +97,158 @@ const sessions = () => {
                 backdropComponent={renderBackdrop}
             >
                 <BottomSheetView>
-                    <View style={{paddingHorizontal: 16}}>
-                        <Text style={globalStyles.baseText}>Add</Text>
+                    <View style={{paddingHorizontal: 6}}>
+                        <TextInput 
+                        onChangeText={input => setNameInput(input)} 
+                        placeholder = "Name"
+                        placeholderTextColor={styleColors.light}
+                        style={style.textInput} 
+                        selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     </View>
-                    
+                    <View style={{display: "flex", flexDirection: "row", paddingHorizontal: 16, marginHorizontal: 15, gap: 8}}>
+                    <Pressable
+                        style={({pressed}) =>({
+                            aspectRatio: 1, 
+                            flex:1, 
+                            right: 16, 
+                            marginTop: 20, 
+                            marginBottom: 12, 
+                            backgroundColor: pressed ? styleColors.primary : styleColors.light,
+                            borderRadius: 999,
+                            width: 10
+                        })}
+                        onPress={()=> {
+                            selectedDays = toggleItem(selectedDays, "M")
+                        }}
+                        > 
+
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                                M
+                            </Text>
+                            
+
+                        </Pressable>
+                        <Pressable
+                            style={{
+                                aspectRatio: 1, 
+                                flex:1, 
+                                right: 16, 
+                                marginTop: 20, 
+                                marginBottom: 12, 
+                                backgroundColor: styleColors.light, 
+                                borderRadius: 999,
+                                width: 10
+                            }}
+                            onPress={()=> {
+                                selectedDays = toggleItem(selectedDays, "T")
+                            }}>
+
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                                T 
+                            </Text>
+                            
+                        </Pressable>
+                        <Pressable
+                            style={{
+                                aspectRatio: 1, 
+                                flex:1, 
+                                right: 16, 
+                                marginTop: 20, 
+                                marginBottom: 12, 
+                                backgroundColor: styleColors.light, 
+                                borderRadius: 999,
+                                width: 10
+                            }}
+                            onPress={()=> {
+                                selectedDays = toggleItem(selectedDays, "W")
+                            }}>
+
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                                W
+                            </Text>
+
+                        </Pressable>
+                        <Pressable
+                        style={{
+                            aspectRatio: 1, 
+                            flex:1, 
+                            right: 16, 
+                            marginTop: 20, 
+                            marginBottom: 12, 
+                            backgroundColor: styleColors.light, 
+                            borderRadius: 999,
+                            width: 10
+                        }}
+                        onPress={()=> {
+                            selectedDays = toggleItem(selectedDays, "Th")
+                        }}>
+                            
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                                Th
+                            </Text>
+
+                        </Pressable>
+                        <Pressable
+                        style={{
+                            aspectRatio: 1, 
+                            flex:1, 
+                            right: 16, 
+                            marginTop: 20, 
+                            marginBottom: 12, 
+                            backgroundColor: styleColors.light, 
+                            borderRadius: 999,
+                            width: 10
+                        }}
+                        onPress={()=> {
+                            selectedDays = toggleItem(selectedDays, "F")
+                        }}>
+                            
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                                F
+                            </Text>
+
+                        </Pressable>
+                        <Pressable
+                        style={{
+                            aspectRatio: 1, 
+                            flex:1, 
+                            right: 16, 
+                            marginTop: 20, 
+                            marginBottom: 12, 
+                            backgroundColor: styleColors.light, 
+                            borderRadius: 999,
+                            width: 10
+                        }}
+                        onPress={()=> {
+                            selectedDays = toggleItem(selectedDays, "S")
+                        }}>
+                            
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                                S
+                            </Text>
+
+                        </Pressable>
+                        <Pressable
+                        style={{
+                            aspectRatio: 1, 
+                            flex:1, 
+                            right: 16, 
+                            marginTop: 20, 
+                            marginBottom: 12, 
+                            backgroundColor: styleColors.light, 
+                            borderRadius: 999,
+                            width: 10
+                        }}
+                        onPress={()=> {
+                            selectedDays = toggleItem(selectedDays, "Su")
+                        }}>
+                            
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                                Su
+                            </Text>
+
+                        </Pressable>
+                    </View>
                 </BottomSheetView>
             </BottomSheet>
 
@@ -105,5 +259,23 @@ const sessions = () => {
         </GestureHandlerRootView>
     )  
 }
+const style = StyleSheet.create({
+    textInput: {
+        backgroundColor: styleColors.dark,
+        padding: 8,
+        height: 50,
+        fontFamily: "Montserrat-Medium",
+        color: styleColors.light,
+        fontSize: 24,
+    }
+})
+
+function toggleItem<T>(list: T[], item: T): T[] {
+    if (list.includes(item)) {
+      return list.filter(i => i !== item); // remove item
+    } else {
+      return [...list, item]; // add item
+    }
+  }  
 
 export default sessions
