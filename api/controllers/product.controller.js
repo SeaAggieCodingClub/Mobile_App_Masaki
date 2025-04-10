@@ -125,6 +125,11 @@ const updateData = async (req, res) => {
         const {username, session} = req.body
         const verifyUsername = await User.findOne({username: username})
         const replaceUser = await UserData.findOne({username: username})
+        const data = await UserData ({
+            username: username,
+            session: session
+        })
+
         if (!verifyUsername) {
             return res.status(404).json({success: false, message: 'username not found'})
         }
@@ -147,14 +152,11 @@ const updateData = async (req, res) => {
                     $set: {session: session}
                 }
             )
+            return res.status(200).json(data)
         } else {
-            const data = await UserData ({
-                username: username,
-                session: session
-            })
             data.save()
+            return res.status(200).json(data)
         }
-        res.json(data)
     } catch (error) {
         res.status(500).json({success: false, message: error.message})
     }
