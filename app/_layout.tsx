@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { StatusBar } from "expo-status-bar"
 import Auth from "./(preAuth)/auth"
 import Signup from "./(preAuth)/signup"
+//require('dotenv').config({ path: "../api/private.env"})
 
 import { secureStoreGet, AuthContext, useAuthContext } from "./(preAuth)/authContext"
 import * as SecureStore from "expo-secure-store"
@@ -42,6 +43,7 @@ const RootLayout = () => {
     }
 
     const loadData = async (): Promise<void> => {
+        //await axios.get('http://localhost:4000/api/workouts')
         await axios.get('http://10.0.2.2:4000/api/workouts')
         .then(response => {
             setWorkouts(response.data)
@@ -75,14 +77,6 @@ const RootLayout = () => {
         )
     }
     
-    if(!workoutsLoaded) {
-        return(
-            <View>
-                <Text>loading data</Text>
-            </View>
-        )
-    }
-
 
 
     if(!auth && !signup) {
@@ -106,6 +100,14 @@ const RootLayout = () => {
             </AuthContext.Provider>
         )
         
+    }
+
+    if(!workoutsLoaded) {
+        return(
+            <View>
+                <Text>loading data</Text>
+            </View>
+        )
     }
 
     return(

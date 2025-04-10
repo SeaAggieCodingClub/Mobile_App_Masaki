@@ -59,8 +59,10 @@ const auth = () => {
                         onPress={() => {
                             //connect to backend
 
-                            // axios.post('http://fitnessapp.duckdns.com:4000/check-user', 
-                            axios.post('http://10.0.2.2:4000/check-user', 
+                            console.log("bobby")
+                            axios.get('http://localhost:4000/api/workouts',
+                            // axios.post('http://fitnessapp.duckdns.org:4000/check-user', 
+                            // axios.post('http://10.0.2.2:4000/check-user', 
                             {
                                 username: usernameInput,
                                 password: passwordInput

@@ -9,7 +9,6 @@ import * as SecureStore from "expo-secure-store"
 import { secureStoreGet, secureStoreSet, secureStoreDelete } from "../(preAuth)/authContext"
 
 
-
 const accounts = () => {
 
     const {value: auth, setValue: setAuth} = useAuthContext()
