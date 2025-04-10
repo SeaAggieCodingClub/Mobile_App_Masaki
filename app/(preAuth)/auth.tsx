@@ -60,7 +60,7 @@ const auth = () => {
                             //connect to backend
 
                             console.log("bobby")
-                            axios.get('http://localhost:4000/api/workouts',
+                            axios.get('http://localhost:4000/api/check-user',
                             // axios.post('http://fitnessapp.duckdns.org:4000/check-user', 
                             // axios.post('http://10.0.2.2:4000/check-user', 
                             {
