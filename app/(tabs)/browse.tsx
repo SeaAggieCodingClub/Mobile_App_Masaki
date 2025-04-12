@@ -116,7 +116,7 @@ const browse = () => {
     //     setFilter(filteredData)
     // }
 
-    const snapPoints = useMemo(() => ['70%', '70%'], [])
+    const snapPoints = useMemo(() => ['70%'], [])
     const bottomSheetRef = useRef<BottomSheet>(null)
     const [bottomSheetText, setBottomSheetText] = useState("")
 
@@ -334,7 +334,7 @@ const browse = () => {
                     
                 <BottomSheet 
                     ref={bottomSheetRef}
-                    
+                    enableDynamicSizing={false}
                     index={-1} 
                     snapPoints={snapPoints}
                     enablePanDownToClose={true}

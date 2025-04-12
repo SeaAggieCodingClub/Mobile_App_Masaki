@@ -101,6 +101,7 @@ const sessions = () => {
 
             <BottomSheet
                 ref={createSessionRef}
+                enableDynamicSizing={false}
                 index={-1}
                 snapPoints={createSessionSnapPoints}
                 enablePanDownToClose={true}

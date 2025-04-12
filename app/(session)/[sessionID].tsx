@@ -1,7 +1,7 @@
-import { Text, View, } from "react-native"
+import { Pressable, Text, View, } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import globalStyles from "../globalStyles"
-import { Stack, useLocalSearchParams } from "expo-router"
+import { router, Stack, useLocalSearchParams } from "expo-router"
 import styleColors from "../styleColors"
 import { sessionObj, workoutObj, SessionContext, useSessionContext } from "./sessionContext"
 import { FlatList } from "react-native"
@@ -18,7 +18,7 @@ const sessionID = () => {
     return (
         <View style={{backgroundColor: styleColors.darkest, flex: 1}}>
             <Stack.Screen options = {{
-                headerTitle: "Session",
+                headerTitle: currentSession.name,
                 headerTitleStyle: {fontFamily: "Montserrat-Bold"},
                 headerBackTitle: "Back",
                 headerTintColor: styleColors.light,
@@ -26,7 +26,6 @@ const sessionID = () => {
                 backgroundColor: styleColors.dark,
                 }
             }}/>
-        <Text style={globalStyles.baseText}>{currentSession.name}</Text>
         <Text style={globalStyles.baseText}>{currentSession.daysOfSession}</Text>
         <FlatList
         style={{paddingHorizontal: 16}}
@@ -40,6 +39,11 @@ const sessionID = () => {
                         <Text style={[globalStyles.baseText, {flex: 1}]}>Reps: {item.item.reps}</Text>
                         <Text style={[globalStyles.baseText, {flex: 1}]}>Weights: {item.item.weights}</Text>
                     </View>
+                    <Pressable onPress={() => {
+                        router.back()
+                        router.push({pathname: "../(tabs)/browse"
+
+                        })}}><Text>add</Text></Pressable>
                 </View>
             )}
         />
