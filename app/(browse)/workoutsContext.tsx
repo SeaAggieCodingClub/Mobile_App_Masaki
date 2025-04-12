@@ -7,6 +7,7 @@ export type workoutInterface = {
     equipment: string,
     difficulty: number,
     workoutType: [string],
+    _id: string
 }
 
 export type workoutsType = {

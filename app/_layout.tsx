@@ -80,7 +80,15 @@ const RootLayout = () => {
     useEffect(() => {
         loadAuth()
         loadWorkouts()
+        console.log("yeah")
     }, []) 
+    
+    useEffect(() => {
+        if(typeof auth === "string") {
+            loadSessions(auth)
+        }
+        console.log("yier")
+    }, [auth])
 
     if(!loaded) {
         return(

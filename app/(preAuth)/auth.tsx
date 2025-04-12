@@ -58,8 +58,7 @@ const auth = () => {
                         style={[globalStyles.button, {marginHorizontal: "auto", width: "50%", height: "5%", backgroundColor: styleColors.dark, borderRadius: 16}]}
                         onPress={() => {
                             //connect to backend
-
-                            console.log("bobby")
+                            
                             // axios.get('http://localhost:4000/api/check-user',
                             // axios.post('http://fitnessapp.duckdns.org:4000/check-user', 
                             axios.post('http://10.0.2.2:4000/check-user', 
@@ -67,8 +66,8 @@ const auth = () => {
                                 username: usernameInput,
                                 password: passwordInput
                             })
-                            .then(function (response : object) {
-                                if(response["data" as keyof boolean]) {
+                            .then(function (response : any) {
+                                if(response.data.success) {
                                     setAuth(usernameInput)
                                     console.log("authorized")
 
@@ -79,11 +78,12 @@ const auth = () => {
 
                                     
                                 } else {
-                                    setErrorMessage("Invalid username or password")
+                                    console.log(response.data)
+                                    setErrorMessage(response.data.message)
                                 }
                             })
                             .catch(function (error : object) {
-                                console.log("error")
+                                console.log("auth error")
                                 console.log(error)
                         })
                     }}>

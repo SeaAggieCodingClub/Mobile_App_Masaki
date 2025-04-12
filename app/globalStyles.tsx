@@ -49,7 +49,7 @@ export default StyleSheet.create({
         shadowRadius: 10,
         shadowOpacity: 0.3,
         elevation: 5,
-        aspectRatio: 1.2,
+        aspectRatio: 4,
     },
 
     pageTitle: {

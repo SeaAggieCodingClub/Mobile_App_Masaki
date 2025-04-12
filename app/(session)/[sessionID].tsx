@@ -12,7 +12,7 @@ const sessionID = () => {
     const _id = useLocalSearchParams<{_id: string}>()
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
     const [currentSession, setCurrentSession] = useState((userSessions.filter((item) => item._id == _id._id))[0])
-    console.log(currentSession.workoutObject)
+    //console.log(currentSession.workoutObject)
 
 
     return (

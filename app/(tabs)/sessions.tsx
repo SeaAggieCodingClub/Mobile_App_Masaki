@@ -27,19 +27,6 @@ const sessions = () => {
     const [setNum, setNumInput] = useState("")
     let selectedDays: string[] = []
 
-    const sessions = [
-        { "id": 1, "name": "test1", "day": ["M"] },
-        { "id": 2, "name": "test2", "day": ["T"] },
-        { "id": 3, "name": "test2", "day": ["Th"] },
-        { "id": 4, "name": "test3", "day": ["T"] },
-        { "id": 5, "name": "test3", "day": ["Th"] },
-        { "id": 6, "name": "test4", "day": ["T"] },
-        { "id": 7, "name": "test4", "day": ["Th"] },
-        { "id": 8, "name": "test5", "day": ["W"] },
-        { "id": 9, "name": "test6", "day": ["F"] },
-        { "id": 10, "name": "test7", "day": ["M", "W"] }
-      ]
-
     const router = useRouter()
 
     const createSessionRef = useRef<BottomSheet>(null)
@@ -76,11 +63,13 @@ const sessions = () => {
                 </Pressable>
             </View>
 
+            {userSessions && userSessions.length != 0 ?
+
             <FlatList
                 style={{paddingHorizontal: 16}}
-                numColumns={2}
+                numColumns={1}
                 contentContainerStyle={{gap: 8}}
-                columnWrapperStyle={{gap: 8}}
+                //columnWrapperStyle={{gap: 8}}
                 data={userSessions}
                 keyExtractor={(item) => item._id}
                 renderItem={({item})=>(
@@ -98,6 +87,8 @@ const sessions = () => {
                     </Pressable>
                 )}
             />
+
+            : <Text style={globalStyles.baseText}>Press the + button to create a new session</Text>}
 
             <BottomSheet
                 ref={createSessionRef}
