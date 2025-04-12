@@ -1,38 +1,19 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigation, Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useLayoutEffect} from 'react';
 import globalStyles from '../globalStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styleColors from '../styleColors';
+import { WorkoutsContext } from './workoutsContext';
 
 
 const SubBrowseData = () => {
 
-  interface workout {
-    name: string,
-    muscle: string[],
-    description: string,
-    equipment: string,
-    difficulty: number,
-    workoutType: string,
-}
+  const { _id } = useLocalSearchParams<{ _id: string }>()
+  const workoutData = useContext(WorkoutsContext).value
+  const [currentWorkout, setCurrentWorkout] = useState((workoutData.filter((item) => item._id == _id))[0])
 
-  const {
-    name,
-    muscle,
-    description,
-    equipment,
-    difficulty,
-    workoutType,
-  } = useLocalSearchParams<{
-    name: string,
-    muscle: string[],
-    description: string,
-    equipment: string,
-    difficulty: string,
-    workoutType: string,
-  }>()
 
   // const navigation = useNavigation();
 
@@ -45,7 +26,7 @@ const SubBrowseData = () => {
   return (
     <View style={globalStyles.screenContainer}>
       <Stack.Screen options = {{
-        headerTitle: name,
+        headerTitle: currentWorkout.name,
         headerTitleStyle: {fontFamily: "Montserrat-Bold"},
         headerBackTitle: "Back",
         headerTintColor: styleColors.light,
@@ -53,12 +34,12 @@ const SubBrowseData = () => {
           backgroundColor: styleColors.dark,
         }
       }}/>
-      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Workout: {name}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Workout Type: {workoutType}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Target Muscles: {muscle.toString()}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Description: {description}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Equipment: {equipment}{"\n"}</Text>
-      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Difficulty: {difficulty}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Workout: {currentWorkout.name}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Workout Type: {currentWorkout.workoutType}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Target Muscles: {currentWorkout.muscle.toString()}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Description: {currentWorkout.description}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Equipment: {currentWorkout.equipment}{"\n"}</Text>
+      <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Difficulty: {currentWorkout.difficulty}{"\n"}</Text>
 
     </View>
     //  name: item.name,

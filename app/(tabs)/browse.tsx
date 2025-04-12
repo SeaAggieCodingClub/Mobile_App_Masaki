@@ -273,18 +273,13 @@ const browse = () => {
                     showsVerticalScrollIndicator={false}
                     numColumns={1}
                     data={workoutDataFiltered} 
-                    keyExtractor={(item) => item.name} 
+                    keyExtractor={(item) => item._id} 
                     renderItem={({item})=>(
                         <Pressable 
                             style={globalStyles.tile}
                             onPress={() => {
                                 router.push({pathname: "(browse)/[workoutID]", params: {
-                                    name: item.name,
-                                    muscle: item.muscle,
-                                    description: item.description,
-                                    equipment: item.equipment,
-                                    difficulty: item.difficulty,
-                                    workoutType: item.workoutType,
+                                    _id: item._id
                                 }})
                             }}
                         >
