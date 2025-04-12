@@ -3,27 +3,57 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import globalStyles from "../globalStyles"
 import { router, Stack, useLocalSearchParams } from "expo-router"
 import styleColors from "../styleColors"
-import { sessionObj, workoutObj, SessionContext, useSessionContext } from "./sessionContext"
+import { sessionObj, workoutObj, SessionContext, useSessionContext, useLoadSessions } from "./sessionContext"
 import { FlatList } from "react-native"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { useAuthContext } from "../(preAuth)/authContext"
+import axios from "axios"
 
 const sessionID = () => {
 
     const _id = useLocalSearchParams<{_id: string}>()
+    const {value: auth, setValue: setAuth} = useAuthContext()
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
     const [currentSession, setCurrentSession] = useState((userSessions.filter((item) => item._id == _id._id))[0])
     //console.log(currentSession.workoutObject)
+    
+    const loadSessions = async (user:string): Promise<void> => {
+        await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
+            {
+                username: user
+            })
+            .then(response => {
+                setUserSessions(response.data.session)
+            }).catch((error) => {
+                console.log("session error")
+                console.log(error.response)
+            }
+        )
+    }
+
+    const updateSessions = async (user:string, newSessions: sessionObj[]): Promise<void> => {
+        await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
+            {
+                username: user,
+                session: newSessions,
+            })
+            .then(response => {
+                console.log(response.data)
+                loadSessions(user)
+                //setUserSessions(response.data.message)
+            }).catch((error) => {
+                console.log("session error")
+                console.log(error.response)
+            }
+        )
+    }
 
     const editSessionRef = useRef<BottomSheet>(null)
     const editSessionSnapPoints = useMemo(() => ['95%'], [])
     const renderBackdrop = useCallback(
         (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
-
-    const saveSession = async: <Promise></Promise>() => {
-        
-    }
 
     return (
         <GestureHandlerRootView>
@@ -36,6 +66,18 @@ const sessionID = () => {
                 headerRight: () => <Pressable onPress={() => {
                     //Alert.alert("Are you sure you want to delete " + currentSession.name.toString() + "?", " ", [{text: "Cancel"}, {text: "Delete"}])
                     //delete session
+
+                    if(typeof auth == "string") {
+                        //loadSessions(auth)
+                        console.log(userSessions)
+                        console.log(_id._id)
+                        updateSessions(auth, userSessions.filter((item) => item._id != _id._id))
+                        loadSessions(auth)
+                        router.back()
+                        
+                    }
+                    
+                   
 
 
                 }}><Text style={{color: "#FF0000", fontSize: 16, fontFamily: "Montserrat-Medium"}}>Delete</Text></Pressable>,

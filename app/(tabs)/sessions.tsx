@@ -34,7 +34,19 @@ const sessions = () => {
     const renderBackdrop = useCallback(
         (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
 
-    
+    const loadSessions = async (user:string): Promise<void> => {
+        await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
+            {
+                username: user
+            })
+            .then(response => {
+                setUserSessions(response.data.session)
+            }).catch((error) => {
+                console.log("session error")
+                console.log(error.response)
+            }
+        )
+    }
 
     return (
         <GestureHandlerRootView>
@@ -253,6 +265,10 @@ const sessions = () => {
 
                         </Pressable>
                     </View>
+                    <Pressable 
+                        >
+                            <Text>Add</Text>
+                    </Pressable>
                 </BottomSheetView>
             </BottomSheet>
 
