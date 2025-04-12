@@ -33,9 +33,6 @@ userSchema.pre('save', function (next) {
 })
 
 userSchema.methods.comparePassword = async function (password) {
-    if (!password) {
-        throw new Error('no password entered')
-    }
     try {
         const result = await bcrypt.compare(password, this.password)
         return result
@@ -45,9 +42,6 @@ userSchema.methods.comparePassword = async function (password) {
 }
 
 userSchema.statics.isThisUsernameInUse = async function (username) {
-    if (!username) {
-        throw new Error('no username entered')
-    }
     try {
         const user = await this.findOne({username})
         if (user) {
