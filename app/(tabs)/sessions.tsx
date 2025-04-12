@@ -7,13 +7,21 @@ import styleColors from "../styleColors"
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import Icon from '@expo/vector-icons/MaterialIcons'
+import { sessionObj, useSessionContext, workoutObj } from "../(session)/sessionContext";
+import axios from "axios";
+import { AuthContext, useAuthContext } from "../(preAuth)/authContext";
 
 interface sessionsProps {
     name: string,
     day: Array<string>,
 }
 
+
+
 const sessions = () => {
+
+    const {value: auth, setValue: setAuth} = useAuthContext()
+    const {value: userSessions, setValue: setUserSessions} = useSessionContext()
 
     const [workoutNameInput, setNameInput] = useState("Name")
     const [setNum, setNumInput] = useState("")
@@ -35,10 +43,11 @@ const sessions = () => {
     const router = useRouter()
 
     const createSessionRef = useRef<BottomSheet>(null)
-    const createSessionSnapPoints = useMemo(()=> ['90%'], [])
+    const createSessionSnapPoints = useMemo(()=> ['90%', '90%'], [])
     const renderBackdrop = useCallback(
         (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
 
+    
 
     return (
         <GestureHandlerRootView>
@@ -72,14 +81,17 @@ const sessions = () => {
                 numColumns={2}
                 contentContainerStyle={{gap: 8}}
                 columnWrapperStyle={{gap: 8}}
-                data={sessions}
+                data={userSessions}
                 keyExtractor={(item) => item.name}
-                renderItem={({item}: {item: sessionsProps})=>(
-                    <Pressable 
+                renderItem={({item})=>(
+                    <Pressable
                         style={globalStyles.sessionTile}
                         onPress={()=> {
-                            router.push({pathname: "(session)/[sessionID]"})
-                        }}
+                            // send session data to session slideout
+                            router.push({pathname: "(session)/[sessionID]", params: {
+                            name: item.name,
+                            }
+                        })}}
                     >
                         <Text style={{fontFamily: "Montserrat-Medium", color: styleColors.light}}>{item.name}</Text>
                         

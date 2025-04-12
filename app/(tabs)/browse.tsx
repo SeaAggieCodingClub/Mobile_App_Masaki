@@ -9,7 +9,7 @@ import { GestureHandlerRootView, ScrollView, TextInput } from "react-native-gest
 import Icon from '@expo/vector-icons/MaterialIcons'
 import { WorkoutsContext, workoutInterface, workoutsType } from "../(browse)/workoutsContext"
 import { useAuthContext, secureStoreGet, secureStoreSet } from "../(preAuth)/authContext"
-import { workoutObj, sessionObj} from "../(session)/sessionTypes"
+import { workoutObj, sessionObj, useSessionContext } from "../(session)/sessionContext"
 const axios = require('axios').default
 
   
@@ -65,7 +65,7 @@ const browse = () => {
     const [selectedType, setSelectedType] = useState<string>("All")
     const [selectedMuscles, setSelectedMuscles] = useState<Array<string>>(["All"])
     const [selectedDifficulty, setSelectedDifficulty] = useState<string>("All")
-    const [userSessions, setUserSessions] = useState<sessionObj[]>([])
+    const {value: userSessions, setValue: setUserSessions} = useSessionContext()
     const [errorMessage, setErrorMessage] = useState<String>()
     const {value: auth, setValue: setAuth} = useAuthContext()
     const [workoutDataFiltered, setWorkoutDataFiltered] = useState<workoutInterface[]>(workoutData.value)
@@ -116,7 +116,7 @@ const browse = () => {
     //     setFilter(filteredData)
     // }
 
-    const snapPoints = useMemo(() => ['70%'], [])
+    const snapPoints = useMemo(() => ['70%', '70%'], [])
     const bottomSheetRef = useRef<BottomSheet>(null)
     const [bottomSheetText, setBottomSheetText] = useState("")
 
@@ -297,30 +297,31 @@ const browse = () => {
                                 onPress={() => {{
                                     setBottomSheetText(item.name)
                                     //backend pull session
-                                    axios.post('http://localhost:4000/api/workouts/retrieveData',
-                                    //axios.post("http://www.fitnessapp.duckdns.org:4000/create-user",
-                                    {
-                                        username: auth,
-                                    })
-                                    .then(function(response : object) {
-                                        setUserSessions(response.data.session)
-                                        // if(response["data" as keyof object]["success"]) {
-                                        //     console.log(response)
-                                        //     // setWorkoutDataFiltered(response)
-                                        // }
-                                        // else {
-                                        //     setErrorMessage(response["data" as keyof object]["message"])
-                                        // }
-                                    })
-                                    .catch(function (error : object) {
-                                        console.log(error)
-                                    })
+                                    // axios.post('http://localhost:4000/api/workouts/retrieveData',
+                                    // axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
+                                    // {
+                                    //     username: auth,
+                                    // })
+                                    // .then((response:any) => {
+                                    //     console.log(response.data.session)
+                                    //     setUserSessions(response.data.session)
+                                    //     // if(response["data" as keyof object]["success"]) {
+                                    //     //     console.log(response)
+                                    //     //     // setWorkoutDataFiltered(response)
+                                    //     // }
+                                    //     // else {
+                                    //     //     setErrorMessage(response["data" as keyof object]["message"])
+                                    //     // }
+                                    // })
+                                    // .catch(function (error : object) {
+                                    //     console.log(error)
+                                    // })
                                     bottomSheetRef.current?.expand()
                                     
                                 }}}>
                                 <Icon
                                     name="add"
-                                    color={styleColors.light}
+                                    color={"rgba(255, 255, 255, 0.75)"}
                                     size={24}
                                 />
                             </Pressable>

@@ -1,9 +1,13 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import globalStyles from "../globalStyles"
-import { Stack } from "expo-router"
+import { Stack, useLocalSearchParams } from "expo-router"
 import styleColors from "../styleColors"
+import { sessionObj, workoutObj, SessionContext, useSessionContext } from "./sessionContext"
 
 const sessionID = () => {
+
+    //const {name, daysOfSession, workouts} = useLocalSearchParams<workoutObj>()
+
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
             <Stack.Screen options = {{

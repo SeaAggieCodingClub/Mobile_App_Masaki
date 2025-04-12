@@ -9,6 +9,7 @@ import Signup from "./(preAuth)/signup"
 //require('dotenv').config({ path: "../api/private.env"})
 
 import { secureStoreGet, AuthContext, useAuthContext } from "./(preAuth)/authContext"
+import { sessionObj, workoutObj, SessionContext, userSessions, useSessionContext } from "./(session)/sessionContext"
 import * as SecureStore from "expo-secure-store"
 import { SignupContext, useSignupContext } from "./(preAuth)/signupContext"
 import { WorkoutsContext, workoutInterface } from "./(browse)/workoutsContext"
@@ -21,6 +22,9 @@ const RootLayout = () => {
 
     const [workouts, setWorkouts] = useState<workoutInterface[]>([])
     const [workoutsLoaded, setWorkoutsLoaded] = useState(false)
+
+    const [userSessions, setUserSessions] = useState<sessionObj[]>([] as sessionObj[])
+    const [sessionsLoaded, setSessionsLoaded] = useState(false)
 
     const [signup, setSignup] = useState<boolean>(false)
 
@@ -38,28 +42,43 @@ const RootLayout = () => {
 
         if(loadAuthUser && loadAuthPass) {
             setAuth(loadAuthUser)
+            loadSessions(loadAuthUser)
         }
         setAuthLoaded(true)
     }
 
-    const loadData = async (): Promise<void> => {
-        await axios.get('http://localhost:4000/api/workouts')
-        //await axios.get('http://10.0.2.2:4000/api/workouts')
+    const loadWorkouts = async (): Promise<void> => {
+        // await axios.get('http://localhost:4000/api/workouts')
+        await axios.get('http://10.0.2.2:4000/api/workouts')
         .then(response => {
             setWorkouts(response.data)
             setWorkoutsLoaded(true)
         })
         .catch((error) => {
-            console.log("error")
+            console.log("workouts error")
             console.log(error)
         })
     }
 
+    const loadSessions = async (user:string): Promise<void> => {
+        await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
+            {
+                username: user
+            })
+            .then(response => {
+                setUserSessions(response.data.session)
+                setSessionsLoaded(true)
+            }).catch((error) => {
+                console.log("session error")
+                console.log(error.response)
+            }
+        )
+    }
+
     useEffect(() => {
         loadAuth()
-        loadData()
+        loadWorkouts()
     }, []) 
-
 
     if(!loaded) {
         return(
@@ -104,9 +123,17 @@ const RootLayout = () => {
 
     if(!workoutsLoaded) {
         return(
-            <View>
+            <SafeAreaView>
                 <Text>loading data</Text>
-            </View>
+            </SafeAreaView>
+        )
+    }
+
+    if(!sessionsLoaded) {
+        return(
+            <SafeAreaView>
+                <Text>loading sessions</Text>
+            </SafeAreaView>
         )
     }
 
@@ -114,12 +141,14 @@ const RootLayout = () => {
         <>
             <AuthContext.Provider value={{ value: auth, setValue: setAuth }}>
             <WorkoutsContext.Provider value={{value: workouts}}>
+            <SessionContext.Provider value={{value: userSessions, setValue: setUserSessions}}>
                 <StatusBar style="light"/>
                 <Stack>
                     <Stack.Screen name="(tabs)" options = {{
                         headerShown: false
                     }}/>
                 </Stack>
+            </SessionContext.Provider>
             </WorkoutsContext.Provider>
             </AuthContext.Provider>
         </>
