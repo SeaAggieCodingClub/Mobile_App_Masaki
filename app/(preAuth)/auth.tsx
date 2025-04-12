@@ -76,6 +76,8 @@ const auth = () => {
                                         secureStoreSet("authUser", usernameInput)
                                         secureStoreSet("authPass", passwordInput)
                                     }
+
+                                    
                                 } else {
                                     setErrorMessage("Invalid username or password")
                                 }

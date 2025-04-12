@@ -14,6 +14,8 @@ import * as SecureStore from "expo-secure-store"
 import { SignupContext, useSignupContext } from "./(preAuth)/signupContext"
 import { WorkoutsContext, workoutInterface } from "./(browse)/workoutsContext"
 import axios from "axios"
+import globalStyles from "./globalStyles"
+import styleColors from "./styleColors"
 
 const RootLayout = () => {
 
@@ -82,16 +84,28 @@ const RootLayout = () => {
 
     if(!loaded) {
         return(
-            <SafeAreaView>
-                <Text>loading font</Text>
+            <SafeAreaView style={globalStyles.screenContainer}>
+                <View style={{margin: "auto"}}>
+                    <ActivityIndicator
+                        color={"rgba(255, 255, 255, 0.5)"}
+                        size={"large"}
+                    />
+                    <Text style={{color: "rgba(255, 255, 255, 0.5)"}}>Loading fonts</Text>
+                </View>
             </SafeAreaView>
         )
     }
 
     if(!authLoaded) {
         return(
-            <SafeAreaView>
-                <Text>loading auth</Text>
+            <SafeAreaView style={globalStyles.screenContainer}>
+                <View style={{margin: "auto"}}>
+                    <ActivityIndicator
+                        color={"rgba(255, 255, 255, 0.5)"}
+                        size={"large"}
+                    />
+                    <Text style={{color: "rgba(255, 255, 255, 0.5)"}}>Loading user</Text>
+                </View>
             </SafeAreaView>
         )
     }
@@ -99,7 +113,7 @@ const RootLayout = () => {
 
 
     if(!auth && !signup) {
-        return(
+        return(            
             <AuthContext.Provider value={{ value: auth, setValue: setAuth }}>
             <SignupContext.Provider value={{value: signup, setValue: setSignup}}>
                 <StatusBar style="light"/>
@@ -123,16 +137,28 @@ const RootLayout = () => {
 
     if(!workoutsLoaded) {
         return(
-            <SafeAreaView>
-                <Text>loading data</Text>
+            <SafeAreaView style={globalStyles.screenContainer}>
+                <View style={{margin: "auto"}}>
+                    <ActivityIndicator
+                        color={"rgba(255, 255, 255, 0.5)"}
+                        size={"large"}
+                    />
+                    <Text style={{color: "rgba(255, 255, 255, 0.5)"}}>Loading workouts</Text>
+                </View>
             </SafeAreaView>
         )
     }
 
     if(!sessionsLoaded) {
         return(
-            <SafeAreaView>
-                <Text>loading sessions</Text>
+            <SafeAreaView style={globalStyles.screenContainer}>
+                <View style={{margin: "auto"}}>
+                    <ActivityIndicator
+                        color={"rgba(255, 255, 255, 0.5)"}
+                        size={"large"}
+                    />
+                    <Text style={{color: "rgba(255, 255, 255, 0.5)"}}>Loading sessions</Text>
+                </View>
             </SafeAreaView>
         )
     }
