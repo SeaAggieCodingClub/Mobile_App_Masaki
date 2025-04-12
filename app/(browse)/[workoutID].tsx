@@ -15,14 +15,6 @@ const SubBrowseData = () => {
   const [currentWorkout, setCurrentWorkout] = useState((workoutData.filter((item) => item._id == _id))[0])
 
 
-  // const navigation = useNavigation();
-
-  // useLayoutEffect(() => {
-  //     navigation.setOptions({
-  //         tabBarStyle: { display: 'none' }, // Hide the tab bar for this screen
-  //     });
-  // }, [navigation]);
-
   return (
     <View style={globalStyles.screenContainer}>
       <Stack.Screen options = {{
@@ -42,12 +34,6 @@ const SubBrowseData = () => {
       <Text style={{fontFamily: "Montserrat-Regular", color: "#FFFFFF", fontSize: 18}}>Difficulty: {currentWorkout.difficulty}{"\n"}</Text>
 
     </View>
-    //  name: item.name,
-    //  muscle: item.muscle,
-    //  description: item.description,
-    //  equipment: item.equipment,
-    //  difficulty: item.difficulty,
-    //  workoutType: item.workoutType,
   )
 }
 

@@ -1,4 +1,4 @@
-import { Pressable, Text, View, } from "react-native"
+import { Pressable, Text, View, TextInput} from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import globalStyles from "../globalStyles"
 import { router, Stack, useLocalSearchParams } from "expo-router"
@@ -31,22 +31,40 @@ const sessionID = () => {
         style={{paddingHorizontal: 16}}
             data={currentSession.workoutObject}
             keyExtractor={item => item._id}
+            ListHeaderComponent={() => (
+                <Text style={[globalStyles.baseText, {fontFamily: "Montserrat-Bold"}]}>Workouts</Text>
+            )}
             renderItem={(item) => (
                 <View>
-                    <View style={{display: "flex", flexDirection: "row"}}>
-                        <Text style={[globalStyles.baseText, {flex: 1}]}>{item.item.workout}</Text>
-                        <Text style={[globalStyles.baseText, {flex: 1}]}>Sets: {item.item.sets}</Text>
+                    <Text style={[globalStyles.baseText, {flex: 1}]}>{item.item.workout}</Text>
+                    <View style={{display: "flex"}}>
+                        <View style={{display: "flex", flexDirection: "row"}}>
+                            <Text style={[globalStyles.baseText, {flex: 1}]}>Sets: {item.item.sets}</Text>
+                            <TextInput 
+                                style={globalStyles.textInput}
+                                inputMode={"numeric"}
+                            />
+                        </View>
                         <Text style={[globalStyles.baseText, {flex: 1}]}>Reps: {item.item.reps}</Text>
                         <Text style={[globalStyles.baseText, {flex: 1}]}>Weights: {item.item.weights}</Text>
                     </View>
-                    <Pressable onPress={() => {
-                        router.back()
-                        router.push({pathname: "../(tabs)/browse"
-
-                        })}}><Text>add</Text></Pressable>
+                    
                 </View>
             )}
+            ListFooterComponent={() => (
+                <Pressable 
+                        onPress={() => {
+                            router.back()
+                            router.push({pathname: "../(tabs)/browse"
+
+                        })}}>
+                            <Text style={globalStyles.baseText}>Add workouts</Text>
+                </Pressable>
+
+
+        )}
         />
+        
         </View>
     )
 }

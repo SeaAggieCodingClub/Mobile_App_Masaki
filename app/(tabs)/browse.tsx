@@ -281,6 +281,7 @@ const browse = () => {
                                 router.push({pathname: "(browse)/[workoutID]", params: {
                                     _id: item._id
                                 }})
+                                console.log(item._id)
                             }}
                         >
                             <Text style={[itemText.text]}>{item.name}</Text>
