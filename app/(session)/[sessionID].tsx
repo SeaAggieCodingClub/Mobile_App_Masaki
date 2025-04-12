@@ -1,15 +1,22 @@
+import { Text, View, } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import globalStyles from "../globalStyles"
 import { Stack, useLocalSearchParams } from "expo-router"
 import styleColors from "../styleColors"
 import { sessionObj, workoutObj, SessionContext, useSessionContext } from "./sessionContext"
+import { FlatList } from "react-native"
+import { useEffect, useState } from "react"
 
 const sessionID = () => {
 
-    //const {name, daysOfSession, workouts} = useLocalSearchParams<workoutObj>()
+    const _id = useLocalSearchParams<{_id: string}>()
+    const {value: userSessions, setValue: setUserSessions} = useSessionContext()
+    const [currentSession, setCurrentSession] = useState((userSessions.filter((item) => item._id == _id._id))[0])
+    console.log(currentSession.workoutObject)
+
 
     return (
-        <SafeAreaView style={globalStyles.androidSafeView}>
+        <View style={{backgroundColor: styleColors.darkest, flex: 1}}>
             <Stack.Screen options = {{
                 headerTitle: "Session",
                 headerTitleStyle: {fontFamily: "Montserrat-Bold"},
@@ -19,7 +26,24 @@ const sessionID = () => {
                 backgroundColor: styleColors.dark,
                 }
             }}/>
-        </SafeAreaView>
+        <Text style={globalStyles.baseText}>{currentSession.name}</Text>
+        <Text style={globalStyles.baseText}>{currentSession.daysOfSession}</Text>
+        <FlatList
+        style={{paddingHorizontal: 16}}
+            data={currentSession.workoutObject}
+            keyExtractor={item => item._id}
+            renderItem={(item) => (
+                <View>
+                    <View style={{display: "flex", flexDirection: "row"}}>
+                        <Text style={[globalStyles.baseText, {flex: 1}]}>{item.item.workout}</Text>
+                        <Text style={[globalStyles.baseText, {flex: 1}]}>Sets: {item.item.sets}</Text>
+                        <Text style={[globalStyles.baseText, {flex: 1}]}>Reps: {item.item.reps}</Text>
+                        <Text style={[globalStyles.baseText, {flex: 1}]}>Weights: {item.item.weights}</Text>
+                    </View>
+                </View>
+            )}
+        />
+        </View>
     )
 }
 

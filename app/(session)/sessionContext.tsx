@@ -5,11 +5,13 @@ export type workoutObj = {
     sets: number,
     reps: number,
     weights: string
+    _id: string
 }
 export type sessionObj = {
     name: string,
     daysOfSession: string[],
-    sessionWorkouts: workoutObj[]
+    workoutObject: workoutObj[],
+    _id: string
 }
 
 export type userSessions = {

@@ -82,14 +82,14 @@ const sessions = () => {
                 contentContainerStyle={{gap: 8}}
                 columnWrapperStyle={{gap: 8}}
                 data={userSessions}
-                keyExtractor={(item) => item.name}
+                keyExtractor={(item) => item._id}
                 renderItem={({item})=>(
                     <Pressable
                         style={globalStyles.sessionTile}
                         onPress={()=> {
                             // send session data to session slideout
                             router.push({pathname: "(session)/[sessionID]", params: {
-                            name: item.name,
+                            _id: item._id,
                             }
                         })}}
                     >
