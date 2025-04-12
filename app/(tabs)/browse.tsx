@@ -276,7 +276,7 @@ const browse = () => {
                     keyExtractor={(item) => item._id} 
                     renderItem={({item})=>(
                         <Pressable 
-                            style={globalStyles.tile}
+                            style={[globalStyles.tile]}
                             onPress={() => {
                                 router.push({pathname: "(browse)/[workoutID]", params: {
                                     _id: item._id
@@ -284,7 +284,7 @@ const browse = () => {
                                 console.log(item._id)
                             }}
                         >
-                            <Text style={[itemText.text]}>{item.name}</Text>
+                            <Text style={globalStyles.text}>{item.name}</Text>
                             <View style={{flex: 1}}></View>
                             
                             <Pressable 

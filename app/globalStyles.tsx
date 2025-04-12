@@ -35,9 +35,10 @@ export default StyleSheet.create({
         backgroundColor: styleColors.dark,
         borderRadius: 5,
         aspectRatio: 6,
-        shadowRadius: 10,
-        shadowOpacity: 0.3,
-        elevation: 5,
+        padding: 8,
+        // shadowRadius: 10,
+        // shadowOpacity: 0.3,
+        // elevation: 5,
     },
 
     sessionTile: {
@@ -85,6 +86,12 @@ export default StyleSheet.create({
         fontFamily: "Montserrat-Regular",
         color: "#FFFFFF",
         fontSize: 18
+    },
+
+    text: {
+        color: styleColors.light,
+        fontFamily: "Montserrat-Regular",
+        fontSize: 18,
     },
 
     dropdown: {

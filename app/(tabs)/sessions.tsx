@@ -74,7 +74,7 @@ const sessions = () => {
                 keyExtractor={(item) => item._id}
                 renderItem={({item})=>(
                     <Pressable
-                        style={globalStyles.sessionTile}
+                        style={globalStyles.tile}
                         onPress={()=> {
                             // send session data to session slideout
                             router.push({pathname: "(session)/[sessionID]", params: {
@@ -82,7 +82,7 @@ const sessions = () => {
                             }
                         })}}
                     >
-                        <Text style={{fontFamily: "Montserrat-Medium", color: styleColors.light}}>{item.name}</Text>
+                        <Text style={globalStyles.text}>{item.name}</Text>
                         
                     </Pressable>
                 )}
