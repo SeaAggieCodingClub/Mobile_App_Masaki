@@ -119,7 +119,8 @@ const browse = () => {
     const snapPoints = useMemo(() => ['70%'], [])
     const bottomSheetRef = useRef<BottomSheet>(null)
     const [bottomSheetText, setBottomSheetText] = useState("")
-
+    const [workoutName, setWorkoutName] = useState("")
+    const [updatedSessions, setUpdatedSessions] = useState({})
     const renderBackdrop = useCallback(
         (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
 
@@ -292,6 +293,7 @@ const browse = () => {
                                 style={{borderRadius: 999, backgroundColor: styleColors.darkest, alignItems: "center", justifyContent: "center", width: '8%', aspectRatio: 1, position: "absolute", top: 10, right: 10}}
                                 onPress={() => {{
                                     setBottomSheetText(item.name)
+                                    setWorkoutName(workoutData.value.filter((i)=> i._id == item._id)[0].name)
                                     //backend pull session
                                     // axios.post('http://localhost:4000/api/workouts/retrieveData',
                                     // axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
@@ -351,6 +353,53 @@ const browse = () => {
                                 <Pressable
                                     onPress ={()=>{
                                         console.log(item.name)
+                                        console.log(userSessions[4].workoutObject)
+                                        const filteredUserSessions = userSessions.map(({ _id, ...session }) => ({
+                                            ...session,
+                                            workoutObject: session.workoutObject.map(({ _id, ...workout }) => workout),
+                                          }));
+                                        let newWorkoutObject = {
+                                            "workout": workoutName,
+                                            "sets": 0,
+                                            "reps": 0,
+                                            "weights": "0 lbs"
+                                        }                                        
+                                        let sessionSelectedIndex = userSessions.findIndex((i) => i._id == item._id)
+                                        let sessionSelected = filteredUserSessions[sessionSelectedIndex]
+                                        let updateSession = [...sessionSelected.workoutObject, newWorkoutObject]
+                                        let newSessionObject = {
+                                            "name": item.name,
+                                            "daysOfSession": item.daysOfSession,
+                                            "workoutObject": updateSession
+                                        }
+                                        let newSession = [
+                                            ...filteredUserSessions.slice(0, sessionSelectedIndex),
+                                            newSessionObject,
+                                            ...filteredUserSessions.slice(sessionSelectedIndex + 1)
+                                        ]
+                                        setUpdatedSessions(newSession);
+                                        //backend post session
+                                        //axios.post("http://10.0.2.2:4000/api/workouts/updateData",
+                                        axios.post('http://localhost:4000/api/workouts/updateData',
+                                        {
+                                            username: auth,
+                                            session: newSession
+                                            //problem came from userSessions not updating each time I call the backend
+                                        })
+                                        .then((response:any) => {
+                                            console.log(response.data[0])                                            
+                                            // if(response["data" as keyof object]["success"]) {
+                                            //     console.log(response)
+                                            //     // setWorkoutDataFiltered(response)
+                                            // }
+                                            // else {
+                                            //     setErrorMessage(response["data" as keyof object]["message"])
+                                            // }
+                                        })
+                                        .catch(function (error : object) {
+                                            console.log(error)
+                                            newSession = []
+                                        })
                                     }} 
                                 >
                                     <Text style={{color: '#ffff'}}>
