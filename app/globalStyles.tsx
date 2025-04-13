@@ -33,7 +33,7 @@ export default StyleSheet.create({
     tile: {
         width: "100%",
         backgroundColor: styleColors.dark,
-        borderRadius: 5,
+        borderRadius: 8,
         aspectRatio: 6,
         padding: 8,
         // shadowRadius: 10,

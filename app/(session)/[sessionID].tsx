@@ -11,13 +11,34 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { useAuthContext } from "../(preAuth)/authContext"
 import axios from "axios"
 
+
+
 const sessionID = () => {
+
+
 
     const _id = useLocalSearchParams<{_id: string}>()
     const {value: auth, setValue: setAuth} = useAuthContext()
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
     const [currentSession, setCurrentSession] = useState((userSessions.filter((item) => item._id == _id._id))[0])
     //console.log(currentSession.workoutObject)
+
+    const [srwData, setSrwData] = useState<{id: string, srwType: string, value: number}[]>([]) 
+
+    const handleSrwChange = (_id:string, srw: string, newValue:number) => {
+        if(srwData.filter(item => item.id == _id && item.srwType == srw).length == 1) {
+            console.log("edit old")
+            setSrwData(prev => prev.map(item => item.id == _id ? item.srwType == srw ? {...item, value: newValue} : item : item))
+        } else {
+            console.log("add new")
+            setSrwData((prev) => [...prev, {id: _id, srwType: srw, value: newValue}])
+        }
+        
+    }
+
+    useEffect(() => {
+        console.log(srwData)
+    }, [srwData])
     
     const loadSessions = async (user:string): Promise<void> => {
         await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
@@ -54,6 +75,8 @@ const sessionID = () => {
     const editSessionSnapPoints = useMemo(() => ['95%'], [])
     const renderBackdrop = useCallback(
         (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
+
+    
 
     return (
         <GestureHandlerRootView>
@@ -96,6 +119,14 @@ const sessionID = () => {
             // ListHeaderComponent={() => (
             //     <Text style={[globalStyles.baseText, {fontFamily: "Montserrat-Bold"}]}>Workouts</Text>
             // )}
+            onViewableItemsChanged={(item) => {
+                item.changed.map(workout => {
+                    console.log(workout.item)
+                    handleSrwChange(workout.item._id, "sets", workout.item.sets)
+                    handleSrwChange(workout.item._id, "reps", workout.item.reps)
+                    handleSrwChange(workout.item._id, "weights", Number(workout.item.weights.split(" ")[0]))
+                })
+            }}
             renderItem={(item) => (
                 <>
                     <View style={{backgroundColor: styleColors.dark, padding: 16, borderRadius: 8}}>
@@ -114,6 +145,9 @@ const sessionID = () => {
                                 maxLength={3}
                                 defaultValue={item.item.sets.toString().trim()}
                                 selectionColor={"rgba(255, 255, 255, 0.25)"}
+                                onChangeText={(input) => {
+                                    handleSrwChange(item.item._id, "sets", Number(input))
+                                }}
                             />
                         </View>
                         <View style={{height: 8}}></View>
@@ -127,6 +161,9 @@ const sessionID = () => {
                                 maxLength={3}
                                 defaultValue={item.item.reps.toString().trim()}
                                 selectionColor={"rgba(255, 255, 255, 0.25)"}
+                                onChangeText={(input) => {
+                                    handleSrwChange(item.item._id, "reps", Number(input))
+                                }}
                             />
                         </View>
                         <View style={{height: 8}}></View>
@@ -138,8 +175,11 @@ const sessionID = () => {
                                 textAlign={"center"}
                                 inputMode={"numeric"}
                                 maxLength={3}
-                                defaultValue={item.item.weights.toString().trim()}
+                                defaultValue={item.item.weights.toString().split(" ")[0]}
                                 selectionColor={"rgba(255, 255, 255, 0.25)"}
+                                onChangeText={(input) => {
+                                    handleSrwChange(item.item._id, "weights", Number(input))
+                                }}
                             />
                         </View>
                     </View>
@@ -147,13 +187,15 @@ const sessionID = () => {
             )}
             ListFooterComponent={() => (
                 <Pressable 
-                    style={{backgroundColor: styleColors.dark,borderRadius: 5, padding: 8,}}
+                    style={{backgroundColor: styleColors.dark,borderRadius: 8, padding: 8, marginBottom: 16}}
                     onPress={() => {
                         //saves current changes
 
 
                         router.back()
+                        console.log(srwData)
                         router.push({pathname: "../(tabs)/browse"
+                            
 
                     })}}>
                         <Text style={[globalStyles.text, {marginHorizontal: "auto", textAlignVertical: "center"}]}>Add workouts</Text>
