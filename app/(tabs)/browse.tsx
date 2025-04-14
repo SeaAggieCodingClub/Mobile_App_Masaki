@@ -352,13 +352,10 @@ const browse = () => {
                             renderItem={({item})=>(
                                 <Pressable
                                     onPress ={()=>{
-                                        console.log(item.name)
                                         const filteredUserSessions = userSessions.map(({ _id, ...session }) => ({
                                             ...session,
                                             workoutObject: session.workoutObject.map(({ _id, ...workout }) => workout),
                                           }));
-                                          console.log(filteredUserSessions[4].workoutObject)
-                                          console.log(userSessions[4].workoutObject)
                                         let newWorkoutObject = {
                                             "workout": workoutName,
                                             "sets": 0,
@@ -379,8 +376,7 @@ const browse = () => {
                                             ...filteredUserSessions.slice(sessionSelectedIndex + 1)
                                         ]
                                         //setUpdatedSessions(newSession);
-                                        
-                                        console.log(newSession[4].workoutObject)
+                                
                                         //backend post session
                                         axios.post("http://10.0.2.2:4000/api/workouts/updateData",
                                         // axios.post('http://localhost:4000/api/workouts/updateData',

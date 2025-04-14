@@ -48,6 +48,25 @@ const sessions = () => {
         )
     }
 
+
+
+    const updateSessions = async (user:string, newSessions: any): Promise<void> => {
+        await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
+            {
+                username: user,
+                session: newSessions,
+            })
+            .then(response => {
+                console.log(response.data)
+                loadSessions(user)
+                //setUserSessions(response.data.message)
+            }).catch((error) => {
+                console.log("session error")
+                console.log(error.response)
+            }
+        )
+    }
+
     return (
         <GestureHandlerRootView>
         <SafeAreaView style={globalStyles.androidSafeView}>
@@ -129,34 +148,33 @@ const sessions = () => {
                             right: 16, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed ? styleColors.primary : styleColors.light,
+                            backgroundColor: pressed || selectedDays.includes("monday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
                             width: 10
                         })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "M")
+                            selectedDays = toggleItem(selectedDays, "monday")
                         }}
                         > 
 
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
                                 M
                             </Text>
-                            
-
+    
                         </Pressable>
                         <Pressable
-                            style={{
+                            style={({pressed}) =>({
                                 aspectRatio: 1, 
                                 flex:1, 
                                 right: 16, 
                                 marginTop: 20, 
                                 marginBottom: 12, 
-                                backgroundColor: styleColors.light, 
+                                backgroundColor: pressed || selectedDays.includes("tuesday") ? styleColors.primary : styleColors.light,
                                 borderRadius: 999,
                                 width: 10
-                            }}
+                            })}
                             onPress={()=> {
-                                selectedDays = toggleItem(selectedDays, "T")
+                                selectedDays = toggleItem(selectedDays, "tuesday")
                             }}>
 
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
@@ -165,18 +183,18 @@ const sessions = () => {
                             
                         </Pressable>
                         <Pressable
-                            style={{
+                            style={({pressed}) =>({
                                 aspectRatio: 1, 
                                 flex:1, 
                                 right: 16, 
                                 marginTop: 20, 
                                 marginBottom: 12, 
-                                backgroundColor: styleColors.light, 
+                                backgroundColor: pressed || selectedDays.includes("wednesday") ? styleColors.primary : styleColors.light,
                                 borderRadius: 999,
                                 width: 10
-                            }}
+                            })}
                             onPress={()=> {
-                                selectedDays = toggleItem(selectedDays, "W")
+                                selectedDays = toggleItem(selectedDays, "wednesday")
                             }}>
 
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
@@ -185,18 +203,18 @@ const sessions = () => {
 
                         </Pressable>
                         <Pressable
-                        style={{
+                        style={({pressed}) =>({
                             aspectRatio: 1, 
                             flex:1, 
                             right: 16, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: styleColors.light, 
+                            backgroundColor: pressed || selectedDays.includes("thursday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
                             width: 10
-                        }}
+                        })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "Th")
+                            selectedDays = toggleItem(selectedDays, "thursday")
                         }}>
                             
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
@@ -205,18 +223,18 @@ const sessions = () => {
 
                         </Pressable>
                         <Pressable
-                        style={{
+                        style={({pressed}) =>({
                             aspectRatio: 1, 
                             flex:1, 
                             right: 16, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: styleColors.light, 
+                            backgroundColor: pressed || selectedDays.includes("friday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
                             width: 10
-                        }}
+                        })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "F")
+                            selectedDays = toggleItem(selectedDays, "friday")
                         }}>
                             
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
@@ -225,18 +243,18 @@ const sessions = () => {
 
                         </Pressable>
                         <Pressable
-                        style={{
+                        style={({pressed}) =>({
                             aspectRatio: 1, 
                             flex:1, 
                             right: 16, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: styleColors.light, 
+                            backgroundColor: pressed || selectedDays.includes("saturday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
                             width: 10
-                        }}
+                        })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "S")
+                            selectedDays = toggleItem(selectedDays, "saturday")
                         }}>
                             
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
@@ -245,18 +263,18 @@ const sessions = () => {
 
                         </Pressable>
                         <Pressable
-                        style={{
+                        style={({pressed}) =>({
                             aspectRatio: 1, 
                             flex:1, 
                             right: 16, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: styleColors.light, 
+                            backgroundColor: pressed || selectedDays.includes("sunday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
                             width: 10
-                        }}
+                        })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "Su")
+                            selectedDays = toggleItem(selectedDays, "sunday")
                         }}>
                             
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
@@ -265,10 +283,47 @@ const sessions = () => {
 
                         </Pressable>
                     </View>
-                    <Pressable 
-                        >
-                            <Text>Add</Text>
+
+                    <View style={{marginHorizontal: "auto"}}>
+                    <Pressable
+                        style={{ 
+                            alignItems: "center",
+                            length: 250,
+                            width: 250, 
+                            marginTop: 20, 
+                            marginBottom: 12, 
+                            backgroundColor: styleColors.primary,
+                            borderRadius: 10,
+                        }}
+                        onPress={()=> {
+
+                            if (selectedDays.length > 0){
+                                const tempSession =
+                                {
+                                    name: workoutNameInput,
+                                    daysOfSession: selectedDays,
+                                    workoutObject: [],
+                                }
+                        
+                                
+                                if((typeof auth)=="string"){
+                                    const howdy = userSessions.map(({ _id, ...session }) => ({
+                                        ...session,
+                                        workoutObject: session.workoutObject.map(({ _id, ...workout }) => workout),
+                                    })); 
+                                    const inputSession = [
+                                        ...howdy,
+                                        tempSession
+                                    ]
+
+                                    updateSessions(auth,  inputSession)
+                                
+                                }
+                            }
+                        }}>
+                        <Text>Create Session</Text>
                     </Pressable>
+                    </View>
                 </BottomSheetView>
             </BottomSheet>
 
