@@ -14,9 +14,6 @@ import axios from "axios"
 
 
 const sessionID = () => {
-
-
-
     const _id = useLocalSearchParams<{_id: string}>()
     const {value: auth, setValue: setAuth} = useAuthContext()
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
@@ -31,7 +28,9 @@ const sessionID = () => {
         friday: 'F',
         saturday: 'Sa',
         sunday: 'Su',
-      }
+    }
+
+    const [loading, setLoading] = useState(false)
 
     const [srwData, setSrwData] = useState<{id: string, srwType: string, value: number}[]>([]) 
 
@@ -46,12 +45,9 @@ const sessionID = () => {
         
     }
 
-    const [loading, setLoading] = useState<boolean>(false)
-
-    // useEffect(() => {
-    //     //console.log(srwData)
-    //     setLoading(false)
-    // }, [currentSession, userSessions])
+    useEffect(() => {
+        console.log(srwData)
+    }, [srwData])
     
     const loadSessions = async (user:string): Promise<void> => {
         await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
@@ -68,25 +64,20 @@ const sessionID = () => {
     }
 
     const updateSessions = async (user:string, newSessions: sessionObj[]): Promise<void> => {
-        setLoading(true)
         await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
             {
                 username: user,
                 session: newSessions,
             })
             .then(response => {
-                //console.log(response.data)
-                setUserSessions(response.data.session)
-                setCurrentSession((response.data.session as sessionObj[]).filter((item) => item._id == _id._id)[0])
-                // setCurrentSession(response.data.session as sessionObj[])
-                //loadSessions(user)
+                console.log(response.data)
+                loadSessions(user)
                 //setUserSessions(response.data.message)
             }).catch((error) => {
                 console.log("session error")
                 console.log(error.response)
             }
         )
-        setLoading(false)
     }
 
     const editSessionRef = useRef<BottomSheet>(null)
@@ -208,7 +199,7 @@ const sessionID = () => {
             // )}
             onViewableItemsChanged={(item) => {
                 item.changed.map(workout => {
-                    //console.log(workout.item)
+                    console.log(workout.item)
                     handleSrwChange(workout.item._id, "sets", workout.item.sets)
                     handleSrwChange(workout.item._id, "reps", workout.item.reps)
                     handleSrwChange(workout.item._id, "weights", Number(workout.item.weights.split(" ")[0]))
@@ -220,27 +211,7 @@ const sessionID = () => {
                         {/* workout text and remove */}
                         <View style={{display: "flex", flexDirection: "row", paddingBottom: 8}}>
                             <Text adjustsFontSizeToFit={true} style={[globalStyles.text, {flex: 4, fontFamily: "Montserrat-Bold"}]}>{item.item.workout}</Text>
-                            <Pressable 
-                                style={{flex: 1}}
-                                onPress={() => {
-                                    console.log(item.item.workout)
-                                    if(typeof auth == "string") {
-                                        // updateSessions(auth, userSessions.filter((thisWorkout) => thisWorkout._id !=))
-                                        let sessionSelectedIndex = userSessions.findIndex((element) => element._id == currentSession._id)
-                                        console.log(sessionSelectedIndex)
-                                        let newSession = [
-                                            ...userSessions.slice(0, sessionSelectedIndex),
-                                            {...currentSession, workoutObject: currentSession.workoutObject.filter((thisWorkout) => thisWorkout._id != item.item._id)},
-
-                                            ...userSessions.slice(sessionSelectedIndex + 1)
-                                        ]
-                                        updateSessions(auth, newSession)
-                                    }
-                                    
-                                }}
-                            >
-                                    <Text style={[globalStyles.text, {color: "#FF0000", fontSize: 16, textAlign: "right"}]}>Remove</Text>
-                            </Pressable>
+                            <Pressable style={{flex: 1}}><Text style={[globalStyles.text, {color: "#FF0000", fontSize: 16, textAlign: "right"}]}>Remove</Text></Pressable>
                         </View>
                         {/* sets */}
                         <View style={{display: "flex", flexDirection: "row"}}>
