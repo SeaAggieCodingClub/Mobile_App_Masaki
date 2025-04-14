@@ -36,20 +36,21 @@ const sessionID = () => {
 
     const handleSrwChange = (_id:string, srw: string, newValue:number) => {
         if(srwData.filter(item => item.id == _id && item.srwType == srw).length == 1) {
-            console.log("edit old")
+            // console.log("edit old")
             setSrwData(prev => prev.map(item => item.id == _id ? item.srwType == srw ? {...item, value: newValue} : item : item))
         } else {
-            console.log("add new")
+            //console.log("add new")
             setSrwData((prev) => [...prev, {id: _id, srwType: srw, value: newValue}])
         }
         
     }
 
-    useEffect(() => {
-        console.log(srwData)
-    }, [srwData])
+    // useEffect(() => {
+    //     console.log(srwData)
+    // }, [srwData])
     
     const loadSessions = async (user:string): Promise<void> => {
+        
         await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
             {
                 username: user
@@ -61,23 +62,28 @@ const sessionID = () => {
                 console.log(error.response)
             }
         )
+        
     }
 
     const updateSessions = async (user:string, newSessions: sessionObj[]): Promise<void> => {
+        setLoading(true)
         await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
             {
                 username: user,
                 session: newSessions,
             })
             .then(response => {
-                console.log(response.data)
-                loadSessions(user)
+                //console.log(response.data)
+                // loadSessions(user)
+                setUserSessions(response.data.session)
+                setCurrentSession((response.data.session as sessionObj[]).filter((item) => item._id == _id._id)[0])
                 //setUserSessions(response.data.message)
             }).catch((error) => {
                 console.log("session error")
                 console.log(error.response)
             }
         )
+        setLoading(false)
     }
 
     const editSessionRef = useRef<BottomSheet>(null)
@@ -211,7 +217,25 @@ const sessionID = () => {
                         {/* workout text and remove */}
                         <View style={{display: "flex", flexDirection: "row", paddingBottom: 8}}>
                             <Text adjustsFontSizeToFit={true} style={[globalStyles.text, {flex: 4, fontFamily: "Montserrat-Bold"}]}>{item.item.workout}</Text>
-                            <Pressable style={{flex: 1}}><Text style={[globalStyles.text, {color: "#FF0000", fontSize: 16, textAlign: "right"}]}>Remove</Text></Pressable>
+                            <Pressable 
+                                style={{flex: 1}}
+                                onPress={() => {
+                                    //console.log(item.item.workout)
+                                    if(typeof auth == "string") {
+                                        // updateSessions(auth, userSessions.filter((thisWorkout) => thisWorkout._id !=))
+                                        let sessionSelectedIndex = userSessions.findIndex((element) => element._id == currentSession._id)
+                                        //console.log(sessionSelectedIndex)
+                                        let newSession = [
+                                            ...userSessions.slice(0, sessionSelectedIndex),
+                                            {...currentSession, workoutObject: currentSession.workoutObject.filter((thisWorkout) => thisWorkout._id != item.item._id)},
+                                            ...userSessions.slice(sessionSelectedIndex + 1)
+                                        ]
+                                        updateSessions(auth, newSession)
+                                    }                            
+                                }}
+                            >
+                                    <Text style={[globalStyles.text, {color: "#FF0000", fontSize: 16, textAlign: "right"}]}>Remove</Text>
+                            </Pressable>
                         </View>
                         {/* sets */}
                         <View style={{display: "flex", flexDirection: "row"}}>
