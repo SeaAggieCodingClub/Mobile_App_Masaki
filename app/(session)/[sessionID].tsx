@@ -14,20 +14,33 @@ import axios from "axios"
 
 
 const sessionID = () => {
+
+
+
     const _id = useLocalSearchParams<{_id: string}>()
     const {value: auth, setValue: setAuth} = useAuthContext()
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
     const [currentSession, setCurrentSession] = useState((userSessions.filter((item) => item._id == _id._id))[0])
     //console.log(currentSession.workoutObject)
 
+    const dayAbbreviations = {
+        monday: 'M',
+        tuesday: 'T',
+        wednesday: 'W',
+        thursday: 'Th',
+        friday: 'F',
+        saturday: 'Sa',
+        sunday: 'Su',
+      }
+
     const [srwData, setSrwData] = useState<{id: string, srwType: string, value: number}[]>([]) 
 
     const handleSrwChange = (_id:string, srw: string, newValue:number) => {
         if(srwData.filter(item => item.id == _id && item.srwType == srw).length == 1) {
-            //console.log("edit old")
+            console.log("edit old")
             setSrwData(prev => prev.map(item => item.id == _id ? item.srwType == srw ? {...item, value: newValue} : item : item))
         } else {
-            //console.log("add new")
+            console.log("add new")
             setSrwData((prev) => [...prev, {id: _id, srwType: srw, value: newValue}])
         }
         
@@ -114,6 +127,64 @@ const sessionID = () => {
                 }
             }}/>
 
+            <FlatList 
+            horizontal={true}
+            data={currentSession.daysOfSession}
+            contentContainerStyle={{ display: "flex", 
+                flexDirection: "row", 
+                paddingHorizontal: 16, 
+                marginHorizontal: 15,
+                paddingTop: 15,
+                paddingBottom: 15, 
+                gap: 8,
+            }}
+            renderItem={({item})=>(
+                <View>
+                <Pressable
+                        style={{
+                            aspectRatio: 1, 
+                            right: 16,
+                            gap: 1,
+                            backgroundColor: styleColors.primary,
+                            borderRadius: 999,
+                            width: 45,
+                            alignItems: 'center'
+                        }}
+                        > 
+
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                                {dayAbbreviations[item as keyof typeof dayAbbreviations] ?? item}
+                            </Text>
+    
+                </Pressable>
+                </View>
+            )}
+            />
+
+            {/*
+            <FlatList
+                style={{paddingHorizontal: 16}}
+                numColumns={1}
+                contentContainerStyle={{gap: 8}}
+                //columnWrapperStyle={{gap: 8}}
+                data={userSessions}
+                keyExtractor={(item) => item._id}
+                renderItem={({item})=>(
+                    <Pressable
+                        style={globalStyles.tile}
+                        onPress={()=> {
+                            // send session data to session slideout
+                            router.push({pathname: "(session)/[sessionID]", params: {
+                            _id: item._id,
+                            }
+                        })}}
+                    >
+                        <Text style={globalStyles.text}>{item.name}</Text>
+                        
+                    </Pressable>
+                )}
+            />
+            */}
         {loading ? 
         //width: "30%", borderRadius: 8, aspectRatio: 1,
         //left: "35%", top: "20%", 
@@ -227,9 +298,12 @@ const sessionID = () => {
                     onPress={() => {
                         //saves current changes
 
+
                         router.back()
+                        console.log(srwData)
                         router.push({pathname: "../(tabs)/browse"
                             
+
                     })}}>
                         <Text style={[globalStyles.text, {marginHorizontal: "auto", textAlignVertical: "center"}]}>Add workouts</Text>
                 </Pressable>
