@@ -386,16 +386,14 @@ const browse = () => {
                                             //problem came from userSessions not updating each time I call the backend
                                         })
                                         .then((response:any) => {
-                                            //console.log(response.data[0])   
-                                            //console.log(response.data)  
-                                            setUserSessions(response.data.session)                                       
-                                            // if(response["data" as keyof object]["success"]) {
-                                            //     console.log(response)
-                                            //     // setWorkoutDataFiltered(response)
-                                            // }
-                                            // else {
-                                            //     setErrorMessage(response["data" as keyof object]["message"])
-                                            // }
+                                            //update userSession to match database
+                                            const currentSessionID = userSessions.indexOf(item)
+                                            console.log(currentSessionID)
+                                            setUserSessions(response.data.session)
+                                            router.push({pathname: "(session)/[sessionID]", params: {
+                                                _id: response.data.session[currentSessionID]._id
+                                            }})
+
                                         })
                                         .catch(function (error : object) {
                                             console.log(error)
