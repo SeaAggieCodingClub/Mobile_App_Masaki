@@ -353,11 +353,12 @@ const browse = () => {
                                 <Pressable
                                     onPress ={()=>{
                                         console.log(item.name)
-                                        console.log(userSessions[4].workoutObject)
                                         const filteredUserSessions = userSessions.map(({ _id, ...session }) => ({
                                             ...session,
                                             workoutObject: session.workoutObject.map(({ _id, ...workout }) => workout),
                                           }));
+                                          console.log(filteredUserSessions[4].workoutObject)
+                                          console.log(userSessions[4].workoutObject)
                                         let newWorkoutObject = {
                                             "workout": workoutName,
                                             "sets": 0,
@@ -377,17 +378,21 @@ const browse = () => {
                                             newSessionObject,
                                             ...filteredUserSessions.slice(sessionSelectedIndex + 1)
                                         ]
-                                        setUpdatedSessions(newSession);
+                                        //setUpdatedSessions(newSession);
+                                        
+                                        console.log(newSession[4].workoutObject)
                                         //backend post session
-                                        //axios.post("http://10.0.2.2:4000/api/workouts/updateData",
-                                        axios.post('http://localhost:4000/api/workouts/updateData',
+                                        axios.post("http://10.0.2.2:4000/api/workouts/updateData",
+                                        // axios.post('http://localhost:4000/api/workouts/updateData',
                                         {
                                             username: auth,
                                             session: newSession
                                             //problem came from userSessions not updating each time I call the backend
                                         })
                                         .then((response:any) => {
-                                            console.log(response.data[0])                                            
+                                            //console.log(response.data[0])   
+                                            //console.log(response.data)  
+                                            setUserSessions(response.data.session)                                       
                                             // if(response["data" as keyof object]["success"]) {
                                             //     console.log(response)
                                             //     // setWorkoutDataFiltered(response)
