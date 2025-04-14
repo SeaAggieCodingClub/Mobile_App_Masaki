@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
-import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, FlatList, Pressable } from "react-native"
+import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, FlatList, Pressable, ActivityIndicator } from "react-native"
 import { Link, router, Stack } from "expo-router"
 import { Dropdown, MultiSelect } from "react-native-element-dropdown"
 import BottomSheet, {BottomSheetBackdrop, BottomSheetView, TouchableOpacity} from "@gorhom/bottom-sheet"
@@ -70,6 +70,8 @@ const browse = () => {
     const {value: auth, setValue: setAuth} = useAuthContext()
     const [workoutDataFiltered, setWorkoutDataFiltered] = useState<workoutInterface[]>(workoutData.value)
     
+    const [loading, setLoading] = useState<boolean>(false)
+
     useEffect(() => {
         let newFilteredData = workoutData.value
         //console.log("filter" + newFilteredData)
@@ -128,6 +130,17 @@ const browse = () => {
     return (
         <GestureHandlerRootView>
             <SafeAreaView style={[globalStyles.androidSafeView]}>
+
+                {loading ? 
+                //width: "30%", borderRadius: 8, aspectRatio: 1,
+                //left: "35%", top: "20%", 
+                <>
+                    <View style={{width: "100%", height: "100%", position: "absolute", zIndex: 1, margin: "auto", backgroundColor: "rgba(0, 0, 0, 0.5)"}}>
+                        <ActivityIndicator style={{margin: "auto"}}size={"large"} color={"rgba(255, 255, 255, 0.3)"}/>
+                    </View>
+                </> : <></>
+                }
+
                 <Text style={[globalStyles.pageTitle]}>Browse</Text>
                 {/* search bar muscle */}
                 <TextInput 
@@ -378,6 +391,8 @@ const browse = () => {
                                         //setUpdatedSessions(newSession);
                                 
                                         //backend post session
+                                        setLoading(true)
+
                                         axios.post("http://10.0.2.2:4000/api/workouts/updateData",
                                         // axios.post('http://localhost:4000/api/workouts/updateData',
                                         {
@@ -390,15 +405,19 @@ const browse = () => {
                                             const currentSessionID = userSessions.indexOf(item)
                                             console.log(currentSessionID)
                                             setUserSessions(response.data.session)
+                                            bottomSheetRef.current?.close()
+                                            router.push("./sessions")
                                             router.push({pathname: "(session)/[sessionID]", params: {
                                                 _id: response.data.session[currentSessionID]._id
                                             }})
+                                            setLoading(false)
 
                                         })
                                         .catch(function (error : object) {
                                             console.log(error)
                                             newSession = []
                                         })
+                                        
                                     }} 
                                 >
                                     <Text style={{color: '#ffff'}}>

@@ -1,4 +1,4 @@
-import { Pressable, Text, View, TextInput, StyleSheet, Alert} from "react-native"
+import { Pressable, Text, View, TextInput, StyleSheet, Alert, ActivityIndicator} from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import globalStyles from "../globalStyles"
 import { router, Stack, useLocalSearchParams } from "expo-router"
@@ -114,7 +114,15 @@ const sessionID = () => {
                 }
             }}/>
 
-        {loading ? <View style={{position: "absolute", zIndex: 1, }}><Text>loading</Text></View> : <></>}
+        {loading ? 
+        //width: "30%", borderRadius: 8, aspectRatio: 1,
+        //left: "35%", top: "20%", 
+        <>
+            <View style={{width: "100%", height: "100%", position: "absolute", zIndex: 1, margin: "auto", backgroundColor: "rgba(0, 0, 0, 0.5)"}}>
+                <ActivityIndicator style={{margin: "auto"}}size={"large"} color={"rgba(255, 255, 255, 0.3)"}/>
+            </View>
+        </> : <></>
+        }
 
         <Text style={globalStyles.baseText}>{currentSession.daysOfSession}</Text>
         
