@@ -91,8 +91,8 @@ const sessions = () => {
                             // send session data to session slideout
                             router.push({pathname: "(session)/[sessionID]", params: {
                             _id: item._id,
-                            }
-                        })}}
+                            }})
+                        }}
                     >
                         <Text style={globalStyles.text}>{item.name}</Text>
                         
