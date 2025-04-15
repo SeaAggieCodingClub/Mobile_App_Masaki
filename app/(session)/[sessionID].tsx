@@ -107,8 +107,8 @@ const sessionID = () => {
 
                     if(typeof auth == "string") {
                         //loadSessions(auth)
-                        console.log(userSessions)
-                        console.log(_id._id)
+                        // console.log(userSessions)
+                        // console.log(_id._id)
                         updateSessions(auth, userSessions.filter((item) => item._id != _id._id))
                         loadSessions(auth)
                         router.back()
@@ -187,7 +187,7 @@ const sessionID = () => {
         //left: "35%", top: "20%", 
         <>
             <View style={{width: "100%", height: "100%", position: "absolute", zIndex: 1, margin: "auto", backgroundColor: "rgba(0, 0, 0, 0.5)"}}>
-                <ActivityIndicator style={{margin: "auto"}}size={"large"} color={"rgba(255, 255, 255, 0.3)"}/>
+                <ActivityIndicator style={{margin: "auto"}}size={"large"} color={"rgba(255, 255, 255, 0.5)"}/>
             </View>
         </> : <></>
         }
@@ -205,7 +205,7 @@ const sessionID = () => {
             // )}
             onViewableItemsChanged={(item) => {
                 item.changed.map(workout => {
-                    console.log(workout.item)
+                    // console.log(workout.item)
                     handleSrwChange(workout.item._id, "sets", workout.item.sets)
                     handleSrwChange(workout.item._id, "reps", workout.item.reps)
                     handleSrwChange(workout.item._id, "weights", Number(workout.item.weights.split(" ")[0]))
@@ -234,7 +234,7 @@ const sessionID = () => {
                                     }                            
                                 }}
                             >
-                                    <Text style={[globalStyles.text, {color: "#FF0000", fontSize: 16, textAlign: "right"}]}>Remove</Text>
+                                    <Text style={[globalStyles.text, {color: styleColors.primary, fontSize: 16, textAlign: "right"}]}>Remove</Text>
                             </Pressable>
                         </View>
                         {/* sets */}
@@ -288,21 +288,31 @@ const sessionID = () => {
                 </>
             )}
             ListFooterComponent={() => (
-                <Pressable 
-                    style={{backgroundColor: styleColors.dark,borderRadius: 8, padding: 8, marginBottom: 16}}
-                    onPress={() => {
-                        //saves current changes
+                <>
+                    <Pressable 
+                        style={{backgroundColor: styleColors.dark,borderRadius: 8, padding: 8, marginBottom: 8}}
+                        onPress={() => {
+                            //saves current changes
 
 
-                        router.back()
-                        console.log(srwData)
-                        router.push({pathname: "../(tabs)/browse"
+                            router.back()
+                            // console.log(srwData)
+                            router.push({pathname: "../(tabs)/browse"
+                                
+
+                        })}}>
+                            <Text style={[globalStyles.text, {marginHorizontal: "auto", textAlignVertical: "center"}]}>Add workouts</Text>
+                    </Pressable>
+
+                    {/* delete session */}
+                    <Pressable 
+                        style={{backgroundColor: styleColors.dark, borderRadius: 8, padding: 8, marginBottom: 16}}
+                        onPress={() => {
                             
-
-                    })}}>
-                        <Text style={[globalStyles.text, {marginHorizontal: "auto", textAlignVertical: "center"}]}>Add workouts</Text>
-                </Pressable>
-
+                        }}>
+                            <Text style={[globalStyles.text, {marginHorizontal: "auto", textAlignVertical: "center"}]}>Add workouts</Text>
+                    </Pressable>
+                </>
 
         )}
         />
