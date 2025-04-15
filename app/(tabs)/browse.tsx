@@ -65,9 +65,9 @@ const browse = () => {
     const [selectedType, setSelectedType] = useState<string>("All")
     const [selectedMuscles, setSelectedMuscles] = useState<Array<string>>(["All"])
     const [selectedDifficulty, setSelectedDifficulty] = useState<string>("All")
-    const [userSessions, setUserSessions] = useState<sessionObj[]>([] as sessionObj[])
     const [errorMessage, setErrorMessage] = useState<String>()
     const {value: auth, setValue: setAuth} = useAuthContext()
+    const {value: userSessions, setValue: setUserSessions} = useSessionContext()
     const [workoutDataFiltered, setWorkoutDataFiltered] = useState<workoutInterface[]>(workoutData.value)
     
     const [loading, setLoading] = useState<boolean>(false)

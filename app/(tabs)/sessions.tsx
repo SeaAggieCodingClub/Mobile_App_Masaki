@@ -22,7 +22,7 @@ const sessions = () => {
     const {value: auth, setValue: setAuth} = useAuthContext()
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
 
-    const [workoutNameInput, setNameInput] = useState("Name")
+    const [workoutNameInput, setNameInput] = useState("")
     const [setNum, setNumInput] = useState("")
     let selectedDays: string[] = []
     const [newSelectedDays, setNewSelectedDays] = useState<string[]>([])
@@ -30,6 +30,7 @@ const sessions = () => {
     const [loading, setLoading] = useState(false)
 
     const createSessionRef = useRef<BottomSheet>(null)
+    const createSessionTextInputRef = useRef<TextInput>(null)
     const createSessionSnapPoints = useMemo(()=> ['30%'], [])
     const renderBackdrop = useCallback(
         (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
@@ -156,7 +157,11 @@ const sessions = () => {
                 <BottomSheetView>   
                     <View style={{paddingHorizontal: 6}}>
                         <TextInput 
+                        ref={createSessionTextInputRef}
                         onChangeText={input => setNameInput(input)} 
+                        //value={workoutNameInput.length != 0 ? workoutNameInput : ""}
+                        multiline={true}
+                        numberOfLines={1}
                         textAlign = "center"
                         placeholder = "Name"
                         placeholderTextColor={"rgba(255, 255, 255, 0.25)"}
@@ -374,7 +379,7 @@ const sessions = () => {
                             if (newSelectedDays.length > 0){
                                 const tempSession =
                                 {
-                                    name: workoutNameInput,
+                                    name: workoutNameInput.length != 0 ? workoutNameInput : "New Session",
                                     daysOfSession: newSelectedDays,
                                     workoutObject: [],
                                 }
@@ -395,7 +400,9 @@ const sessions = () => {
                                 }
                                 // selectedDays = []
                                 setNewSelectedDays([])
-                                setNameInput("Name")
+                                //setNameInput("")
+                                createSessionTextInputRef.current?.clear()
+                                console.log("clear thing")
                                 createSessionRef.current?.close()
                             }
                         }}>
