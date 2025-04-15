@@ -267,8 +267,8 @@ const sessionID = () => {
                                 gap: 1,
                                 backgroundColor: 
                                 (currentSession.daysOfSession).includes(item) 
-                                ? styleColors.dark 
-                                : styleColors.primary,
+                                ? styleColors.primary 
+                                : styleColors.dark,
                                 borderRadius: 999,
                                 width: 40,
                                 justifyContent: "center",
@@ -278,8 +278,8 @@ const sessionID = () => {
     
                                 <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", 
                                     color: (currentSession.daysOfSession).includes(item) 
-                                    ? styleColors.light 
-                                    : styleColors.dark}}>
+                                    ? styleColors.dark 
+                                    : styleColors.light}}>
                                     {dayAbbreviations[item as keyof typeof dayAbbreviations]}
                                 </Text>
         

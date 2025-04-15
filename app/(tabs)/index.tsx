@@ -4,6 +4,7 @@ import globalStyles from "../globalStyles"
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar"
 import styleColors from "../styleColors"
 import { useFocusEffect } from "expo-router"
+import { sessionObj, useSessionContext, workoutObj } from "../(session)/sessionContext"
 
 const DOTW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -11,6 +12,7 @@ const index = () => {
 
     const [date, setDate] = useState<String>()
     const [time, setTime] = useState<String>()
+    const {value: userSessions, setValue: setUserSessions} = useSessionContext()
 
     useFocusEffect(
         useCallback(() => {
@@ -22,6 +24,7 @@ const index = () => {
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
                 <Text style={globalStyles.pageTitle}>Home</Text>
+                
                 <FlatList
                     style={{borderRadius: styles.listContainer.borderRadius, marginLeft: 16, marginRight: 16}}
                     data = {[
