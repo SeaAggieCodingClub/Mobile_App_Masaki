@@ -65,7 +65,7 @@ const browse = () => {
     const [selectedType, setSelectedType] = useState<string>("All")
     const [selectedMuscles, setSelectedMuscles] = useState<Array<string>>(["All"])
     const [selectedDifficulty, setSelectedDifficulty] = useState<string>("All")
-    const {value: userSessions, setValue: setUserSessions} = useSessionContext()
+    const [userSessions, setUserSessions] = useState<sessionObj[]>([] as sessionObj[])
     const [errorMessage, setErrorMessage] = useState<String>()
     const {value: auth, setValue: setAuth} = useAuthContext()
     const [workoutDataFiltered, setWorkoutDataFiltered] = useState<workoutInterface[]>(workoutData.value)
@@ -279,7 +279,7 @@ const browse = () => {
 
 
                 {/* muscles list */}
-                <View style={{marginHorizontal: 8, marginVertical: 16, backgroundColor: "rgba(255, 255, 255, 0.25)", borderWidth: 1, height: 4}}></View>
+                <View style={{marginHorizontal: 8, marginVertical: 16, backgroundColor: "rgba(255, 255, 255, 0.25)", height: 2}}></View>
                 <FlatList 
                     // ListHeaderComponent={<View style={{backgroundColor: styleColors.darkest}}><Text style={globalStyles.pageTitle}>Browse</Text></View>}
                     // stickyHeaderIndices={[0]}
@@ -358,8 +358,11 @@ const browse = () => {
                     
 
                     <BottomSheetView>
-                        <Text style={{fontSize: 25, margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.light, marginBottom: 20}}>Add {bottomSheetText} </Text>
+                        <Text style={{fontSize: 24, margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.light, marginBottom: 20}}>Add {bottomSheetText} To:</Text>
                         {/*show sessions Important*/}
+                        
+                        {userSessions.length == 0 ? <Text style={[globalStyles.text, {paddingHorizontal: 16}]}>You have no sessions. Create one to begin.</Text> : <></>}
+                        
                         <FlatList
                             data={userSessions}
                             keyExtractor={(item) => item._id}

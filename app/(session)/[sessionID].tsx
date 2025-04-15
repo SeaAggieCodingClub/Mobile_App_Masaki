@@ -247,30 +247,27 @@ const sessionID = () => {
             ListHeaderComponent={() => (
                 <>
                 <FlatList 
+                style={{
+                    marginHorizontal: "auto",
+                    paddingVertical: 16,
+                }}
                 horizontal={true}
                 data={days}
-                contentContainerStyle={{ display: "flex", 
-                    flexDirection: "row", 
-                    marginHorizontal: 15,
-                    paddingTop: 15,
-                    paddingBottom: 15, 
+                contentContainerStyle={{
                     gap: 8,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexGrow: 1
                 }}
                 renderItem={({item})=>(
                     <View>
                     <Pressable
                             style={{
                                 aspectRatio: 1, 
-                                gap: 1,
+                                //gap: 1,
                                 backgroundColor: 
                                 (currentSession.daysOfSession).includes(item) 
                                 ? styleColors.primary 
                                 : styleColors.dark,
                                 borderRadius: 999,
-                                width: 40,
+                                width: 50,
                                 justifyContent: "center",
                                 alignItems: "center"
                             }}

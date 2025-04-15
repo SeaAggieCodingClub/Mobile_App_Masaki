@@ -41,14 +41,13 @@ const sessions = () => {
             })
             .then(response => {
                 setUserSessions(response.data.session)
+                router.push({pathname: "(session)/[sessionID]", params: {_id: response.data.session[response.data.session.length - 1]._id}})
             }).catch((error) => {
                 console.log("session error")
                 console.log(error.response)
             }
         )
     }
-
-
 
     const updateSessions = async (user:string, newSessions: any, from:string): Promise<void> => {
         setLoading(true)
@@ -64,10 +63,9 @@ const sessions = () => {
                     console.log(response.data.session)
                     console.log(response.data.session[response.data.session.length - 1]._id)
                     //router.push("./sessions")
-                    router.push("./browse")
-                    router.push("./sessions")
+
                     // router.push("../sessionID")
-                    console.log()
+                    //console.log()
                     // router.push({pathname: "../(session)/[sessionID]", params: {
                     //     _id: response.data.session[0]._id
                     // }})
