@@ -36,7 +36,8 @@ const sessions = () => {
         (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
 
     const loadSessions = async (user:string): Promise<void> => {
-        await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
+        await axios.post("http://localhost:4000/api/workouts/retrieveData",
+        //await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
             {
                 username: user
             })
@@ -52,13 +53,14 @@ const sessions = () => {
 
     const updateSessions = async (user:string, newSessions: any, from:string): Promise<void> => {
         setLoading(true)
-        await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
+        await axios.post("http://localhost:4000/api/workouts/updateData",
+        //await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
             {
                 username: user,
                 session: newSessions,
             })
             .then(response => {
-                console.log(response.data)
+                console.log(response)
                 loadSessions(user)
                 if(from == "new") {
                     console.log(response.data.session)
@@ -74,7 +76,7 @@ const sessions = () => {
                 //setUserSessions(response.data.message)
             }).catch((error) => {
                 console.log("session error")
-                // console.log(error.response)
+                console.log(error.response)
             }
         )
         setLoading(false)
@@ -378,7 +380,7 @@ const sessions = () => {
                             borderWidth: 3
                         }}
                         onPress={()=> {
-
+                            
                             if (newSelectedDays.length > 0){
                                 const tempSession =
                                 {
@@ -389,6 +391,9 @@ const sessions = () => {
                         
                                 
                                 if((typeof auth)=="string"){
+                                    if(typeof userSessions != "undefined"){
+
+                                    
                                     const howdy = userSessions.map(({ _id, ...session }) => ({
                                         ...session,
                                         workoutObject: session.workoutObject.map(({ _id, ...workout }) => workout),
@@ -397,8 +402,12 @@ const sessions = () => {
                                         ...howdy,
                                         tempSession
                                     ]
+                                    
 
                                     updateSessions(auth,  inputSession, "new")
+                                } else {
+                                    updateSessions(auth, [tempSession], "new")
+                                }
                                 
                                 }
                                 // selectedDays = []

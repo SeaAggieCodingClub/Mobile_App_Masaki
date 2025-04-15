@@ -413,8 +413,8 @@ const browse = () => {
                                         bottomSheetRef.current?.close()
                                         setLoading(true)
 
-                                        axios.post("http://10.0.2.2:4000/api/workouts/updateData",
-                                        // axios.post('http://localhost:4000/api/workouts/updateData',
+                                        //axios.post("http://10.0.2.2:4000/api/workouts/updateData",
+                                         axios.post('http://localhost:4000/api/workouts/updateData',
                                         {
                                             username: auth,
                                             session: newSession
