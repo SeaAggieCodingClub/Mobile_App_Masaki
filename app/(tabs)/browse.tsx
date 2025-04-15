@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
-import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, Pressable } from "react-native"
+import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, Pressable, ActivityIndicator } from "react-native"
 import { Link, router, Stack } from "expo-router"
 import { Dropdown, MultiSelect } from "react-native-element-dropdown"
 import BottomSheet, {BottomSheetBackdrop, BottomSheetView, TouchableOpacity} from "@gorhom/bottom-sheet"
@@ -362,7 +362,7 @@ const browse = () => {
                         {/*show sessions Important*/}
                         <FlatList
                             data={userSessions}
-                            keyExtractor={(item) => item.name}
+                            keyExtractor={(item) => item._id}
                             contentContainerStyle={{ display: "flex",
                                 marginHorizontal: "auto",
                                 gap: 2,

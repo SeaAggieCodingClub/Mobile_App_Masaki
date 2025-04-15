@@ -25,6 +25,7 @@ const sessions = () => {
     const [workoutNameInput, setNameInput] = useState("Name")
     const [setNum, setNumInput] = useState("")
     let selectedDays: string[] = []
+    const [newSelectedDays, setNewSelectedDays] = useState<string[]>([])
 
     const [loading, setLoading] = useState(false)
 
@@ -164,6 +165,7 @@ const sessions = () => {
                         style={[style.textInput, {backgroundColor: styleColors.darkest}]}     
                         selectionColor={"rgba(255, 255, 255, 0.25)"}
                         />
+                        <View style={{height: 2, width: "100%", backgroundColor: styleColors.dark, paddingHorizontal: 8}}></View>
                     </View>
                     <View style={{display: "flex", flexDirection: "row", paddingHorizontal: 16, marginHorizontal: 15, gap: 8, justifyContent: "center", alignItems: "center"}}>
                     <Pressable
@@ -172,20 +174,21 @@ const sessions = () => {
                             flex:1, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("monday") ? styleColors.primary : styleColors.dark,
+                            backgroundColor: newSelectedDays.includes("monday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
                             alignItems: 'center',
                         })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "monday")
+                            // selectedDays = toggleItem(selectedDays, "monday")
+                            setNewSelectedDays(toggleItem(newSelectedDays, "monday"))
                         }}
                         > 
 
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", 
                                 color: 
-                                (selectedDays.includes("monday")) 
+                                (newSelectedDays.includes("monday")) 
                                 ? styleColors.dark 
                                 : styleColors.light}}>
                                 M
@@ -198,19 +201,20 @@ const sessions = () => {
                                 flex:1, 
                                 marginTop: 20, 
                                 marginBottom: 12, 
-                                backgroundColor: pressed || selectedDays.includes("tuesday") ? styleColors.primary : styleColors.dark,
+                                backgroundColor: newSelectedDays.includes("tuesday") ? styleColors.primary : styleColors.dark,
                                 borderRadius: 999,
                                 width: 10,
                                 justifyContent: 'center',
                                 alignItems: 'center',
                             })}
                             onPress={()=> {
-                                selectedDays = toggleItem(selectedDays, "tuesday")
+                                // selectedDays = toggleItem(selectedDays, "tuesday")
+                                setNewSelectedDays(toggleItem(newSelectedDays, "tuesday"))
                             }}>
 
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
                                 color: 
-                                (selectedDays.includes("tuesday")) 
+                                (newSelectedDays.includes("tuesday")) 
                                 ? styleColors.dark 
                                 : styleColors.light
                             }}>
@@ -224,19 +228,20 @@ const sessions = () => {
                                 flex:1, 
                                 marginTop: 20, 
                                 marginBottom: 12, 
-                                backgroundColor: pressed || selectedDays.includes("wednesday") ? styleColors.primary : styleColors.dark,
+                                backgroundColor: newSelectedDays.includes("wednesday") ? styleColors.primary : styleColors.dark,
                                 borderRadius: 999,
                                 width: 10,
                                 justifyContent: 'center',
                                 alignItems: 'center',
                             })}
                             onPress={()=> {
-                                selectedDays = toggleItem(selectedDays, "wednesday")
+                                // selectedDays = toggleItem(selectedDays, "wednesday")
+                                setNewSelectedDays(toggleItem(newSelectedDays, "wednesday"))
                             }}>
 
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
                                 color: 
-                                (selectedDays.includes("wednesday")) 
+                                (newSelectedDays.includes("wednesday")) 
                                 ? styleColors.dark 
                                 : styleColors.light
                             }}>
@@ -250,19 +255,20 @@ const sessions = () => {
                             flex:1, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("thursday") ? styleColors.primary : styleColors.dark,
+                            backgroundColor: newSelectedDays.includes("thursday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
                             alignItems: 'center',
                         })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "thursday")
+                            // selectedDays = toggleItem(selectedDays, "thursday")
+                            setNewSelectedDays(toggleItem(newSelectedDays, "thursday"))
                         }}>
                             
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
                                 color: 
-                                (selectedDays.includes("thursday")) 
+                                (newSelectedDays.includes("thursday")) 
                                 ? styleColors.dark 
                                 : styleColors.light
                             }}>
@@ -276,19 +282,20 @@ const sessions = () => {
                             flex:1,  
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("friday") ? styleColors.primary : styleColors.dark,
+                            backgroundColor: newSelectedDays.includes("friday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
                             alignItems: 'center',
                         })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "friday")
+                            // selectedDays = toggleItem(selectedDays, "friday")
+                            setNewSelectedDays(toggleItem(newSelectedDays, "friday"))
                         }}>
                             
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
                                 color: 
-                                (selectedDays.includes("friday")) 
+                                (newSelectedDays.includes("friday")) 
                                 ? styleColors.dark 
                                 : styleColors.light
                             }}>
@@ -302,19 +309,20 @@ const sessions = () => {
                             flex:1,  
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("saturday") ? styleColors.primary : styleColors.dark,
+                            backgroundColor: newSelectedDays.includes("saturday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
                             alignItems: 'center',
                         })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "saturday")
+                            // selectedDays = toggleItem(selectedDays, "saturday")
+                            setNewSelectedDays(toggleItem(newSelectedDays, "saturday"))
                         }}>
                             
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
                                 color: 
-                                (selectedDays.includes("saturday")) 
+                                (newSelectedDays.includes("saturday")) 
                                 ? styleColors.dark 
                                 : styleColors.light
                             }}>
@@ -328,19 +336,20 @@ const sessions = () => {
                             flex:1, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("sunday") ? styleColors.primary : styleColors.dark,
+                            backgroundColor: newSelectedDays.includes("sunday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
                             alignItems: 'center',
                         })}
                         onPress={()=> {
-                            selectedDays = toggleItem(selectedDays, "sunday")
+                            // selectedDays = toggleItem(selectedDays, "sunday")
+                            setNewSelectedDays(toggleItem(newSelectedDays, "sunday"))
                         }}>
                             
                             <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
                                 color: 
-                                (selectedDays.includes("sunday")) 
+                                (newSelectedDays.includes("sunday")) 
                                 ? styleColors.dark 
                                 : styleColors.light
                             }}>
@@ -364,11 +373,11 @@ const sessions = () => {
                         }}
                         onPress={()=> {
 
-                            if (selectedDays.length > 0){
+                            if (newSelectedDays.length > 0){
                                 const tempSession =
                                 {
                                     name: workoutNameInput,
-                                    daysOfSession: selectedDays,
+                                    daysOfSession: newSelectedDays,
                                     workoutObject: [],
                                 }
                         
@@ -386,7 +395,8 @@ const sessions = () => {
                                     updateSessions(auth,  inputSession, "new")
                                 
                                 }
-                                selectedDays = []
+                                // selectedDays = []
+                                setNewSelectedDays([])
                                 setNameInput("Name")
                                 createSessionRef.current?.close()
                             }
@@ -422,10 +432,12 @@ const style = StyleSheet.create({
 
 function toggleItem<T>(list: T[], item: T): T[] {
     if (list.includes(item)) {
+        console.log()
         return list.filter(i => i !== item); // remove item
     } else {
         return [...list, item]; // add item
     }
+    
   }  
 
 export default sessions
