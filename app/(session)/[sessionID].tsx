@@ -124,40 +124,6 @@ const sessionID = () => {
                 }
             }}/>
 
-            <FlatList 
-            horizontal={true}
-            data={currentSession.daysOfSession}
-            contentContainerStyle={{ display: "flex", 
-                flexDirection: "row", 
-                paddingHorizontal: 16, 
-                marginHorizontal: 15,
-                paddingTop: 15,
-                paddingBottom: 15, 
-                gap: 8,
-            }}
-            renderItem={({item})=>(
-                <View>
-                <Pressable
-                        style={{
-                            aspectRatio: 1, 
-                            right: 16,
-                            gap: 1,
-                            backgroundColor: styleColors.primary,
-                            borderRadius: 999,
-                            width: 45,
-                            alignItems: 'center'
-                        }}
-                        > 
-
-                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
-                                {dayAbbreviations[item as keyof typeof dayAbbreviations] ?? item}
-                            </Text>
-    
-                </Pressable>
-                </View>
-            )}
-            />
-
             {/*
             <FlatList
                 style={{paddingHorizontal: 16}}
@@ -200,9 +166,44 @@ const sessionID = () => {
             data={currentSession.workoutObject}
             keyExtractor={item => item._id}
             contentContainerStyle={{gap: 8}}
-            // ListHeaderComponent={() => (
-            //     <Text style={[globalStyles.baseText, {fontFamily: "Montserrat-Bold"}]}>Workouts</Text>
-            // )}
+            ListHeaderComponent={() => (
+                <FlatList 
+                horizontal={true}
+                data={currentSession.daysOfSession}
+                contentContainerStyle={{ display: "flex", 
+                    flexDirection: "row", 
+                    paddingHorizontal: 16, 
+                    marginHorizontal: 15,
+                    paddingTop: 15,
+                    paddingBottom: 15, 
+                    gap: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexGrow: 1
+                }}
+                renderItem={({item})=>(
+                    <View>
+                    <Pressable
+                            style={{
+                                aspectRatio: 1, 
+                                gap: 1,
+                                backgroundColor: styleColors.light,
+                                borderRadius: 999,
+                                width: 45,
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}
+                            > 
+    
+                                <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                                    {dayAbbreviations[item as keyof typeof dayAbbreviations] ?? item}
+                                </Text>
+        
+                    </Pressable>
+                    </View>
+                )}
+                />
+            )}
             onViewableItemsChanged={(item) => {
                 item.changed.map(workout => {
                     // console.log(workout.item)

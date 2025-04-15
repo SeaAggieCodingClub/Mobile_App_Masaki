@@ -135,22 +135,24 @@ const sessions = () => {
                     <View style={{paddingHorizontal: 6}}>
                         <TextInput 
                         onChangeText={input => setNameInput(input)} 
+                        textAlign = "center"
                         placeholder = "Name"
-                        placeholderTextColor={styleColors.light}
-                        style={style.textInput} 
+                        placeholderTextColor={"rgba(255, 255, 255, 0.25)"}
+                        style={style.textInput}     
                         selectionColor={"rgba(255, 255, 255, 0.25)"}/>
                     </View>
-                    <View style={{display: "flex", flexDirection: "row", paddingHorizontal: 16, marginHorizontal: 15, gap: 8}}>
+                    <View style={{display: "flex", flexDirection: "row", paddingHorizontal: 16, marginHorizontal: 15, gap: 8, justifyContent: "center", alignItems: "center"}}>
                     <Pressable
                         style={({pressed}) =>({
                             aspectRatio: 1, 
                             flex:1, 
-                            right: 16, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("monday") ? styleColors.primary : styleColors.light,
+                            backgroundColor: selectedDays.includes("monday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
-                            width: 10
+                            width: 10,
+                            justifyContent: 'center',
+                            alignItems: 'center',
                         })}
                         onPress={()=> {
                             selectedDays = toggleItem(selectedDays, "monday")
@@ -166,12 +168,13 @@ const sessions = () => {
                             style={({pressed}) =>({
                                 aspectRatio: 1, 
                                 flex:1, 
-                                right: 16, 
                                 marginTop: 20, 
                                 marginBottom: 12, 
                                 backgroundColor: pressed || selectedDays.includes("tuesday") ? styleColors.primary : styleColors.light,
                                 borderRadius: 999,
-                                width: 10
+                                width: 10,
+                                justifyContent: 'center',
+                                alignItems: 'center',
                             })}
                             onPress={()=> {
                                 selectedDays = toggleItem(selectedDays, "tuesday")
@@ -186,12 +189,13 @@ const sessions = () => {
                             style={({pressed}) =>({
                                 aspectRatio: 1, 
                                 flex:1, 
-                                right: 16, 
                                 marginTop: 20, 
                                 marginBottom: 12, 
                                 backgroundColor: pressed || selectedDays.includes("wednesday") ? styleColors.primary : styleColors.light,
                                 borderRadius: 999,
-                                width: 10
+                                width: 10,
+                                justifyContent: 'center',
+                                alignItems: 'center',
                             })}
                             onPress={()=> {
                                 selectedDays = toggleItem(selectedDays, "wednesday")
@@ -206,12 +210,13 @@ const sessions = () => {
                         style={({pressed}) =>({
                             aspectRatio: 1, 
                             flex:1, 
-                            right: 16, 
                             marginTop: 20, 
                             marginBottom: 12, 
                             backgroundColor: pressed || selectedDays.includes("thursday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
-                            width: 10
+                            width: 10,
+                            justifyContent: 'center',
+                            alignItems: 'center',
                         })}
                         onPress={()=> {
                             selectedDays = toggleItem(selectedDays, "thursday")
@@ -225,13 +230,14 @@ const sessions = () => {
                         <Pressable
                         style={({pressed}) =>({
                             aspectRatio: 1, 
-                            flex:1, 
-                            right: 16, 
+                            flex:1,  
                             marginTop: 20, 
                             marginBottom: 12, 
                             backgroundColor: pressed || selectedDays.includes("friday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
-                            width: 10
+                            width: 10,
+                            justifyContent: 'center',
+                            alignItems: 'center',
                         })}
                         onPress={()=> {
                             selectedDays = toggleItem(selectedDays, "friday")
@@ -245,13 +251,14 @@ const sessions = () => {
                         <Pressable
                         style={({pressed}) =>({
                             aspectRatio: 1, 
-                            flex:1, 
-                            right: 16, 
+                            flex:1,  
                             marginTop: 20, 
                             marginBottom: 12, 
                             backgroundColor: pressed || selectedDays.includes("saturday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
-                            width: 10
+                            width: 10,
+                            justifyContent: 'center',
+                            alignItems: 'center',
                         })}
                         onPress={()=> {
                             selectedDays = toggleItem(selectedDays, "saturday")
@@ -266,12 +273,13 @@ const sessions = () => {
                         style={({pressed}) =>({
                             aspectRatio: 1, 
                             flex:1, 
-                            right: 16, 
                             marginTop: 20, 
                             marginBottom: 12, 
                             backgroundColor: pressed || selectedDays.includes("sunday") ? styleColors.primary : styleColors.light,
                             borderRadius: 999,
-                            width: 10
+                            width: 10,
+                            justifyContent: 'center',
+                            alignItems: 'center',
                         })}
                         onPress={()=> {
                             selectedDays = toggleItem(selectedDays, "sunday")
@@ -288,12 +296,11 @@ const sessions = () => {
                     <Pressable
                         style={{ 
                             alignItems: "center",
-                            length: 250,
-                            width: 250, 
+                            width: 175,
                             marginTop: 20, 
                             marginBottom: 12, 
                             backgroundColor: styleColors.primary,
-                            borderRadius: 10,
+                            borderRadius: 20,
                         }}
                         onPress={()=> {
 
@@ -319,9 +326,14 @@ const sessions = () => {
                                     updateSessions(auth,  inputSession)
                                 
                                 }
+                                createSessionRef.current?.close()
                             }
                         }}>
-                        <Text>Create Session</Text>
+                        <Text style={{margin: "auto", 
+                            fontFamily: "Montserrat-Medium", 
+                            color: styleColors.darkest, 
+                            marginHorizontal: 20,
+                            padding: 10}}>Create Session</Text>
                     </Pressable>
                     </View>
                 </BottomSheetView>
