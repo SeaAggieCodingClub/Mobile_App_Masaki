@@ -1,18 +1,21 @@
-import { View, Text, StyleSheet, SafeAreaView, FlatList, Dimensions } from "react-native"
+import { View, Text, StyleSheet, SafeAreaView, FlatList, Dimensions, Pressable } from "react-native"
 import { useCallback, useEffect, useState } from "react"
 import globalStyles from "../globalStyles"
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar"
 import styleColors from "../styleColors"
 import { useFocusEffect } from "expo-router"
 import { sessionObj, useSessionContext, workoutObj } from "../(session)/sessionContext"
+import { useRouter } from "expo-router"
 
 const DOTW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 const index = () => {
 
-    const [date, setDate] = useState<String>()
-    const [time, setTime] = useState<String>()
+    const [date, setDate] = useState<string>("")
+    const [time, setTime] = useState<string>("")
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
+
+    const router = useRouter()
 
     useFocusEffect(
         useCallback(() => {
@@ -20,6 +23,8 @@ const index = () => {
             setTime((new Date().getHours()).toString() + ":" + (new Date().getMinutes()).toString() + ":" + (new Date().getSeconds()).toString())
         }, [])
     )
+
+    const todaySessions = userSessions.filter(userSessions => (userSessions.daysOfSession.includes(date.toLowerCase())))
 
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
@@ -30,7 +35,6 @@ const index = () => {
                     data = {[
                         {id: "1", title: date}, 
                         {id: "2", title: time},
-                        {id: "3", title: "test3"},
                     ]}
                     keyExtractor={(item) => item.id}  
                     renderItem={ ({item}) => (
@@ -48,6 +52,28 @@ const index = () => {
                     contentContainerStyle={{columnGap: 20}}
                     
                 />
+                <FlatList
+                    style={{paddingHorizontal: 16, paddingTop: 10}}
+                    numColumns={1}
+                    contentContainerStyle={{gap: 8}}
+                    //columnWrapperStyle={{gap: 8}}
+                    data={todaySessions}
+                    keyExtractor={(item) => item._id}
+                    renderItem={({item})=>(
+                    <Pressable
+                        style={globalStyles.tile}
+                        onPress={()=> {
+                            // send session data to session slideout
+                            router.push({pathname: "(session)/[sessionID]", params: {
+                            _id: item._id,
+                        }
+                        })}}
+                    >
+                        <Text style={globalStyles.text}>{item.name}</Text>
+                                        
+                    </Pressable>
+                    )}
+                />
         </SafeAreaView>
     )
 }
@@ -55,15 +81,18 @@ const index = () => {
 const styles = StyleSheet.create({
     listContainer: {
         width: Dimensions.get("window").width - 2 * globalStyles.screenContainer.paddingLeft,
-        height: 500,
+        height: 75,
         backgroundColor: styleColors.dark,
+        borderColor: styleColors.light,
+        borderWidth: 1,
         padding: 10,
         borderRadius: 10,
     },
 
     listText: {
-        color: "#ffffff",
+        color: styleColors.light,
         fontFamily: "Montserrat-Medium",
+        fontSize: 25,
     }
 })
 
