@@ -361,8 +361,8 @@ const browse = () => {
                         <Text style={{fontSize: 24, margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.light, marginBottom: 20}}>Add {bottomSheetText} To:</Text>
                         {/*show sessions Important*/}
                         
-                        {userSessions.length == 0 ? <Text style={[globalStyles.text, {paddingHorizontal: 16}]}>You have no sessions. Create one to begin.</Text> : <></>}
-                        
+                        {userSessions?.length != 0 ? <></> : <Text style={[globalStyles.text, {paddingHorizontal: 16}]}>You have no sessions. Create one to begin.</Text>}
+                        {typeof userSessions == "undefined" ? <Text style={[globalStyles.text, {paddingHorizontal: 16}]}>You have no sessions. Create one to begin.</Text> : <></> }
                         <FlatList
                             data={userSessions}
                             keyExtractor={(item) => item._id}
