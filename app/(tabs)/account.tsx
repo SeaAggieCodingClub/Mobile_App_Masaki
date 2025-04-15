@@ -29,7 +29,7 @@ const accounts = () => {
 
 
                         setAuth(false)
-                    }} style={[{backgroundColor: styleColors.dark, borderRadius: 8, marginHorizontal: "auto", width: "40%", height: "10%", marginTop: 20}]}>
+                    }} style={[{backgroundColor: styleColors.dark, borderRadius: 8, marginHorizontal: "auto", width: "40%", paddingVertical: 16, marginTop: 20}]}>
                         <Text style={[globalStyles.buttonText, {color: styleColors.light, textAlign: "center"}]}>Log out</Text>
                     </Pressable>
         </SafeAreaView>
