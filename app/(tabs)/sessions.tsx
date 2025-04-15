@@ -30,7 +30,7 @@ const sessions = () => {
     const router = useRouter()
 
     const createSessionRef = useRef<BottomSheet>(null)
-    const createSessionSnapPoints = useMemo(()=> ['90%', '90%'], [])
+    const createSessionSnapPoints = useMemo(()=> ['30%'], [])
     const renderBackdrop = useCallback(
         (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
 

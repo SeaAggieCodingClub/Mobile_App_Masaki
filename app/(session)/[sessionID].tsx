@@ -33,6 +33,17 @@ const sessionID = () => {
         sunday: 'Su',
       }
 
+    
+    const days = [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday"
+    ];
+
     const [srwData, setSrwData] = useState<{id: string, srwType: string, value: number}[]>([]) 
 
     const handleSrwChange = (_id:string, srw: string, newValue:number) => {
@@ -153,10 +164,9 @@ const sessionID = () => {
             ListHeaderComponent={() => (
                 <FlatList 
                 horizontal={true}
-                data={currentSession.daysOfSession}
+                data={days}
                 contentContainerStyle={{ display: "flex", 
                     flexDirection: "row", 
-                    paddingHorizontal: 16, 
                     marginHorizontal: 15,
                     paddingTop: 15,
                     paddingBottom: 15, 
@@ -171,16 +181,22 @@ const sessionID = () => {
                             style={{
                                 aspectRatio: 1, 
                                 gap: 1,
-                                backgroundColor: styleColors.light,
+                                backgroundColor: 
+                                (currentSession.daysOfSession).includes(item) 
+                                ? styleColors.dark 
+                                : styleColors.primary,
                                 borderRadius: 999,
-                                width: 45,
+                                width: 40,
                                 justifyContent: "center",
                                 alignItems: "center"
                             }}
                             > 
     
-                                <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
-                                    {dayAbbreviations[item as keyof typeof dayAbbreviations] ?? item}
+                                <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", 
+                                    color: (currentSession.daysOfSession).includes(item) 
+                                    ? styleColors.light 
+                                    : styleColors.dark}}>
+                                    {dayAbbreviations[item as keyof typeof dayAbbreviations]}
                                 </Text>
         
                     </Pressable>
