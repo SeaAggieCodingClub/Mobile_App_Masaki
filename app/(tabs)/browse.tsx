@@ -1,11 +1,11 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
-import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, FlatList, Pressable } from "react-native"
+import { View, Text, StyleSheet, SafeAreaView, Appearance, useColorScheme, Pressable } from "react-native"
 import { Link, router, Stack } from "expo-router"
 import { Dropdown, MultiSelect } from "react-native-element-dropdown"
 import BottomSheet, {BottomSheetBackdrop, BottomSheetView, TouchableOpacity} from "@gorhom/bottom-sheet"
 import globalStyles from "../globalStyles"
 import styleColors from "../styleColors"
-import { GestureHandlerRootView, ScrollView, TextInput } from "react-native-gesture-handler"
+import { GestureHandlerRootView, ScrollView, TextInput, FlatList } from "react-native-gesture-handler"
 import Icon from '@expo/vector-icons/MaterialIcons'
 import { WorkoutsContext, workoutInterface, workoutsType } from "../(browse)/workoutsContext"
 import { useAuthContext, secureStoreGet, secureStoreSet } from "../(preAuth)/authContext"
@@ -116,7 +116,7 @@ const browse = () => {
     //     setFilter(filteredData)
     // }
 
-    const snapPoints = useMemo(() => ['70%'], [])
+    const snapPoints = useMemo(() => ['50%'], [])
     const bottomSheetRef = useRef<BottomSheet>(null)
     const [bottomSheetText, setBottomSheetText] = useState("")
     const [workoutName, setWorkoutName] = useState("")
@@ -344,13 +344,28 @@ const browse = () => {
                     
 
                     <BottomSheetView>
-                        <Text style={globalStyles.baseText}>Add {bottomSheetText} </Text>
+                        <Text style={{fontSize: 25, margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.light, marginBottom: 20}}>Add {bottomSheetText} </Text>
                         {/*show sessions Important*/}
                         <FlatList
                             data={userSessions}
                             keyExtractor={(item) => item.name}
+                            contentContainerStyle={{ display: "flex",
+                                marginHorizontal: "auto",
+                                gap: 2,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
                             renderItem={({item})=>(
+                                <View style={{display: "flex"}}>
                                 <Pressable
+                                    style={{ 
+                                        alignItems: "center",
+                                        width: 250,
+                                        marginTop: 2, 
+                                        marginBottom: 2, 
+                                        backgroundColor: styleColors.dark,
+                                        borderRadius: 8,
+                                    }}
                                     onPress ={()=>{
                                         const filteredUserSessions = userSessions.map(({ _id, ...session }) => ({
                                             ...session,
@@ -401,10 +416,12 @@ const browse = () => {
                                         })
                                     }} 
                                 >
-                                    <Text style={{color: '#ffff'}}>
+                                    <Text adjustsFontSizeToFit={true} style={{fontSize: 15, color: styleColors.light, fontFamily: "Montserrat-Medium", 
+                                        paddingTop: 7, paddingBottom: 7}}>
                                     {item.name}
                                     </Text>
                                 </Pressable>
+                                </View>
                             )}
                         />
                     </BottomSheetView>

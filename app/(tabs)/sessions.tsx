@@ -128,7 +128,7 @@ const sessions = () => {
                 snapPoints={createSessionSnapPoints}
                 enablePanDownToClose={true}
                 handleIndicatorStyle={{backgroundColor: styleColors.light}}
-                backgroundStyle={{backgroundColor: styleColors.dark}}
+                backgroundStyle={{backgroundColor: styleColors.darkest}}
                 backdropComponent={renderBackdrop}
             >
                 <BottomSheetView>   
@@ -138,8 +138,9 @@ const sessions = () => {
                         textAlign = "center"
                         placeholder = "Name"
                         placeholderTextColor={"rgba(255, 255, 255, 0.25)"}
-                        style={style.textInput}     
-                        selectionColor={"rgba(255, 255, 255, 0.25)"}/>
+                        style={[style.textInput, {backgroundColor: styleColors.darkest}]}     
+                        selectionColor={"rgba(255, 255, 255, 0.25)"}
+                        />
                     </View>
                     <View style={{display: "flex", flexDirection: "row", paddingHorizontal: 16, marginHorizontal: 15, gap: 8, justifyContent: "center", alignItems: "center"}}>
                     <Pressable
@@ -148,7 +149,7 @@ const sessions = () => {
                             flex:1, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: selectedDays.includes("monday") ? styleColors.primary : styleColors.light,
+                            backgroundColor: selectedDays.includes("monday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
@@ -159,7 +160,11 @@ const sessions = () => {
                         }}
                         > 
 
-                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", 
+                                color: 
+                                (selectedDays.includes("monday")) 
+                                ? styleColors.dark 
+                                : styleColors.light}}>
                                 M
                             </Text>
     
@@ -170,7 +175,7 @@ const sessions = () => {
                                 flex:1, 
                                 marginTop: 20, 
                                 marginBottom: 12, 
-                                backgroundColor: pressed || selectedDays.includes("tuesday") ? styleColors.primary : styleColors.light,
+                                backgroundColor: pressed || selectedDays.includes("tuesday") ? styleColors.primary : styleColors.dark,
                                 borderRadius: 999,
                                 width: 10,
                                 justifyContent: 'center',
@@ -180,7 +185,12 @@ const sessions = () => {
                                 selectedDays = toggleItem(selectedDays, "tuesday")
                             }}>
 
-                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
+                                color: 
+                                (selectedDays.includes("tuesday")) 
+                                ? styleColors.dark 
+                                : styleColors.light
+                            }}>
                                 T 
                             </Text>
                             
@@ -191,7 +201,7 @@ const sessions = () => {
                                 flex:1, 
                                 marginTop: 20, 
                                 marginBottom: 12, 
-                                backgroundColor: pressed || selectedDays.includes("wednesday") ? styleColors.primary : styleColors.light,
+                                backgroundColor: pressed || selectedDays.includes("wednesday") ? styleColors.primary : styleColors.dark,
                                 borderRadius: 999,
                                 width: 10,
                                 justifyContent: 'center',
@@ -201,7 +211,12 @@ const sessions = () => {
                                 selectedDays = toggleItem(selectedDays, "wednesday")
                             }}>
 
-                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
+                                color: 
+                                (selectedDays.includes("wednesday")) 
+                                ? styleColors.dark 
+                                : styleColors.light
+                            }}>
                                 W
                             </Text>
 
@@ -212,7 +227,7 @@ const sessions = () => {
                             flex:1, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("thursday") ? styleColors.primary : styleColors.light,
+                            backgroundColor: pressed || selectedDays.includes("thursday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
@@ -222,7 +237,12 @@ const sessions = () => {
                             selectedDays = toggleItem(selectedDays, "thursday")
                         }}>
                             
-                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
+                                color: 
+                                (selectedDays.includes("thursday")) 
+                                ? styleColors.dark 
+                                : styleColors.light
+                            }}>
                                 Th
                             </Text>
 
@@ -233,7 +253,7 @@ const sessions = () => {
                             flex:1,  
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("friday") ? styleColors.primary : styleColors.light,
+                            backgroundColor: pressed || selectedDays.includes("friday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
@@ -243,7 +263,12 @@ const sessions = () => {
                             selectedDays = toggleItem(selectedDays, "friday")
                         }}>
                             
-                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
+                                color: 
+                                (selectedDays.includes("friday")) 
+                                ? styleColors.dark 
+                                : styleColors.light
+                            }}>
                                 F
                             </Text>
 
@@ -254,7 +279,7 @@ const sessions = () => {
                             flex:1,  
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("saturday") ? styleColors.primary : styleColors.light,
+                            backgroundColor: pressed || selectedDays.includes("saturday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
@@ -264,7 +289,12 @@ const sessions = () => {
                             selectedDays = toggleItem(selectedDays, "saturday")
                         }}>
                             
-                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
+                                color: 
+                                (selectedDays.includes("saturday")) 
+                                ? styleColors.dark 
+                                : styleColors.light
+                            }}>
                                 S
                             </Text>
 
@@ -275,7 +305,7 @@ const sessions = () => {
                             flex:1, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: pressed || selectedDays.includes("sunday") ? styleColors.primary : styleColors.light,
+                            backgroundColor: pressed || selectedDays.includes("sunday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
@@ -285,7 +315,12 @@ const sessions = () => {
                             selectedDays = toggleItem(selectedDays, "sunday")
                         }}>
                             
-                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold", color: styleColors.dark}}>
+                            <Text style={{margin: "auto", fontFamily: "Montserrat-Bold",
+                                color: 
+                                (selectedDays.includes("sunday")) 
+                                ? styleColors.dark 
+                                : styleColors.light
+                            }}>
                                 Su
                             </Text>
 
