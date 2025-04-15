@@ -126,6 +126,9 @@ const sessions = () => {
                 //columnWrapperStyle={{gap: 8}}
                 data={userSessions}
                 keyExtractor={(item) => item._id}
+                ListFooterComponent={(
+                    <View style={{height: 16}}></View>
+                )}
                 renderItem={({item})=>(
                     <Pressable
                         style={globalStyles.tile}
