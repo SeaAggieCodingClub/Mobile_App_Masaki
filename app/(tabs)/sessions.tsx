@@ -142,7 +142,7 @@ const sessions = () => {
                 )}
             />
 
-            : <Text style={globalStyles.baseText}>Press the + button to create a new session</Text>}
+            : <Text style={[globalStyles.text, {marginHorizontal: 16}]}>Press the + button to create a new session</Text>}
 
             <BottomSheet
                 ref={createSessionRef}

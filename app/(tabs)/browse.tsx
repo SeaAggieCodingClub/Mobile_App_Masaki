@@ -333,7 +333,7 @@ const browse = () => {
                                 }}}>
                                 <Icon
                                     name="add"
-                                    color={"rgba(255, 255, 255, 0.75)"}
+                                    color={"rgb(255, 255, 255)"}
                                     size={24}
                                 />
                             </Pressable>

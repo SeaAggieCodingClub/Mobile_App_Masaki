@@ -16,7 +16,7 @@ const accounts = () => {
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
             <Text style={globalStyles.pageTitle}>Account</Text>
-            <Text style={globalStyles.baseText}>User: {auth}</Text>
+            <Text style={[globalStyles.text, {marginHorizontal: 16}]}>User: {auth}</Text>
             <Pressable onPress={() => {
                         secureStoreGet("authUser")
                         secureStoreGet("authPass")
