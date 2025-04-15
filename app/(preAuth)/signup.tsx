@@ -64,8 +64,8 @@ const signup = () => {
                         onPress={() => {
                             //connect to backend
 
-                            axios.post('http://10.0.2.2:4000/create-user', 
-                            // axios.post('http://localhost:4000/create-user', 
+                            //axios.post('http://10.0.2.2:4000/create-user', 
+                            axios.post('http://localhost:4000/create-user', 
                             // axios.post("http://www.fitnessapp.duckdns.org:4000/create-user",
                             {
                                 fullname: fullNameInput,

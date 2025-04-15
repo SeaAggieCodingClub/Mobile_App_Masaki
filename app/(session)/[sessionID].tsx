@@ -65,8 +65,8 @@ const sessionID = () => {
     // }, [srwData])
     
     const loadSessions = async (user:string): Promise<void> => {
-        
-        await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
+        await axios.post("http://localhost:4000/api/workouts/retrieveData",
+        //await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
             {
                 username: user
             })
@@ -82,8 +82,8 @@ const sessionID = () => {
 
     const updateSessions = async (user:string, newSessions: sessionObj[], from:string): Promise<void> => {
         setLoading(true)
-    
-        await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
+        await axios.post("http://localhost:4000/api/workouts/updateData",
+        //await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
             {
                 username: user,
                 session: newSessions,
@@ -341,7 +341,12 @@ const sessionID = () => {
                                 defaultValue={item.item.sets.toString().trim()}
                                 selectionColor={"rgba(255, 255, 255, 0.25)"}
                                 onChangeText={(input) => {
-                                    handleSrwChange(item.item._id, "sets", Number(input))
+                                    if(!isNaN(Number(input))) {
+                                        handleSrwChange(item.item._id, "sets", Number(input))
+                                    } else {
+                                        handleSrwChange(item.item._id, "sets", 0)
+                                    }
+                                    
                                 }}
                             />
                         </View>
@@ -357,7 +362,11 @@ const sessionID = () => {
                                 defaultValue={item.item.reps.toString().trim()}
                                 selectionColor={"rgba(255, 255, 255, 0.25)"}
                                 onChangeText={(input) => {
-                                    handleSrwChange(item.item._id, "reps", Number(input))
+                                    if(!isNaN(Number(input))) {
+                                        handleSrwChange(item.item._id, "reps", Number(input))
+                                    } else {
+                                        handleSrwChange(item.item._id, "reps", 0)
+                                    }
                                 }}
                             />
                         </View>
@@ -373,7 +382,11 @@ const sessionID = () => {
                                 defaultValue={item.item.weights.toString().split(" ")[0]}
                                 selectionColor={"rgba(255, 255, 255, 0.25)"}
                                 onChangeText={(input) => {
-                                    handleSrwChange(item.item._id, "weights", Number(input))
+                                    if(!isNaN(Number(input))) {
+                                        handleSrwChange(item.item._id, "weights", Number(input))
+                                    } else {
+                                        handleSrwChange(item.item._id, "weights", 0)
+                                    }
                                 }}
                             />
                         </View>
@@ -493,7 +506,7 @@ const style = StyleSheet.create({
     },
     srwText: {
         textAlignVertical: "center",
-        flex: 7
+        flex: 6
     }
 })
 
