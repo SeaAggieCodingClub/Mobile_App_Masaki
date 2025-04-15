@@ -15,6 +15,8 @@ const index = () => {
     const [time, setTime] = useState<string>("")
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
 
+    const [todaySessions, setTodaySessions] = useState([] as sessionObj[])
+
     const router = useRouter()
 
     useFocusEffect(
@@ -24,7 +26,11 @@ const index = () => {
         }, [])
     )
 
-    const todaySessions = userSessions.filter(userSessions => (userSessions.daysOfSession.includes("thursday")))
+    useEffect(() => {
+        if(typeof userSessions != "undefined") {
+            setTodaySessions(userSessions.filter(userSessions => (userSessions.daysOfSession.includes(date.toLowerCase()))))
+        }
+    }, [userSessions])        
 
     return (
         <SafeAreaView style={globalStyles.androidSafeView}>
