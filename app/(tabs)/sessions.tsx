@@ -1,7 +1,7 @@
-import { View, Text, TextInput, Image, StyleSheet, FlatList, Pressable, SafeAreaView, Appearance, useColorScheme } from "react-native"
+import { View, Text, TextInput, Image, StyleSheet, FlatList, Pressable, SafeAreaView, Appearance, useColorScheme, ActivityIndicator } from "react-native"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import React from 'react';
-import { useRouter } from "expo-router"
+import { router } from "expo-router"
 import globalStyles from "../globalStyles"
 import styleColors from "../styleColors"
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet"
@@ -19,7 +19,6 @@ interface sessionsProps {
 
 
 const sessions = () => {
-
     const {value: auth, setValue: setAuth} = useAuthContext()
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
 
@@ -27,7 +26,7 @@ const sessions = () => {
     const [setNum, setNumInput] = useState("")
     let selectedDays: string[] = []
 
-    const router = useRouter()
+    const [loading, setLoading] = useState(false)
 
     const createSessionRef = useRef<BottomSheet>(null)
     const createSessionSnapPoints = useMemo(()=> ['30%'], [])
@@ -50,7 +49,8 @@ const sessions = () => {
 
 
 
-    const updateSessions = async (user:string, newSessions: any): Promise<void> => {
+    const updateSessions = async (user:string, newSessions: any, from:string): Promise<void> => {
+        setLoading(true)
         await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
             {
                 username: user,
@@ -59,16 +59,39 @@ const sessions = () => {
             .then(response => {
                 console.log(response.data)
                 loadSessions(user)
+                if(from == "new") {
+                    console.log(response.data.session)
+                    console.log(response.data.session[response.data.session.length - 1]._id)
+                    //router.push("./sessions")
+                    router.push("./browse")
+                    router.push("./sessions")
+                    // router.push("../sessionID")
+                    console.log()
+                    // router.push({pathname: "../(session)/[sessionID]", params: {
+                    //     _id: response.data.session[0]._id
+                    // }})
+                }
                 //setUserSessions(response.data.message)
             }).catch((error) => {
                 console.log("session error")
-                console.log(error.response)
+                // console.log(error.response)
             }
         )
+        setLoading(false)
     }
 
     return (
+        
         <GestureHandlerRootView>
+            {loading ? 
+                //width: "30%", borderRadius: 8, aspectRatio: 1,
+                //left: "35%", top: "20%", 
+                <>
+                    <View style={{width: "100%", height: "100%", position: "absolute", zIndex: 1, margin: "auto", backgroundColor: "rgba(0, 0, 0, 0.5)"}}>
+                        <ActivityIndicator style={{margin: "auto"}}size={"large"} color={"rgba(255, 255, 255, 0.3)"}/>
+                    </View>
+                </> : <></>
+            }
         <SafeAreaView style={globalStyles.androidSafeView}>
             <View style={{display: "flex", flexDirection: "row"}}>
                 <Text style={[globalStyles.pageTitle, {flex: 1}]}>Sessions</Text>
@@ -323,7 +346,7 @@ const sessions = () => {
                                         tempSession
                                     ]
 
-                                    updateSessions(auth,  inputSession)
+                                    updateSessions(auth,  inputSession, "new")
                                 
                                 }
                                 createSessionRef.current?.close()

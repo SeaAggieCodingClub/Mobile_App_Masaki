@@ -129,9 +129,7 @@ const browse = () => {
 
     return (
         <GestureHandlerRootView>
-            <SafeAreaView style={[globalStyles.androidSafeView]}>
-
-                {loading ? 
+            {loading ? 
                 //width: "30%", borderRadius: 8, aspectRatio: 1,
                 //left: "35%", top: "20%", 
                 <>
@@ -139,7 +137,10 @@ const browse = () => {
                         <ActivityIndicator style={{margin: "auto"}}size={"large"} color={"rgba(255, 255, 255, 0.3)"}/>
                     </View>
                 </> : <></>
-                }
+            }
+            <SafeAreaView style={[globalStyles.androidSafeView]}>
+
+                
 
                 <Text style={[globalStyles.pageTitle]}>Browse</Text>
                 {/* search bar muscle */}
@@ -295,7 +296,7 @@ const browse = () => {
                                 router.push({pathname: "(browse)/[workoutID]", params: {
                                     _id: item._id
                                 }})
-                                console.log(item._id)
+                                //console.log(item._id)
                             }}
                         >
                             <Text style={globalStyles.text}>{item.name}</Text>
@@ -361,7 +362,7 @@ const browse = () => {
                         {/*show sessions Important*/}
                         <FlatList
                             data={userSessions}
-                            keyExtractor={(item) => item.name}
+                            keyExtractor={(item) => item._id}
                             renderItem={({item})=>(
                                 <Pressable
                                     onPress ={()=>{
@@ -391,6 +392,7 @@ const browse = () => {
                                         //setUpdatedSessions(newSession);
                                 
                                         //backend post session
+                                        bottomSheetRef.current?.close()
                                         setLoading(true)
 
                                         axios.post("http://10.0.2.2:4000/api/workouts/updateData",

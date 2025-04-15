@@ -9,16 +9,19 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { useAuthContext } from "../(preAuth)/authContext"
-import axios from "axios"
-
-
+import axios from "axios" 
+import browse from "../(tabs)/browse"
 
 const sessionID = () => {
     const _id = useLocalSearchParams<{_id: string}>()
     const {value: auth, setValue: setAuth} = useAuthContext()
     const {value: userSessions, setValue: setUserSessions} = useSessionContext()
     const [currentSession, setCurrentSession] = useState((userSessions.filter((item) => item._id == _id._id))[0])
+    const uneditedSession = JSON.parse(JSON.stringify(userSessions.filter((item) => item._id == _id._id)[0]))
+    // const [uneditedSession, setUneditedSession] = useState(currentSession)
     //console.log(currentSession.workoutObject)
+
+    const viewableItemsChanged = useRef(false) //keeps track if flatlist got rendered
 
     const dayAbbreviations = {
         monday: 'M',
@@ -46,11 +49,12 @@ const sessionID = () => {
     const [srwData, setSrwData] = useState<{id: string, srwType: string, value: number}[]>([]) 
 
     const handleSrwChange = (_id:string, srw: string, newValue:number) => {
+        console.log(_id, srw, newValue)
         if(srwData.filter(item => item.id == _id && item.srwType == srw).length == 1) {
-            // console.log("edit old")
+            console.log("edit old")
             setSrwData(prev => prev.map(item => item.id == _id ? item.srwType == srw ? {...item, value: newValue} : item : item))
         } else {
-            //console.log("add new")
+            console.log("add new")
             setSrwData((prev) => [...prev, {id: _id, srwType: srw, value: newValue}])
         }
         
@@ -76,8 +80,9 @@ const sessionID = () => {
         
     }
 
-    const updateSessions = async (user:string, newSessions: sessionObj[]): Promise<void> => {
+    const updateSessions = async (user:string, newSessions: sessionObj[], from:string): Promise<void> => {
         setLoading(true)
+    
         await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
             {
                 username: user,
@@ -86,6 +91,21 @@ const sessionID = () => {
             .then(response => {
                 //console.log(response.data)
                 // loadSessions(user)
+
+                if(from == "delete") {
+                    console.log("deleteite")
+                    router.back()
+                }
+
+                if(from == "add") {
+                    router.back()
+                    router.push({pathname: "../(tabs)/browse"})
+                }
+
+                if(from == "save") {
+                    router.back()
+                }
+
                 setUserSessions(response.data.session)
                 setCurrentSession((response.data.session as sessionObj[]).filter((item) => item._id == _id._id)[0])
                 //setUserSessions(response.data.message)
@@ -94,7 +114,10 @@ const sessionID = () => {
                 console.log(error.response)
             }
         )
+        
+        
         setLoading(false)
+        //router.back()
     }
 
     const editSessionRef = useRef<BottomSheet>(null)
@@ -116,20 +139,64 @@ const sessionID = () => {
                     //Alert.alert("Are you sure you want to delete " + currentSession.name.toString() + "?", " ", [{text: "Cancel"}, {text: "Delete"}])
                     //delete session
 
-                    if(typeof auth == "string") {
-                        //loadSessions(auth)
-                        // console.log(userSessions)
-                        // console.log(_id._id)
-                        updateSessions(auth, userSessions.filter((item) => item._id != _id._id))
-                        loadSessions(auth)
-                        router.back()
-                        
-                    }
+                    console.log("srwdata", srwData)
+
+                    const newData = currentSession
+                    srwData.forEach((newValue) => {
+                        const target = newData.workoutObject.findIndex(w => w._id == newValue.id)
+                        console.log(target)
+                        if(target != -1) {
+                            // console.log(newValue)
+                            if(newValue.srwType == "sets") {
+                                newData.workoutObject[target].sets = newValue.value
+                                console.log("changed sets")
+                            } else if(newValue.srwType == "reps") {
+                                newData.workoutObject[target].reps = newValue.value
+                                console.log("changed reps")
+                            } else if(newValue.srwType == "weights") {
+                                newData.workoutObject[target].weights = newValue.value + " lbs"
+                                console.log("changed weights")
+                            }
+
+                        }
+                        console.log(newData)
+                        setCurrentSession(newData)
+                    })
                     
-                   
+                    //console.log("current", currentSession)
+                    // console.log(srwData)
+                    //console.log(newData)
+                    //console.log("unedited", uneditedSession)
+                    //console.log(JSON.stringify(currentSession) != JSON.stringify(uneditedSession))
+                    let sessionSelectedIndex = userSessions.findIndex((element) => element._id == currentSession._id)
+                            //console.log(sessionSelectedIndex)
+                    let newSession = [
+                        ...userSessions.slice(0, sessionSelectedIndex),
+                        {...newData},
+                        ...userSessions.slice(sessionSelectedIndex + 1)
+                    ]
+
+                    console.log("ne", newSession)
+                    console.log("un", uneditedSession)
+
+                    if(JSON.stringify(newSession.filter((item) => item._id == _id._id)[0]) != JSON.stringify(uneditedSession)) {
+                        if(typeof auth == "string" ) {
+                            //loadSessions(auth)
+                            // console.log(userSessions)
+                            // console.log(_id._id)
+                            
+                            
+                            
+                            updateSessions(auth, newSession, "save")
 
 
-                }}><Text style={{color: "#FF0000", fontSize: 16, fontFamily: "Montserrat-Medium"}}>Delete</Text></Pressable>,
+                        } 
+                    } else {
+                        router.back()
+                    }
+
+
+                }}><Text style={{color: styleColors.primary, fontSize: 16, fontFamily: "Montserrat-Medium"}}>Save</Text></Pressable>,
                 headerStyle: {
                 backgroundColor: styleColors.dark,
                 }
@@ -169,7 +236,7 @@ const sessionID = () => {
         </> : <></>
         }
 
-        <Text style={globalStyles.baseText}>{currentSession.daysOfSession}</Text>
+        {/* <Text style={globalStyles.baseText}>{currentSession.daysOfSession}</Text> */}
         
         {/* workouts within session */}
         <FlatList
@@ -178,6 +245,7 @@ const sessionID = () => {
             keyExtractor={item => item._id}
             contentContainerStyle={{gap: 8}}
             ListHeaderComponent={() => (
+                <>
                 <FlatList 
                 horizontal={true}
                 data={days}
@@ -219,14 +287,19 @@ const sessionID = () => {
                     </View>
                 )}
                 />
+                {currentSession.workoutObject.length == 0 ? <Text style={[globalStyles.text, {color: "rgba(255, 255, 255, 0.5)", textAlign: "center"}]}>Click 'Add Workouts' to Begin</Text> : <></> }
+                </>
             )}
             onViewableItemsChanged={(item) => {
+                if(viewableItemsChanged.current) return
+
                 item.changed.map(workout => {
-                    // console.log(workout.item)
+                    console.log(workout.item)
                     handleSrwChange(workout.item._id, "sets", workout.item.sets)
                     handleSrwChange(workout.item._id, "reps", workout.item.reps)
                     handleSrwChange(workout.item._id, "weights", Number(workout.item.weights.split(" ")[0]))
                 })
+                viewableItemsChanged.current = true 
             }}
             renderItem={(item) => (
                 <>
@@ -240,14 +313,20 @@ const sessionID = () => {
                                     //console.log(item.item.workout)
                                     if(typeof auth == "string") {
                                         // updateSessions(auth, userSessions.filter((thisWorkout) => thisWorkout._id !=))
-                                        let sessionSelectedIndex = userSessions.findIndex((element) => element._id == currentSession._id)
+                                        //let sessionSelectedIndex = userSessions.findIndex((element) => element._id == currentSession._id)
                                         //console.log(sessionSelectedIndex)
-                                        let newSession = [
-                                            ...userSessions.slice(0, sessionSelectedIndex),
-                                            {...currentSession, workoutObject: currentSession.workoutObject.filter((thisWorkout) => thisWorkout._id != item.item._id)},
-                                            ...userSessions.slice(sessionSelectedIndex + 1)
-                                        ]
-                                        updateSessions(auth, newSession)
+                                        // let newSession = [
+                                        //     ...userSessions.slice(0, sessionSelectedIndex),
+                                        //     {...currentSession, workoutObject: currentSession.workoutObject.filter((thisWorkout) => thisWorkout._id != item.item._id)},
+                                        //     ...userSessions.slice(sessionSelectedIndex + 1)
+                                        // ]
+                                        // updateSessions(auth, newSession)
+                                        
+                                        //edit local session to remove workout
+                                        console.log("filterlog", srwData.filter(element => element.id != item.item._id))
+                                        setSrwData((prev) => prev.filter(element => element.id != item.item._id))
+                                        
+                                        setCurrentSession({...currentSession, workoutObject: currentSession.workoutObject.filter((thisWorkout) => thisWorkout._id != item.item._id)})
                                     }                            
                                 }}
                             >
@@ -311,23 +390,63 @@ const sessionID = () => {
                         onPress={() => {
                             //saves current changes
 
-
-                            router.back()
+                            if(typeof auth == "string") {
                             // console.log(srwData)
-                            router.push({pathname: "../(tabs)/browse"
-                                
 
-                        })}}>
-                            <Text style={[globalStyles.text, {marginHorizontal: "auto", textAlignVertical: "center"}]}>Add workouts</Text>
+                                const newData = currentSession
+                                srwData.forEach((newValue) => {
+                                    const target = newData.workoutObject.findIndex(w => w._id == newValue.id)
+                                    console.log(target)
+                                    if(target != -1) {
+                                        // console.log(newValue)
+                                        if(newValue.srwType == "sets") {
+                                            newData.workoutObject[target].sets = newValue.value
+                                            console.log("changed sets")
+                                        } else if(newValue.srwType == "reps") {
+                                            newData.workoutObject[target].reps = newValue.value
+                                            console.log("changed reps")
+                                        } else if(newValue.srwType == "weights") {
+                                            newData.workoutObject[target].weights = newValue.value + " lbs"
+                                            console.log("changed weights")
+                                        }
+            
+                                    }
+                                    console.log(newData)
+                                    setCurrentSession(newData)
+                                })
+
+                                let sessionSelectedIndex = userSessions.findIndex((element) => element._id == currentSession._id)
+                            //console.log(sessionSelectedIndex)
+                                let newSession = [
+                                    ...userSessions.slice(0, sessionSelectedIndex),
+                                    {...newData},
+                                    ...userSessions.slice(sessionSelectedIndex + 1)
+                                ]
+                                
+                                if(JSON.stringify(newSession.filter((item) => item._id == _id._id)[0]) != JSON.stringify(uneditedSession)) {
+                                    let sessionSelectedIndex = userSessions.findIndex((element) => element._id == currentSession._id)
+                                    updateSessions(auth, newSession, "add")
+                                } else {
+                                    router.back()
+                                    router.push({pathname: "../(tabs)/browse"})
+                                }
+                                
+                            }
+                            
+                        }}>
+                            <Text style={[globalStyles.text, {marginHorizontal: "auto", textAlignVertical: "center"}]}>Add Workouts</Text>
                     </Pressable>
 
                     {/* delete session */}
                     <Pressable 
                         style={{backgroundColor: styleColors.dark, borderRadius: 8, padding: 8, marginBottom: 16}}
                         onPress={() => {
+                            if(typeof auth == "string") {
+                                updateSessions(auth, userSessions.filter((item) => item._id != _id._id), "delete")
+                            }   
                             
                         }}>
-                            <Text style={[globalStyles.text, {marginHorizontal: "auto", textAlignVertical: "center"}]}>Add workouts</Text>
+                            <Text style={[globalStyles.text, {color: "#FF0000", marginHorizontal: "auto", textAlignVertical: "center"}]}>Delete Session</Text>
                     </Pressable>
                 </>
 
