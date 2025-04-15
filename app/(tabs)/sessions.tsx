@@ -149,7 +149,7 @@ const sessions = () => {
                             flex:1, 
                             marginTop: 20, 
                             marginBottom: 12, 
-                            backgroundColor: selectedDays.includes("monday") ? styleColors.primary : styleColors.dark,
+                            backgroundColor: pressed || selectedDays.includes("monday") ? styleColors.primary : styleColors.dark,
                             borderRadius: 999,
                             width: 10,
                             justifyContent: 'center',
@@ -336,6 +336,8 @@ const sessions = () => {
                             marginBottom: 12, 
                             backgroundColor: styleColors.primary,
                             borderRadius: 20,
+                            borderColor: styleColors.dark,
+                            borderWidth: 3
                         }}
                         onPress={()=> {
 
@@ -361,14 +363,17 @@ const sessions = () => {
                                     updateSessions(auth,  inputSession)
                                 
                                 }
+                                selectedDays = []
+                                setNameInput("Name")
                                 createSessionRef.current?.close()
                             }
                         }}>
                         <Text style={{margin: "auto", 
                             fontFamily: "Montserrat-Medium", 
-                            color: styleColors.darkest, 
+                            color: styleColors.dark, 
                             marginHorizontal: 20,
-                            padding: 10}}>Create Session</Text>
+                            padding: 10,
+                            }}>Create Session</Text>
                     </Pressable>
                     </View>
                 </BottomSheetView>
@@ -394,9 +399,9 @@ const style = StyleSheet.create({
 
 function toggleItem<T>(list: T[], item: T): T[] {
     if (list.includes(item)) {
-      return list.filter(i => i !== item); // remove item
+        return list.filter(i => i !== item); // remove item
     } else {
-      return [...list, item]; // add item
+        return [...list, item]; // add item
     }
   }  
 
