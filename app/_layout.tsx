@@ -50,7 +50,7 @@ const RootLayout = () => {
     }
 
     const loadWorkouts = async (): Promise<void> => {
-        await axios.get('http://localhost:4000/api/workouts')
+        await axios.get('http://10.0.2.2:4000/api/workouts')
         //await axios.get('http://10.0.2.2:4000/api/workouts')
         .then(response => {
             setWorkouts(response.data)
@@ -64,7 +64,7 @@ const RootLayout = () => {
 
     const loadSessions = async (user:string): Promise<void> => {
         //await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
-        await axios.post("http://localhost:4000/api/workouts/retrieveData",
+        await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
             {
                 username: user
             })

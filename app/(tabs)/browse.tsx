@@ -309,7 +309,7 @@ const browse = () => {
                                     setBottomSheetText(item.name)
                                     setWorkoutName(workoutData.value.filter((i)=> i._id == item._id)[0].name)
                                     //backend pull session
-                                    // axios.post('http://localhost:4000/api/workouts/retrieveData',
+                                    // axios.post('http://10.0.2.2:4000/api/workouts/retrieveData',
                                     // axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
                                     // {
                                     //     username: auth,
@@ -414,7 +414,7 @@ const browse = () => {
                                         setLoading(true)
 
                                         //axios.post("http://10.0.2.2:4000/api/workouts/updateData",
-                                         axios.post('http://localhost:4000/api/workouts/updateData',
+                                         axios.post('http://10.0.2.2:4000/api/workouts/updateData',
                                         {
                                             username: auth,
                                             session: newSession

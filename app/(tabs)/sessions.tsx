@@ -36,7 +36,7 @@ const sessions = () => {
         (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props}/>, [])
 
     const loadSessions = async (user:string): Promise<void> => {
-        await axios.post("http://localhost:4000/api/workouts/retrieveData",
+        await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
         //await axios.post("http://10.0.2.2:4000/api/workouts/retrieveData",
             {
                 username: user
@@ -53,7 +53,7 @@ const sessions = () => {
 
     const updateSessions = async (user:string, newSessions: any, from:string): Promise<void> => {
         setLoading(true)
-        await axios.post("http://localhost:4000/api/workouts/updateData",
+        await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
         //await axios.post("http://10.0.2.2:4000/api/workouts/updateData",
             {
                 username: user,
