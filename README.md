@@ -8,7 +8,7 @@ Core features include authentication, persistent per-user data, filterable worko
 
 Created in Sea Aggie Coding Club at Texas A&M University at Galveston.
 
-## Contributors
+## Development Team
 
 - Masaki Maruo
 - Aayush Mashruwala
