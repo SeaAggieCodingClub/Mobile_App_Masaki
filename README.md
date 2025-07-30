@@ -5,6 +5,9 @@
 **MASS Fitness App** is a fullstack mobile fitness planner for IOS and Android. This app allows users to plan and keep track of workouts for each day of the week. 
 
 Core features include authentication, persistent per-user data, filterable workouts with descriptions, custom sessions, and editable parameters for workouts in sessions.
+
+Created in Sea Aggie Coding Club at Texas A&M University at Galveston.
+
 ## Contributors
 
 - Masaki Maruo
